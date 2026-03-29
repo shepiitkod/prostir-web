@@ -280,7 +280,7 @@
       margin-top: 3.25rem; border: 1px solid var(--grey-line);
       border-radius: 22px; overflow: hidden; background: var(--bg);
       box-shadow: var(--card-shadow), 0 1px 2px rgba(0,0,0,0.04), 0 24px 64px rgba(0,0,0,0.045);
-      position: relative;
+      position: relative; will-change: transform;
     }
     .dine-card::before {
       content: ''; position: absolute; top: -80px; right: -80px;
@@ -369,10 +369,7 @@
       border: 1px solid var(--grey-line); border-radius: 16px; padding: 1.4rem 1.5rem;
       background: var(--bg); position: relative; overflow: hidden;
       box-shadow: var(--card-shadow);
-      transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
     }
-    .desk-card:hover { border-color: var(--grey-muted); box-shadow: 0 8px 30px rgba(0,0,0,0.06), 0 2px 20px rgba(139,92,246,0.09); }
-    .desk-card.available:hover { border-color: var(--violet); }
     .desk-num { font-family: var(--font-mono); font-size: 0.65rem; color: var(--grey-muted); margin-bottom: 0.75rem; }
     .desk-label { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.03em; color: var(--jet); margin-bottom: 0.4rem; }
     .desk-zone { font-family: var(--font-mono); font-size: 0.65rem; color: var(--grey-muted); margin-bottom: 1rem; }
@@ -1195,6 +1192,44 @@
     /* ─── Main safe-exit timer sync ─── */
     #main-timer { font-variant-numeric: tabular-nums; }
 
+    /* ─── SVG Table: 3D float on hover ─── */
+    .svg-table {
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: filter 0.28s var(--ease), transform 0.28s var(--ease-out);
+    }
+    .svg-table.available:hover {
+      transform: scale(1.13);
+      filter: drop-shadow(0 6px 18px rgba(139,92,246,0.28));
+    }
+    .svg-table.is-selected {
+      transform: scale(1.08);
+    }
+    .svg-table.is-selected .t-circle {
+      filter: drop-shadow(0 0 10px rgba(139,92,246,0.7)) drop-shadow(0 0 24px rgba(139,92,246,0.32));
+    }
+
+    /* ─── Desk card: 3D float on hover ─── */
+    .desk-card {
+      transition: border-color 0.25s var(--ease), box-shadow 0.3s var(--ease), transform 0.3s var(--ease-out);
+    }
+    .desk-card:hover {
+      transform: translateY(-5px) scale(1.013);
+      box-shadow: 0 14px 44px rgba(0,0,0,0.09), 0 4px 20px rgba(139,92,246,0.12);
+    }
+    .desk-card.available:hover {
+      border-color: var(--violet);
+    }
+
+    /* ─── dine-card subtle lift ─── */
+    .dine-card {
+      transition: box-shadow 0.35s var(--ease), transform 0.35s var(--ease-out);
+    }
+    .dine-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-shadow), 0 1px 2px rgba(0,0,0,0.04), 0 32px 80px rgba(0,0,0,0.065);
+    }
+
   </style>
 </head>
 <body>
@@ -1295,7 +1330,7 @@
   <div class="header-right">
     <a href="#" class="diia-btn" aria-label="Увійти через Дію">
       <span class="diia-logo" aria-hidden="true">Дія</span>
-      <span class="btn-label">Увійти через Дію</span>
+      <span class="btn-label">Швидкий вхід з Дія</span>
     </a>
     <div class="user-avatar" id="user-avatar" title="Профіль">
       <div class="moments-ring" aria-hidden="true"></div>
@@ -1526,8 +1561,7 @@
                 ⚠ Оберіть час для бронювання
               </div>
               <button class="sb-book btn-inactive" id="sb-book-btn">
-                <span class="sb-diia-chip" aria-hidden="true">Дія</span>
-                Забронювати через Дію
+                Забронювати
               </button>
             </div>
           </div>
@@ -1596,7 +1630,7 @@
           <div class="desk-label">Стіл #1</div>
           <div class="desk-zone">Зона A · Вікно</div>
           <div class="desk-status"><span class="status-dot green"></span><span style="color:#16A34A">Вільний</span></div>
-          <button class="desk-reserve-btn">Зайняти</button>
+          <button class="desk-reserve-btn">Замовити зараз</button>
         </div>
         <div class="desk-card reveal reveal-delay">
           <div class="desk-num">DESK · A02</div>
@@ -1615,7 +1649,7 @@
           <div class="desk-label">Стіл #4</div>
           <div class="desk-zone">Зона A · Центр</div>
           <div class="desk-status"><span class="status-dot green"></span><span style="color:#16A34A">Вільний</span></div>
-          <button class="desk-reserve-btn">Зайняти</button>
+          <button class="desk-reserve-btn">Замовити зараз</button>
         </div>
         <!-- Zone B -->
         <div class="desk-card reveal reveal-delay">
@@ -1629,7 +1663,7 @@
           <div class="desk-label">Стіл #6</div>
           <div class="desk-zone">Зона B · Quiet</div>
           <div class="desk-status"><span class="status-dot green"></span><span style="color:#16A34A">Вільний</span></div>
-          <button class="desk-reserve-btn">Зайняти</button>
+          <button class="desk-reserve-btn">Замовити зараз</button>
         </div>
         <div class="desk-card reveal">
           <div class="desk-num">DESK · B03</div>
@@ -1642,7 +1676,7 @@
           <div class="desk-label">Стіл #8</div>
           <div class="desk-zone">Зона B · Стенд</div>
           <div class="desk-status"><span class="status-dot green"></span><span style="color:#16A34A">Вільний</span></div>
-          <button class="desk-reserve-btn">Зайняти</button>
+          <button class="desk-reserve-btn">Замовити зараз</button>
         </div>
         <!-- Zone C -->
         <div class="desk-card available reveal reveal-delay2">
@@ -1650,7 +1684,7 @@
           <div class="desk-label">Стіл #9</div>
           <div class="desk-zone">Зона C · Колаб</div>
           <div class="desk-status"><span class="status-dot green"></span><span style="color:#16A34A">Вільний</span></div>
-          <button class="desk-reserve-btn">Зайняти</button>
+          <button class="desk-reserve-btn">Замовити зараз</button>
         </div>
         <div class="desk-card reveal">
           <div class="desk-num">DESK · C02</div>
@@ -1663,7 +1697,7 @@
           <div class="desk-label">Стіл #11</div>
           <div class="desk-zone">Зона C · Колаб</div>
           <div class="desk-status"><span class="status-dot green"></span><span style="color:#16A34A">Вільний</span></div>
-          <button class="desk-reserve-btn">Зайняти</button>
+          <button class="desk-reserve-btn">Замовити зараз</button>
         </div>
         <div class="desk-card reveal reveal-delay2">
           <div class="desk-num">DESK · C04</div>
@@ -1897,18 +1931,18 @@
 <section id="safe-exit" aria-labelledby="safe-h2">
   <div class="wrap">
     <div class="reveal">
-      <p class="eyebrow">03 &nbsp;·&nbsp; Safety</p>
-      <h2 class="section-h" id="safe-h2">Ти завжди<br>у безпеці.</h2>
-      <p class="section-p">Safe Exit — невидимий охоронець у твоєму кишені. Таймер зворотного відліку автоматично сповіщає близьких, якщо щось піде не так.</p>
+      <p class="eyebrow">03 &nbsp;·&nbsp; Safe Exit</p>
+      <h2 class="section-h" id="safe-h2">Твій рахунок<br>закривається сам.</h2>
+      <p class="section-p">Просто встань і йди. Завдяки Geofencing Safe Exit ми автоматично оплатимо твій чек та надішлемо пуш. Жодних очікувань. Жодних зайвих слів.</p>
     </div>
     <div class="timer-card reveal reveal-delay" role="timer" aria-label="Safe Exit таймер">
       <div class="timer-digits" id="main-timer" aria-live="off">14:32</div>
       <div class="timer-label">до авто-сповіщення</div>
       <div class="safe-status">
         <span class="pulse-dot" aria-hidden="true"></span>
-        Safe Exit Активний.
+        Geofencing · Активний
       </div>
-      <div class="timer-note">Служба безпеки отримає ваш маршрут та останнє місцезнаходження, якщо таймер дійде до нуля.</div>
+      <div class="timer-note">Коли ви вийдете за межу закладу, система автоматично закриє рахунок і надішле push-підтвердження. Zero-click оплата.</div>
     </div>
   </div>
 </section>
@@ -2261,6 +2295,7 @@ navLinks.forEach(a => {
     selectedTime = null;
     document.querySelectorAll('.sb-slot').forEach(s => s.classList.remove('active'));
     sbBookBtn.classList.add('btn-inactive');
+    sbBookBtn.textContent = `Забронювати Стіл №${id}`;
     oopsBanner.classList.remove('visible');
 
     allTables.forEach(g => { if (!g.classList.contains('booked')) g.classList.remove('is-selected'); });
@@ -2279,6 +2314,7 @@ navLinks.forEach(a => {
     selectedId   = null;
     selectedTime = null;
     sbBookBtn.classList.add('btn-inactive');
+    sbBookBtn.textContent = 'Стіл зайнятий';
   }
 
   // ── Wire all table clicks ──
@@ -2336,11 +2372,15 @@ navLinks.forEach(a => {
       slot.classList.add('active');
       selectedTime = slot.dataset.time;
       sbBookBtn.classList.remove('btn-inactive');
+      sbBookBtn.textContent = selectedId
+        ? `Забронювати Стіл №${selectedId} · ${selectedTime}`
+        : 'Забронювати';
       oopsBanner.classList.remove('visible');
     });
   });
 
   // Init with table 5
+  sbBookBtn.textContent = 'Забронювати Стіл №5';
   updateSidebar(5, false);
 
   /* ── Diia Modal ── */
