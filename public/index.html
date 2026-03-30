@@ -1192,6 +1192,68 @@
     /* ─── Main safe-exit timer sync ─── */
     #main-timer { font-variant-numeric: tabular-nums; }
 
+    /* ─── Sidebar success state ─── */
+    .sb-success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1.5rem 1rem 0.5rem;
+      flex: 1;
+      animation: fadeUp 0.45s var(--ease-out) forwards;
+    }
+    .sb-success.visible { display: flex; }
+    .sb-success-check { margin-bottom: 1rem; }
+    .sb-check-circle {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: rgba(34,197,94,0.1); border: 2.5px solid var(--green);
+      display: flex; align-items: center; justify-content: center;
+      animation: checkPop 0.5s var(--ease-out) forwards;
+    }
+    .sb-check-circle svg { stroke-dasharray: 30; stroke-dashoffset: 30; animation: checkDraw 0.45s 0.25s var(--ease-out) forwards; }
+    .sb-success-title { font-size: 1.05rem; font-weight: 700; color: var(--jet); letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+    .sb-success-sub   { font-size: 0.9rem; color: var(--violet); font-weight: 500; margin-bottom: 0.85rem; }
+    .sb-success-detail {
+      font-family: var(--font-mono); font-size: 0.7rem; color: var(--grey-muted);
+      padding: 0.35rem 0.85rem; background: var(--grey-fill);
+      border: 1px solid var(--grey-line); border-radius: 20px; margin-bottom: 1.5rem;
+    }
+    .sb-success-new {
+      width: 100%; padding: 0.72rem; border: 1.5px solid var(--grey-line);
+      border-radius: 10px; background: transparent; cursor: pointer;
+      font-size: 0.78rem; font-weight: 500; color: var(--grey-soft);
+      font-family: var(--font-sans); margin-top: auto;
+      transition: all 0.25s var(--ease);
+    }
+    .sb-success-new:hover { border-color: var(--jet); color: var(--jet); background: var(--grey-fill); }
+
+    /* ─── Sidebar booking form (hideable) ─── */
+    .sb-booking-form { display: flex; flex-direction: column; gap: 1.4rem; }
+    .sb-booking-form.hidden { display: none; }
+
+    /* ─── Widget float animation ─── */
+    @keyframes widgetFloat {
+      0%, 100% { transform: translateY(var(--widget-scroll-y, 0px)); }
+      50%       { transform: translateY(calc(var(--widget-scroll-y, 0px) - 9px)); }
+    }
+    .widgets-cluster .ios-widget {
+      --widget-scroll-y: 0px;
+      animation: widgetFloat 6.5s ease-in-out infinite;
+      will-change: transform;
+    }
+    .widgets-cluster .ios-widget:nth-child(2) { animation-duration: 8s;   animation-delay: 1.2s; }
+    .widgets-cluster .ios-widget:nth-child(3) { animation-duration: 5.8s; animation-delay: 0.6s; }
+    .widgets-cluster .ios-widget:hover { animation-play-state: paused; transform: translateY(-5px) !important; }
+
+    /* ─── Global transition polish ─── */
+    nav a, .mobile-nav a, .sb-slot, .desk-reserve-btn, .apt-btn, .cta-btn, .modal-btn { transition: all 0.3s ease-out; }
+
+    /* ─── Mobile: dine-map horizontal scroll ─── */
+    @media (max-width: 560px) {
+      .dine-map { overflow-x: auto; min-height: 0; }
+      .dine-map svg { min-width: 420px; min-height: 340px; }
+    }
+
     /* ─── SVG Table: 3D float on hover ─── */
     .svg-table {
       transform-box: fill-box;
@@ -1317,7 +1379,7 @@
 ════════════════════════════════════════ -->
 <header id="dock">
   <a class="logo" href="#" aria-label="PROSTIR home">
-    <span class="lp">P</span><span class="lo">O</span><span class="lrest">STIR</span>
+    <span class="lp">PR</span><span class="lo">O</span><span class="lrest">STIR</span>
   </a>
 
   <nav aria-label="Main navigation">
@@ -1360,8 +1422,7 @@
     Твій особистий<br><span class="accent">ритм</span>&thinsp;міста.
   </h1>
   <p class="hero-subline">
-    Екосистема для життя, роботи та відпочинку.<br>
-    <span class="verified">verified by Дія.</span>
+    Екосистема для життя, роботи та відпочинку в одному місті.
   </p>
   <a href="#module-shell" class="cta-btn">
     Зайняти свій простір
@@ -1525,45 +1586,61 @@
           <!-- Sidebar -->
           <div class="dine-sidebar-wrap open" id="dine-sidebar-wrap">
             <div class="dine-sidebar" id="dine-sidebar">
-              <div class="sb-head">
-                <div class="sb-badge-wrap">
-                  <div class="sb-badge" id="sb-badge">5</div>
-                  <div class="sb-badge-text">
-                    <div class="sb-title" id="sb-title">Стіл №5</div>
-                    <div class="sb-sub">Зал A · Cafe Aura</div>
+              <div class="sb-booking-form" id="sb-booking-form">
+                <div class="sb-head">
+                  <div class="sb-badge-wrap">
+                    <div class="sb-badge" id="sb-badge">5</div>
+                    <div class="sb-badge-text">
+                      <div class="sb-title" id="sb-title">Стіл №5</div>
+                      <div class="sb-sub">Зал A · Cafe Aura</div>
+                    </div>
                   </div>
+                  <button class="sb-close-btn" id="sb-close" aria-label="Закрити">
+                    <svg width="10" height="10" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg>
+                  </button>
                 </div>
-                <button class="sb-close-btn" id="sb-close" aria-label="Закрити">
-                  <svg width="10" height="10" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg>
-                </button>
-              </div>
-              <div class="sb-divider"></div>
-              <div class="sb-details">
-                <div class="sb-row"><span class="sb-row-k">Вид</span><span class="sb-row-v" id="sb-view">Вікно</span></div>
-                <div class="sb-row"><span class="sb-row-k">Місць</span><span class="sb-row-v" id="sb-seats">2 особи</span></div>
-                <div class="sb-row"><span class="sb-row-k">Зона</span><span class="sb-row-v" id="sb-zone">A · Вікно</span></div>
-                <div class="sb-row"><span class="sb-row-k">Статус</span><span class="sb-row-v free" id="sb-status">Вільний</span></div>
-              </div>
-              <div class="sb-divider"></div>
-              <div>
-                <div class="sb-time-label">Час бронювання</div>
-                <div class="booked-notice" id="booked-notice">
+                <div class="sb-divider"></div>
+                <div class="sb-details">
+                  <div class="sb-row"><span class="sb-row-k">Вид</span><span class="sb-row-v" id="sb-view">Вікно</span></div>
+                  <div class="sb-row"><span class="sb-row-k">Місць</span><span class="sb-row-v" id="sb-seats">2 особи</span></div>
+                  <div class="sb-row"><span class="sb-row-k">Зона</span><span class="sb-row-v" id="sb-zone">A · Вікно</span></div>
+                  <div class="sb-row"><span class="sb-row-k">Статус</span><span class="sb-row-v free" id="sb-status">Вільний</span></div>
+                </div>
+                <div class="sb-divider"></div>
+                <div>
+                  <div class="sb-time-label">Час бронювання</div>
+                  <div class="booked-notice" id="booked-notice">
                     <strong>Зайнято</strong> · Цей столик зараз зайнятий.<br>Звільниться орієнтовно о 18:30.
                   </div>
                   <div class="sb-slots" id="sb-slots">
-                  <span class="sb-slot" data-time="18:00">18:00</span>
-                  <span class="sb-slot" data-time="19:00">19:00</span>
-                  <span class="sb-slot" data-time="20:00">20:00</span>
-                  <span class="sb-slot" data-time="21:00">21:00</span>
+                    <span class="sb-slot" data-time="18:00">18:00</span>
+                    <span class="sb-slot" data-time="19:00">19:00</span>
+                    <span class="sb-slot" data-time="20:00">20:00</span>
+                    <span class="sb-slot" data-time="21:00">21:00</span>
+                  </div>
+                </div>
+                <div class="oops-banner" id="oops-banner" role="alert">
+                  ⚠ Оберіть час для бронювання
+                </div>
+                <button class="sb-book btn-inactive" id="sb-book-btn">
+                  Забронювати
+                </button>
+              </div>
+            </div>
+
+            <!-- ── Inline success state ── -->
+            <div class="sb-success" id="sb-success" aria-live="polite">
+              <div class="sb-success-check">
+                <div class="sb-check-circle">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 12 10 16 18 8"/></svg>
                 </div>
               </div>
-              <div class="oops-banner" id="oops-banner" role="alert">
-                ⚠ Оберіть час для бронювання
-              </div>
-              <button class="sb-book btn-inactive" id="sb-book-btn">
-                Забронювати
-              </button>
+              <div class="sb-success-title">Стіл зарезервовано.</div>
+              <div class="sb-success-sub">Чекаємо на вас!</div>
+              <div class="sb-success-detail" id="sb-success-detail">Стіл №5 · 19:00</div>
+              <button class="sb-success-new" id="sb-success-new">← Нове бронювання</button>
             </div>
+          </div>
           </div>
         </div>
       </div>
@@ -2066,9 +2143,9 @@
 <footer>
   <div class="footer-inner">
     <a class="footer-logo" href="#" aria-label="PROSTIR">
-      <span class="lp">P</span><span class="lo">O</span><span class="lrest">STIR</span>
+      <span class="lp">PR</span><span class="lo">O</span><span class="lrest">STIR</span>
     </a>
-    <span class="footer-copy">© 2026 PROSTIR · Urban OS · Kyiv</span>
+    <span class="footer-copy">© 2026 PROSTIR · Urban OS · Kyiv &nbsp;·&nbsp; <span style="color:rgba(139,92,246,0.7);font-size:0.6rem;">✓ verified by Дія</span></span>
     <nav class="footer-links" aria-label="Footer navigation">
       <a href="#">Умови</a>
       <a href="#">Конфіденційність</a>
@@ -2124,10 +2201,20 @@ function $(id) { return document.getElementById(id); }
    HEADER SHADOW
 ════════════════════════════════════════ */
 const dock = $('dock');
+
+// Precompute widget elements for parallax (staggered depths)
+const widgetEls = document.querySelectorAll('.widgets-cluster .ios-widget');
+
 window.addEventListener('scroll', () => {
   dock.classList.toggle('scrolled', window.scrollY > 8);
-  // Parallax: lines move opposite to scroll (subtle depth)
   document.documentElement.style.setProperty('--parallax-y', (-window.scrollY * 0.04).toFixed(2) + 'px');
+
+  // Widgets drift at slightly different speeds — gives depth
+  widgetEls.forEach((w, i) => {
+    const depths = [0.018, 0.028, 0.012];
+    const offset = (window.scrollY * depths[i % depths.length]).toFixed(2);
+    w.style.setProperty('--widget-scroll-y', `-${offset}px`);
+  });
 }, { passive: true });
 
 /* ════════════════════════════════════════
@@ -2462,6 +2549,34 @@ navLinks.forEach(a => {
   doneBtn && doneBtn.addEventListener('click', () => {
     closeModal();
     showSEW(selectedId, selectedTime, tableData[selectedId]);
+    showSidebarSuccess(selectedId, selectedTime);
+  });
+
+  // ── Sidebar inline success state ──
+  const sbSuccess     = $('sb-success');
+  const sbBookingForm = $('sb-booking-form');
+  const sbSuccessDetail = $('sb-success-detail');
+  const sbSuccessNew  = $('sb-success-new');
+
+  function showSidebarSuccess(tableId, time) {
+    if (!sbSuccess || !sbBookingForm) return;
+    sbBookingForm.classList.add('hidden');
+    sbSuccess.classList.add('visible');
+    if (sbSuccessDetail) sbSuccessDetail.textContent = `Стіл №${tableId} · ${time || ''}`;
+    sidebarWrap.classList.add('open');
+  }
+
+  sbSuccessNew && sbSuccessNew.addEventListener('click', () => {
+    sbSuccess.classList.remove('visible');
+    sbBookingForm.classList.remove('hidden');
+    // Reset form
+    selectedId   = null;
+    selectedTime = null;
+    sbBookBtn.textContent = 'Забронювати';
+    sbBookBtn.classList.add('btn-inactive');
+    document.querySelectorAll('.sb-slot').forEach(s => s.classList.remove('active'));
+    allTables.forEach(g => g.classList.remove('is-selected'));
+    sidebarWrap.classList.remove('open');
   });
 })();
 
