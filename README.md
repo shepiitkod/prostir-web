@@ -3,7 +3,7 @@
 > **ПРОгресивно. ПРОзоро. ПРОсто.**  
 > Your personal urban rhythm.
 
-**Live site → [prostir-web.onrender.com](https://prostir-web.onrender.com)**
+**GitHub → [github.com/shepiitkod/prostir-web](https://github.com/shepiitkod/prostir-web)**
 
 ---
 
