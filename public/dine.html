@@ -6,43 +6,616 @@
   <title>Dine — Cafe Aura · PROSTIR</title>
   <link rel="stylesheet" href="/app.css"/>
   <style>
-    .page-content { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem 6rem; }
-    @media (max-width: 720px) { .page-content { padding: 0 1.5rem 4rem; } }
+  /* ═══════════════════════════════════════════════════════
+     DINE PAGE — Full Redesign
+  ═══════════════════════════════════════════════════════ */
 
-    /* Wider sidebar to fit new detail rows */
-    .dine-sidebar-wrap.open { width: 320px !important; }
-    .dine-sidebar { width: 320px !important; }
+  .dine-page-wrap {
+    max-width: 1100px; margin: 0 auto;
+    padding: calc(68px + 1.5rem) 2rem 6rem;
+  }
+  @media (max-width: 720px) { .dine-page-wrap { padding: calc(68px + 1rem) 1rem 4rem; } }
 
-    /* Detail rows — make keys slightly smaller, add icon alignment */
-    .sb-row-k {
-      display: flex; align-items: center; gap: 3px;
-      font-family: var(--font-mono); font-size: 0.64rem; color: var(--grey-muted);
-    }
-    .sb-row-v { font-size: 0.78rem; }
+  /* ── Active session strip ── */
+  .active-session-alert {
+    display: flex; align-items: center; gap: 0.75rem;
+    background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.2);
+    border-radius: 14px; padding: 0.65rem 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.82rem;
+  }
+  body.theme-noir .active-session-alert { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.22); }
+  .asa-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; flex-shrink: 0; box-shadow: 0 0 0 3px rgba(34,197,94,0.2); animation: blink 1.8s ease-in-out infinite; }
+  .asa-title { font-weight: 600; color: #16a34a; }
+  body.theme-noir .asa-title { color: #4ade80; }
+  .asa-venue { color: var(--grey-soft); margin-left: 0.4rem; }
+  body.theme-noir .asa-venue { color: rgba(255,255,255,0.45); }
+  .asa-timer { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; color: #16a34a; letter-spacing: 0.04em; margin-left: auto; }
+  body.theme-noir .asa-timer { color: #4ade80; }
 
-    /* Detail block title */
-    .sb-section-label {
-      font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--grey-muted); margin-bottom: 0.5rem;
-    }
+  /* ══════════════════════════════════════════════════════
+     VENUE HERO CARD
+  ══════════════════════════════════════════════════════ */
+  .venue-hero {
+    border-radius: 24px; overflow: hidden;
+    margin-bottom: 1.25rem; position: relative;
+    background: linear-gradient(145deg, #1a0533 0%, #2d1152 40%, #1e0a3e 70%, #0d0918 100%);
+    box-shadow: 0 4px 40px rgba(139,92,246,0.18), 0 1px 0 rgba(255,255,255,0.04);
+  }
 
-    @media (max-width: 680px) {
-      .dine-sidebar-wrap.open { width: 100% !important; }
-      .dine-sidebar { width: 100% !important; }
-    }
+  /* Decorative ambient elements */
+  .vh-orb {
+    position: absolute; border-radius: 50%; pointer-events: none;
+  }
+  .vh-orb-1 { width: 300px; height: 300px; top: -80px; right: -60px; background: radial-gradient(circle, rgba(139,92,246,0.22) 0%, transparent 70%); }
+  .vh-orb-2 { width: 200px; height: 200px; bottom: -50px; left: 10%; background: radial-gradient(circle, rgba(80,30,180,0.18) 0%, transparent 70%); }
+  .vh-orb-3 { width: 120px; height: 120px; top: 20%; left: 40%; background: radial-gradient(circle, rgba(196,181,253,0.08) 0%, transparent 70%); }
+
+  /* Fine architectural lines */
+  .vh-lines {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden; opacity: 0.12;
+  }
+  .vh-lines::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 80% 100% at 80% 50%, black, transparent);
+  }
+
+  .vh-body {
+    position: relative; z-index: 1;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 2rem 2.25rem; gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .vh-identity {}
+  .vh-eyebrow {
+    font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(196,181,253,0.65);
+    margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .vh-eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: rgba(196,181,253,0.35); }
+  .vh-name {
+    font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 900;
+    letter-spacing: -0.05em; color: #fff; line-height: 1.05; margin-bottom: 0.5rem;
+  }
+  .vh-name span { color: #c4b5fd; }
+
+  .vh-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+  .vh-pill {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.07em;
+    border-radius: 8px; padding: 0.22rem 0.65rem;
+  }
+  .vh-pill svg { width: 11px; height: 11px; flex-shrink: 0; }
+  .vh-pill-open  { background: rgba(34,197,94,0.15);  border: 1px solid rgba(34,197,94,0.3);  color: #4ade80; }
+  .vh-pill-addr  { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.55); }
+  .vh-pill-cusine{ background: rgba(196,181,253,0.1);  border: 1px solid rgba(196,181,253,0.2); color: #c4b5fd; }
+
+  /* Rating */
+  .vh-rating-row { display: flex; align-items: center; gap: 1rem; }
+  .vh-stars { display: flex; gap: 2px; }
+  .vh-star { font-size: 0.9rem; }
+  .vh-score { font-size: 1.05rem; font-weight: 800; color: #fff; letter-spacing: -0.03em; }
+  .vh-reviews { font-family: var(--font-mono); font-size: 0.6rem; color: rgba(255,255,255,0.35); letter-spacing: 0.05em; }
+
+  /* Right side: live status */
+  .vh-status {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem;
+    min-width: 160px;
+  }
+  .vh-live-badge {
+    display: flex; align-items: center; gap: 0.45rem;
+    font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em;
+    background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.28);
+    border-radius: 10px; padding: 0.35rem 0.8rem; color: #4ade80;
+  }
+  .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; animation: blink 1.8s ease-in-out infinite; box-shadow: 0 0 0 3px rgba(34,197,94,0.2); flex-shrink: 0; }
+  .vh-avail-count {
+    font-size: 2rem; font-weight: 900; letter-spacing: -0.05em;
+    color: #fff; line-height: 1; text-align: right;
+  }
+  .vh-avail-count span { font-size: 0.75rem; font-weight: 400; color: rgba(255,255,255,0.35); margin-left: 0.3rem; font-family: var(--font-mono); letter-spacing: 0.06em; }
+  .vh-avail-sub { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.25); text-align: right; }
+
+  /* Bottom bar */
+  .vh-bottom {
+    position: relative; z-index: 1;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 0.75rem 2.25rem;
+    display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .vh-info-item {
+    display: flex; align-items: center; gap: 0.45rem;
+    font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.35);
+  }
+  .vh-info-item svg { width: 12px; height: 12px; stroke: rgba(196,181,253,0.5); flex-shrink: 0; }
+  .vh-info-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.07); }
+
+  /* ══════════════════════════════════════════════════════
+     BOOKING LAYOUT
+  ══════════════════════════════════════════════════════ */
+  .dine-booking-card {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 24px; overflow: hidden;
+    box-shadow: 0 2px 24px rgba(139,92,246,0.06), 0 1px 4px rgba(0,0,0,0.04);
+  }
+  body.theme-noir .dine-booking-card {
+    background: #0D0D0F; border-color: rgba(139,92,246,0.1);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 8px 40px rgba(0,0,0,0.5);
+  }
+
+  /* Card top bar */
+  .dine-card-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--grey-line);
+    flex-wrap: wrap; gap: 0.5rem;
+  }
+  body.theme-noir .dine-card-top { border-bottom-color: rgba(255,255,255,0.06); }
+  .venue-name { font-size: 1rem; font-weight: 700; letter-spacing: -0.03em; color: var(--jet); }
+  body.theme-noir .venue-name { color: #fff; }
+  .venue-sub  { font-family: var(--font-mono); font-size: 0.62rem; color: var(--grey-muted); margin-top: 0.12rem; }
+  .dine-meta  { display: flex; align-items: center; gap: 0.65rem; }
+  .dine-count { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.06em; color: var(--grey-muted); }
+
+  /* Map + sidebar layout */
+  .dine-body {
+    display: grid; grid-template-columns: 1fr 300px;
+    min-height: 480px;
+  }
+  @media (max-width: 800px) { .dine-body { grid-template-columns: 1fr; } }
+
+  /* Map col */
+  .dine-map-col { padding: 1.25rem; border-right: 1px solid var(--grey-line); }
+  body.theme-noir .dine-map-col { border-right-color: rgba(255,255,255,0.06); }
+  @media (max-width: 800px) { .dine-map-col { border-right: none; border-bottom: 1px solid var(--grey-line); } }
+
+  /* Legend */
+  .dine-legend {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--grey-muted); }
+  body.theme-noir .legend-item { color: rgba(255,255,255,0.3); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .ld-avail   { background: rgba(34,197,94,0.2); border: 1.5px solid #22c55e; }
+  .ld-booked  { background: rgba(156,163,175,0.15); border: 1.5px solid #9CA3AF; }
+  .ld-sel     { background: rgba(139,92,246,0.25); border: 1.5px solid #8B5CF6; box-shadow: 0 0 0 3px rgba(139,92,246,0.15); }
+
+  /* Map container */
+  .dine-map {
+    background: var(--grey-fill); border-radius: 16px; overflow: hidden;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--grey-line);
+  }
+  body.theme-noir .dine-map { background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.06); }
+  .dine-map svg { min-width: 360px; width: 100%; display: block; }
+
+  /* Skeleton / empty */
+  .dine-skeleton { display:none; padding: 1.25rem; gap: 1.5rem; }
+  .dine-empty    { display:none; padding: 3rem 1.5rem; }
+
+  /* Sidebar col */
+  .dine-sidebar-col {
+    display: flex; flex-direction: column; padding: 1.25rem;
+    min-height: 480px; overflow-y: auto;
+  }
+  @media (max-width: 800px) { .dine-sidebar-col { min-height: unset; } }
+
+  /* Placeholder state (no table selected) */
+  .sb-placeholder {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center; gap: 0.75rem;
+    opacity: 0.5; padding: 2rem 0;
+    transition: opacity 0.3s;
+  }
+  .sb-placeholder.hidden { display: none; }
+  .sbp-icon { font-size: 2rem; }
+  .sbp-text { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--grey-muted); }
+
+  /* Sidebar main form */
+  .sb-booking-form.hidden { display: none; }
+
+  /* Table badge / head */
+  .sb-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .sb-badge-row { display: flex; align-items: center; gap: 0.75rem; }
+  .sb-badge {
+    width: 44px; height: 44px; border-radius: 13px; flex-shrink: 0;
+    background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: -0.04em;
+    box-shadow: 0 4px 16px rgba(139,92,246,0.35);
+  }
+  .sb-title { font-size: 1rem; font-weight: 700; letter-spacing: -0.03em; color: var(--jet); }
+  body.theme-noir .sb-title { color: #fff; }
+  .sb-sub { font-family: var(--font-mono); font-size: 0.6rem; color: var(--grey-muted); margin-top: 0.1rem; }
+  .sb-close-btn {
+    width: 28px; height: 28px; border-radius: 50%; border: none;
+    background: var(--grey-fill); color: var(--grey-soft);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background 0.2s; flex-shrink: 0;
+  }
+  .sb-close-btn:hover { background: rgba(239,68,68,0.1); color: #ef4444; }
+  body.theme-noir .sb-close-btn { background: rgba(255,255,255,0.06); }
+
+  /* Divider */
+  .sb-divider { height: 1px; background: var(--grey-line); margin: 0.85rem 0; }
+  body.theme-noir .sb-divider { background: rgba(255,255,255,0.06); }
+
+  /* Detail rows */
+  .sb-section-label {
+    font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--grey-muted); margin-bottom: 0.6rem;
+  }
+  .sb-details { display: flex; flex-direction: column; gap: 0; }
+  .sb-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.45rem 0; border-bottom: 1px solid rgba(139,92,246,0.06);
+  }
+  .sb-row:last-child { border-bottom: none; }
+  .sb-row-k {
+    display: flex; align-items: center; gap: 5px;
+    font-family: var(--font-mono); font-size: 0.62rem; color: var(--grey-muted);
+  }
+  .sb-row-k svg { width: 11px; height: 11px; flex-shrink: 0; }
+  .sb-row-v { font-size: 0.78rem; font-weight: 500; color: var(--jet); text-align: right; }
+  body.theme-noir .sb-row-v { color: rgba(255,255,255,0.75); }
+  .sb-row-v.free { color: #22c55e !important; }
+
+  /* Booked notice */
+  .booked-notice {
+    display: none; background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.18);
+    border-radius: 12px; padding: 0.75rem 0.9rem;
+    font-size: 0.78rem; color: #ef4444; line-height: 1.55; margin-bottom: 0.65rem;
+  }
+  .booked-notice.visible { display: block; }
+
+  /* Time label + slots */
+  .sb-time-label {
+    font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--grey-muted); margin-bottom: 0.6rem;
+  }
+  .sb-slots {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4rem;
+    margin-bottom: 0.65rem;
+  }
+  .sb-slot {
+    padding: 0.55rem 0; border-radius: 10px; cursor: pointer;
+    border: 1px solid rgba(139,92,246,0.18);
+    background: rgba(139,92,246,0.04);
+    font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600;
+    color: #8B5CF6; text-align: center;
+    transition: all 0.18s cubic-bezier(0.22,1,0.36,1);
+    user-select: none;
+  }
+  .sb-slot:hover  { background: rgba(139,92,246,0.1); border-color: rgba(139,92,246,0.35); transform: translateY(-1px); }
+  .sb-slot.active { background: #8B5CF6; border-color: #8B5CF6; color: #fff; box-shadow: 0 4px 16px rgba(139,92,246,0.35); transform: translateY(-1px); }
+  .sb-slot.past   { opacity: 0.3; pointer-events: none; }
+
+  /* Oops banner */
+  .oops-banner {
+    display: none; background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 10px; padding: 0.55rem 0.75rem;
+    font-size: 0.76rem; color: #ef4444; margin-bottom: 0.6rem;
+    animation: shake 0.35s ease;
+  }
+  .oops-banner.visible { display: block; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-4px)} 40%,80%{transform:translateX(4px)} }
+
+  /* Book button */
+  .sb-book {
+    width: 100%; padding: 0.85rem; border-radius: 14px;
+    border: none; background: #8B5CF6; color: #fff;
+    font-size: 0.88rem; font-weight: 700; cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    margin-top: auto;
+  }
+  .sb-book:hover { background: #7c3aed; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(139,92,246,0.35); }
+  .sb-book.btn-inactive { background: rgba(139,92,246,0.15); color: rgba(139,92,246,0.5); pointer-events: none; }
+  body.theme-noir .sb-book.btn-inactive { background: rgba(139,92,246,0.12); }
+
+  /* Success state */
+  .sb-success { display: none; flex-direction: column; align-items: center; text-align: center; padding: 1.5rem 0; flex: 1; }
+  .sb-success.visible { display: flex; }
+  .sb-success-check { margin-bottom: 1rem; }
+  .sb-check-circle {
+    width: 58px; height: 58px; border-radius: 50%;
+    background: rgba(34,197,94,0.1); border: 2px solid rgba(34,197,94,0.3);
+    display: flex; align-items: center; justify-content: center;
+    animation: scaleIn 0.4s cubic-bezier(0.22,1,0.36,1);
+  }
+  @keyframes scaleIn { from{ transform:scale(0.6); opacity:0; } to{ transform:scale(1); opacity:1; } }
+  .sb-success-title { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.03em; color: var(--jet); margin-bottom: 0.25rem; }
+  body.theme-noir .sb-success-title { color: #fff; }
+  .sb-success-sub { font-size: 0.82rem; color: var(--grey-soft); margin-bottom: 0.6rem; }
+  .sb-success-detail {
+    font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em;
+    color: #8B5CF6; background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.18);
+    border-radius: 10px; padding: 0.4rem 0.85rem; margin-bottom: 1rem;
+  }
+  .sb-success-new {
+    width: 100%; padding: 0.75rem; border-radius: 12px;
+    border: 1px solid rgba(139,92,246,0.22); background: transparent;
+    color: #8B5CF6; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .sb-success-new:hover { background: rgba(139,92,246,0.07); border-color: rgba(139,92,246,0.4); }
+
+  /* ══════════════════════════════════════════════════════
+     RECEIPT
+  ══════════════════════════════════════════════════════ */
+  .receipt-card {
+    margin-top: 1.25rem; border-radius: 22px; overflow: hidden;
+    background: #0a0a0c; border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 4px 32px rgba(0,0,0,0.25);
+    transition: opacity 0.4s, transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    will-change: transform, opacity;
+  }
+  .receipt-card.is-locked { opacity: 0.3; transform: translateY(18px) scale(0.98); filter: blur(2px); pointer-events: none; }
+  .receipt-card.is-revealed { opacity: 1; transform: none; filter: none; pointer-events: auto; animation: receiptReveal 0.65s cubic-bezier(0.22,1,0.36,1) forwards; }
+  @keyframes receiptReveal { from{ opacity:0.3; transform:translateY(18px) scale(0.98); filter:blur(2px); } to{ opacity:1; transform:none; filter:none; } }
+
+  .receipt-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 1.35rem 1.5rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .receipt-venue-name { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.04em; color: #fff; margin-bottom: 0.25rem; }
+  .receipt-meta-line  { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.3); }
+  .receipt-paid-stamp {
+    font-family: var(--font-mono); font-size: 1.1rem; font-weight: 900;
+    letter-spacing: 0.18em; color: #22c55e;
+    border: 2px solid rgba(34,197,94,0.45); border-radius: 8px;
+    padding: 0.2rem 0.7rem; transform: rotate(-5deg);
+    opacity: 0; transition: opacity 0.3s, transform 0.35s;
+    box-shadow: 0 0 16px rgba(34,197,94,0.2), inset 0 0 12px rgba(34,197,94,0.05);
+  }
+  .receipt-paid-stamp.stamp-in { opacity: 1; transform: rotate(-5deg) scale(1); animation: stampIn 0.35s cubic-bezier(0.22,1,0.36,1) forwards; }
+  @keyframes stampIn { from{ transform:rotate(-5deg) scale(0.5); opacity:0; } to{ transform:rotate(-5deg) scale(1); opacity:1; } }
+
+  .receipt-items { padding: 1rem 1.5rem; }
+  .receipt-row { display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0; }
+  .receipt-row-name  { font-size: 0.82rem; color: rgba(255,255,255,0.55); }
+  .receipt-row-price { font-family: var(--font-mono); font-size: 0.82rem; color: rgba(255,255,255,0.75); font-weight: 600; }
+  .receipt-divider   { height: 1px; background: rgba(255,255,255,0.08); margin: 0.5rem 0; }
+  .receipt-total .receipt-row-name  { font-weight: 700; color: #fff; font-size: 0.9rem; }
+  .receipt-total .receipt-row-price { color: #c4b5fd; font-size: 0.95rem; }
+  .receipt-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.06);
+    gap: 1rem;
+  }
+  .receipt-qr-box {
+    display: grid; grid-template-columns: repeat(7,8px); grid-template-rows: repeat(7,8px);
+    gap: 2px; flex-shrink: 0;
+  }
+  .receipt-qr-box span { border-radius: 2px; background: rgba(255,255,255,0.1); }
+  .receipt-qr-box span.q1 { background: rgba(196,181,253,0.8); }
+  .receipt-sign { text-align: right; }
+  .receipt-diia-badge {
+    display: inline-block; font-family: var(--font-mono); font-size: 0.62rem;
+    letter-spacing: 0.07em; color: #22c55e;
+    background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.22);
+    border-radius: 8px; padding: 0.22rem 0.6rem; margin-bottom: 0.4rem;
+  }
+  #receipt-sign-lines { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.22); line-height: 1.7; }
+
+  /* ══════════════════════════════════════════════════════
+     SVG FLOORPLAN STYLES
+  ══════════════════════════════════════════════════════ */
+  .fp-shell   { fill: none; stroke: var(--grey-line); stroke-width: 1.5; }
+  body.theme-noir .fp-shell { stroke: rgba(255,255,255,0.07); }
+  .fp-zone    { fill: rgba(139,92,246,0.04); }
+  body.theme-noir .fp-zone { fill: rgba(255,255,255,0.02); }
+  .fp-zone-window  { fill: rgba(139,92,246,0.06); }
+  .fp-zone-bar     { fill: rgba(30,10,60,0.06); }
+  .fp-zone-host    { fill: rgba(139,92,246,0.05); stroke: rgba(139,92,246,0.12); stroke-width: 0.5; }
+  .fp-zone-wc      { fill: rgba(139,92,246,0.05); stroke: rgba(139,92,246,0.12); stroke-width: 0.5; }
+  .fp-zone-kitchen { fill: rgba(251,146,60,0.05); stroke: rgba(251,146,60,0.15); stroke-width: 0.5; }
+  .fp-zone-pass    { fill: rgba(139,92,246,0.04); stroke: rgba(139,92,246,0.1); stroke-width: 0.5; }
+  .fp-zone-lounge  { fill: rgba(34,197,94,0.04);  stroke: rgba(34,197,94,0.12);  stroke-width: 0.5; }
+  .fp-zone-exit    { fill: rgba(239,68,68,0.05);  stroke: rgba(239,68,68,0.15);  stroke-width: 0.5; }
+  .fp-aisle  { fill: rgba(0,0,0,0.025); stroke: rgba(139,92,246,0.08); stroke-width: 0.5; }
+  body.theme-noir .fp-aisle { fill: rgba(255,255,255,0.015); }
+  .fp-divider{ stroke: rgba(139,92,246,0.12); stroke-width: 0.5; }
+  .fp-booth  { fill: rgba(139,92,246,0.05); stroke: rgba(139,92,246,0.15); stroke-width: 0.5; }
+  body.theme-noir .fp-booth { fill: rgba(139,92,246,0.06); stroke: rgba(139,92,246,0.18); }
+  .fp-emoji  { font-size: 14px; }
+  .fp-labels text { dominant-baseline: middle; }
+
+  /* Tables */
+  .svg-table { cursor: pointer; transition: filter 0.2s; }
+  .svg-table:focus-visible { outline: 2px solid #8B5CF6; outline-offset: 4px; border-radius: 50%; }
+  .t-ring   { fill: none; stroke: #D1D5DB; stroke-width: 1.5; transition: stroke 0.2s, filter 0.2s; }
+  .t-circle { fill: #F9FAFB; stroke: #D1D5DB; stroke-width: 1.5; transition: all 0.2s; }
+  .chair    { fill: #F3F4F6; stroke: #D1D5DB; transition: all 0.2s; }
+  .t-label  { font-family: var(--font-mono); font-size: 11px; font-weight: 700; fill: #9CA3AF; dominant-baseline: middle; transition: fill 0.2s; }
+
+  body.theme-noir .t-ring   { stroke: rgba(255,255,255,0.12); }
+  body.theme-noir .t-circle { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.12); }
+  body.theme-noir .chair    { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.1); }
+  body.theme-noir .t-label  { fill: rgba(255,255,255,0.3); }
+
+  /* Available */
+  .svg-table.available .t-ring   { stroke: rgba(34,197,94,0.5); }
+  .svg-table.available .t-circle { fill: rgba(34,197,94,0.06); stroke: rgba(34,197,94,0.4); }
+  .svg-table.available .chair    { stroke: rgba(34,197,94,0.3); }
+  .svg-table.available .t-label  { fill: #16a34a; }
+
+  /* Booked */
+  .svg-table.booked { cursor: default; }
+  .svg-table.booked .t-ring   { stroke: rgba(156,163,175,0.3); }
+  .svg-table.booked .t-circle { fill: rgba(156,163,175,0.08); stroke: rgba(156,163,175,0.25); }
+  .svg-table.booked .chair    { stroke: rgba(156,163,175,0.2); fill: rgba(156,163,175,0.06); }
+  .svg-table.booked .t-label  { fill: #9CA3AF; }
+
+  /* Selected */
+  .svg-table.is-selected .t-ring {
+    stroke: #8B5CF6; stroke-width: 2;
+    filter: drop-shadow(0 0 6px rgba(139,92,246,0.5));
+    animation: tableRingPulse 2.2s ease-in-out infinite;
+  }
+  .svg-table.is-selected .t-circle { fill: rgba(139,92,246,0.15); stroke: #8B5CF6; stroke-width: 2; }
+  .svg-table.is-selected .chair    { stroke: rgba(139,92,246,0.5); fill: rgba(139,92,246,0.08); }
+  .svg-table.is-selected .t-label  { fill: #8B5CF6; font-weight: 900; }
+  @keyframes tableRingPulse { 0%,100%{ stroke-opacity:1; } 50%{ stroke-opacity:0.55; } }
+
+  .svg-table.available:hover .t-ring   { stroke: #8B5CF6; stroke-width: 2; }
+  .svg-table.available:hover .t-circle { fill: rgba(139,92,246,0.1); stroke: #8B5CF6; }
+  .svg-table.available:hover .t-label  { fill: #8B5CF6; }
+
+  /* Tooltip */
+  .table-tooltip {
+    position: fixed; z-index: 9999;
+    background: #0a0a0c; color: rgba(255,255,255,0.85);
+    font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.04em;
+    padding: 0.35rem 0.75rem; border-radius: 8px; pointer-events: none;
+    opacity: 0; transition: opacity 0.15s;
+    border: 1px solid rgba(139,92,246,0.2);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .table-tooltip.visible { opacity: 1; }
+
+  /* ══════════════════════════════════════════════════════
+     DIIA MODAL
+  ══════════════════════════════════════════════════════ */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 9000;
+    background: rgba(0,0,0,0); pointer-events: none;
+    display: flex; align-items: flex-end; justify-content: center;
+    transition: background 0.35s;
+  }
+  .modal-overlay.open { background: rgba(0,0,0,0.65); pointer-events: all; backdrop-filter: blur(4px); }
+  .modal-card {
+    background: #fff; border-radius: 28px 28px 0 0;
+    width: min(480px, 100vw); padding: 2rem;
+    transform: translateY(100%); transition: transform 0.45s cubic-bezier(0.22,1,0.36,1);
+    position: relative; overflow: hidden;
+    box-shadow: 0 -8px 64px rgba(0,0,0,0.18);
+  }
+  body.theme-noir .modal-card { background: #0D0D0F; box-shadow: 0 -8px 64px rgba(0,0,0,0.7), 0 0 0 1px rgba(139,92,246,0.14); }
+  .modal-overlay.open .modal-card { transform: translateY(0); }
+  .modal-close {
+    position: absolute; top: 1rem; right: 1rem;
+    width: 30px; height: 30px; border-radius: 50%; border: none;
+    background: rgba(0,0,0,0.06); color: #6B7280; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  body.theme-noir .modal-close { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.4); }
+  .modal-close:hover { background: rgba(239,68,68,0.1); color: #ef4444; }
+  .modal-step { display: none; text-align: center; }
+  .modal-step.active { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .diia-modal-logo { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; margin-bottom: 1.25rem; }
+  .diia-modal-icon {
+    width: 52px; height: 52px; border-radius: 16px;
+    background: linear-gradient(135deg, #1a3ae0, #0f2bb5);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 900; color: #fff; letter-spacing: -0.03em;
+    box-shadow: 0 4px 16px rgba(26,58,224,0.4);
+  }
+  .diia-modal-name { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--grey-muted); }
+  .qr-placeholder {
+    display: grid; grid-template-columns: repeat(7,10px); grid-template-rows: repeat(7,10px);
+    gap: 2px; margin: 0 auto 1.25rem; padding: 10px;
+    background: #fff; border: 1px solid var(--grey-line); border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .qr-cell { border-radius: 1.5px; }
+  .modal-title { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.03em; color: var(--jet); margin-bottom: 0.4rem; }
+  body.theme-noir .modal-title { color: #fff; }
+  .modal-sub { font-size: 0.82rem; color: var(--grey-soft); line-height: 1.6; margin-bottom: 1.5rem; max-width: 36ch; }
+  body.theme-noir .modal-sub { color: rgba(255,255,255,0.4); }
+  .modal-btn {
+    width: 100%; padding: 0.85rem; border-radius: 14px; border: none;
+    background: #8B5CF6; color: #fff; font-size: 0.9rem; font-weight: 700;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+  }
+  .modal-btn:hover { background: #7c3aed; transform: scale(0.99); }
+  .modal-spinner-wrap { width: 52px; height: 52px; margin: 0 auto 1.25rem; }
+  .modal-spinner { width: 52px; height: 52px; border-radius: 50%; border: 4px solid rgba(139,92,246,0.15); border-top-color: #8B5CF6; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to{ transform:rotate(360deg); } }
+  .modal-check-wrap { margin-bottom: 1.25rem; }
+  .check-circle {
+    width: 58px; height: 58px; border-radius: 50%; margin: 0 auto;
+    background: rgba(34,197,94,0.1); border: 2px solid rgba(34,197,94,0.3);
+    display: flex; align-items: center; justify-content: center;
+    animation: scaleIn 0.4s cubic-bezier(0.22,1,0.36,1);
+  }
+  .booking-confirm-details { width: 100%; background: var(--grey-fill); border-radius: 14px; overflow: hidden; margin-bottom: 1.25rem; }
+  body.theme-noir .booking-confirm-details { background: rgba(255,255,255,0.04); }
+  .bcd-row { display: flex; justify-content: space-between; padding: 0.6rem 1rem; border-bottom: 1px solid var(--grey-line); font-size: 0.82rem; }
+  .bcd-row:last-child { border-bottom: none; }
+  .bcd-row span:first-child { color: var(--grey-muted); font-family: var(--font-mono); font-size: 0.72rem; }
+  .bcd-row span:last-child { font-weight: 600; color: var(--jet); }
+  body.theme-noir .bcd-row span:last-child { color: #fff; }
+  body.theme-noir .bcd-row { border-bottom-color: rgba(255,255,255,0.05); }
+  .modal-btn-outline {
+    width: 100%; padding: 0.75rem; border-radius: 14px;
+    border: 1px solid rgba(139,92,246,0.22); background: transparent;
+    color: #8B5CF6; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .modal-btn-outline:hover { background: rgba(139,92,246,0.07); }
+
+  /* ══════════════════════════════════════════════════════
+     SAFE EXIT WIDGET
+  ══════════════════════════════════════════════════════ */
+  .safe-exit-widget {
+    position: fixed; bottom: 5rem; right: 1.5rem; z-index: 800;
+    background: #060a06; border: 1px solid rgba(34,197,94,0.22);
+    border-radius: 20px; padding: 1rem 1.1rem;
+    min-width: 210px; opacity: 0; transform: translateY(16px) scale(0.96);
+    pointer-events: none; transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(34,197,94,0.1);
+  }
+  .safe-exit-widget.active { opacity: 1; transform: none; pointer-events: all; }
+  .sew-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+  .sew-badge { display: flex; align-items: center; gap: 0.4rem; }
+  .sew-dot { width: 5px; height: 5px; border-radius: 50%; background: #22c55e; animation: blink 1.6s ease-in-out infinite; }
+  .sew-label { font-family: var(--font-mono); font-size: 0.54rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(34,197,94,0.75); }
+  .sew-close { width: 20px; height: 20px; border-radius: 50%; border: none; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.35); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .sew-venue { font-size: 0.88rem; font-weight: 700; color: #fff; margin-bottom: 0.1rem; }
+  .sew-detail { font-family: var(--font-mono); font-size: 0.62rem; color: rgba(255,255,255,0.35); margin-bottom: 0.6rem; }
+  .sew-timer-row { display: flex; align-items: center; justify-content: space-between; }
+  .sew-countdown { font-family: var(--font-mono); font-size: 1.45rem; font-weight: 700; color: #22c55e; letter-spacing: 0.04em; text-shadow: 0 0 20px rgba(34,197,94,0.45); }
+  .sew-cancel { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.07em; color: rgba(239,68,68,0.65); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .sew-cancel:hover { color: #ef4444; }
+
+  /* ══════════════════════════════════════════════════════
+     LIVE BADGE
+  ══════════════════════════════════════════════════════ */
+  .live-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.06em;
+    color: #22c55e; background: rgba(34,197,94,0.07);
+    border: 1px solid rgba(34,197,94,0.2); border-radius: 8px;
+    padding: 0.22rem 0.65rem;
+  }
   </style>
 </head>
 <body class="dine-page">
 <div class="grain" aria-hidden="true"></div>
 
-<!-- Diia Modal -->
+<!-- ══ DIIA MODAL ══ -->
 <div class="modal-overlay" id="diia-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal-card">
     <button class="modal-close" id="modal-close" aria-label="Закрити">
       <svg width="10" height="10" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg>
     </button>
     <div class="modal-step active" id="modal-step-1">
-      <div class="diia-modal-logo"><div class="diia-modal-icon">Дія</div><span class="diia-modal-name">Підпис Дія</span></div>
+      <div class="diia-modal-logo">
+        <div class="diia-modal-icon">Дія</div>
+        <span class="diia-modal-name">Підпис Дія</span>
+      </div>
       <div class="qr-placeholder" id="qr-grid" aria-label="QR-код для Дія"></div>
       <p class="modal-title" id="modal-title">Відкрийте застосунок Дія</p>
       <p class="modal-sub">Відскануйте QR-код для верифікації особистості та підписання бронювання.</p>
@@ -69,7 +642,7 @@
   </div>
 </div>
 
-<!-- Safe Exit Widget -->
+<!-- ══ SAFE EXIT WIDGET ══ -->
 <div class="safe-exit-widget" id="sew" role="status" aria-live="polite">
   <div class="sew-top">
     <div class="sew-badge"><span class="sew-dot"></span><span class="sew-label">SAFE EXIT</span></div>
@@ -83,11 +656,11 @@
   </div>
 </div>
 
-<!-- HEADER -->
+<!-- ══ HEADER ══ -->
 <header id="dock">
   <a class="logo" href="/" aria-label="PROSTIR home"><span class="lp">PR</span><span class="lo">O</span><span class="lrest">STIR</span></a>
   <nav aria-label="Main navigation">
-    <a href="/dine.html" class="nav-active" data-magnetic data-mag-r="44" data-mag-s="7" data-nav="dine">Dine</a>
+    <a href="/dine.html"    class="nav-active" data-magnetic data-mag-r="44" data-mag-s="7" data-nav="dine">Dine</a>
     <a href="/working.html" data-magnetic data-mag-r="44" data-mag-s="7" data-nav="working">Working</a>
     <a href="/moments.html" data-magnetic data-mag-r="44" data-mag-s="7" data-nav="moments">Moments</a>
     <a href="/business.html" data-magnetic data-mag-r="44" data-mag-s="7">Business</a>
@@ -95,12 +668,8 @@
   <div class="header-right">
     <a href="#" class="diia-btn"><span class="diia-logo" aria-hidden="true">Дія</span><span class="btn-label">Швидкий вхід з Дія</span></a>
     <div class="lang-switch" id="lang-switch" role="group" aria-label="Language">
-      <button type="button" class="lang-btn" data-lang="ua" aria-pressed="true" aria-label="Українська">
-        <span class="lang-flag" aria-hidden="true">🇺🇦</span><span class="lang-code">UA</span>
-      </button>
-      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false" aria-label="English">
-        <span class="lang-flag" aria-hidden="true">🇬🇧</span><span class="lang-code">EN</span>
-      </button>
+      <button type="button" class="lang-btn" data-lang="ua" aria-pressed="true" aria-label="Українська"><span class="lang-flag" aria-hidden="true">🇺🇦</span><span class="lang-code">UA</span></button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false" aria-label="English"><span class="lang-flag" aria-hidden="true">🇬🇧</span><span class="lang-code">EN</span></button>
     </div>
     <a href="/profile.html" class="user-avatar" id="user-avatar" title="Профіль" aria-label="Профіль">
       <div class="moments-ring" aria-hidden="true"></div>
@@ -110,237 +679,320 @@
   </div>
 </header>
 <div class="mobile-nav" id="mobile-nav">
-  <a href="/dine.html" class="nav-active" data-magnetic data-mag-r="44" data-mag-s="7" data-nav="dine">Dine</a>
-  <a href="/working.html" data-magnetic data-mag-r="44" data-mag-s="7" data-nav="working">Working</a>
-  <a href="/moments.html" data-magnetic data-mag-r="44" data-mag-s="7" data-nav="moments">Moments</a>
-  <a href="/business.html" data-magnetic data-mag-r="44" data-mag-s="7">Business</a>
+  <a href="/dine.html" class="nav-active" data-nav="dine">Dine</a>
+  <a href="/working.html" data-nav="working">Working</a>
+  <a href="/moments.html" data-nav="moments">Moments</a>
+  <a href="/business.html">Business</a>
 </div>
 
-<!-- PAGE HERO -->
-<div class="page-hero">
-  <p class="page-hero-eyebrow" id="hero-eyebrow">01 &nbsp;·&nbsp; Dine</p>
-  <h1 class="page-hero-h1" id="hero-title">Обери свій стіл.<br>До <span class="accent" id="hero-accent">останнього</span> місця.</h1>
-  <p class="page-hero-p" id="hero-desc">Інтерактивний план залу Cafe Aura в реальному часі. Клікни на стіл, обери час — і підпиши бронювання через Дію за секунди. Без черг. Без дзвінків.</p>
-  <div class="page-hero-divider"></div>
-</div>
+<!-- ══ PAGE CONTENT ══ -->
+<div class="dine-page-wrap">
 
-<!-- DINE CONTENT -->
-<div class="page-content">
-
-  <!-- Active session alert -->
+  <!-- Active session strip -->
   <div class="active-session-alert reveal">
     <div class="asa-dot" aria-hidden="true"></div>
-    <div><span class="asa-title" id="asa-title">Активна сесія</span><span class="asa-venue" id="asa-venue">· Cafe Aura · Стіл #5</span></div>
+    <div>
+      <span class="asa-title" id="asa-title">Активна сесія</span>
+      <span class="asa-venue" id="asa-venue">· Cafe Aura · Стіл #5</span>
+    </div>
     <div class="asa-timer" id="asa-timer" aria-live="off">14:32</div>
   </div>
 
-  <div class="dine-card reveal">
+  <!-- ══ VENUE HERO ══ -->
+  <div class="venue-hero reveal">
+    <div class="vh-orb vh-orb-1" aria-hidden="true"></div>
+    <div class="vh-orb vh-orb-2" aria-hidden="true"></div>
+    <div class="vh-orb vh-orb-3" aria-hidden="true"></div>
+    <div class="vh-lines"        aria-hidden="true"></div>
+
+    <div class="vh-body">
+      <div class="vh-identity">
+        <div class="vh-eyebrow" id="hero-eyebrow">01 · Dine</div>
+        <div class="vh-name">Cafe <span>Aura</span></div>
+        <div class="vh-meta-row">
+          <span class="vh-pill vh-pill-open" id="live-badge">
+            <span class="live-dot"></span>Відкрито · до 22:30
+          </span>
+          <span class="vh-pill vh-pill-addr">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M7 1C4.8 1 3 2.8 3 4.9c0 3.3 4 8.1 4 8.1s4-4.8 4-8.1C11 2.8 9.2 1 7 1z"/><circle cx="7" cy="5" r="1.5"/></svg>
+            Саксаганського, 8
+          </span>
+          <span class="vh-pill vh-pill-cusine">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 1v5a4 4 0 0 0 8 0V1M7 1v5M1 13h12"/></svg>
+            Specialty Coffee · All Day
+          </span>
+        </div>
+        <div class="vh-rating-row">
+          <div class="vh-stars">
+            <span class="vh-star">⭐</span><span class="vh-star">⭐</span><span class="vh-star">⭐</span><span class="vh-star">⭐</span><span class="vh-star" style="opacity:.5">⭐</span>
+          </div>
+          <span class="vh-score">4.8</span>
+          <span class="vh-reviews">· 312 відгуків</span>
+        </div>
+      </div>
+
+      <div class="vh-status">
+        <div class="vh-live-badge">
+          <span class="live-dot"></span>
+          <span id="vh-live-label">Live · Зал оновлено</span>
+        </div>
+        <div>
+          <div class="vh-avail-count">
+            <span id="avail-count">6</span><span id="avail-total">/ 10 вільних</span>
+          </div>
+          <div class="vh-avail-sub" id="vh-avail-sub">столів зараз</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vh-bottom">
+      <div class="vh-info-item">
+        <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="5.5"/><path d="M7 4.5v3l2 1.2"/></svg>
+        08:00 – 22:30
+      </div>
+      <div class="vh-info-sep"></div>
+      <div class="vh-info-item">
+        <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M2 10.5c0-2.5 2.2-4.5 5-4.5s5 2 5 4.5"/><circle cx="7" cy="4" r="2.5"/></svg>
+        Diia Verified · PROSTIR Partner
+      </div>
+      <div class="vh-info-sep"></div>
+      <div class="vh-info-item">
+        <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M5.5 12.5a5 5 0 0 1 0-11h1a5 5 0 0 1 0 11h-1z"/><path d="M7 3.5v7M3.5 7h7"/></svg>
+        Safe Exit · Авто-оплата
+      </div>
+      <div class="vh-info-sep"></div>
+      <div class="vh-info-item">
+        <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M7 1l1.5 3 3.5.5-2.5 2.5.5 3.5L7 9l-3 1.5.5-3.5L2 4.5l3.5-.5z"/></svg>
+        Parking · Wi-Fi · Terrace
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ DINE BOOKING CARD ══ -->
+  <div class="dine-booking-card reveal">
+
+    <!-- Card top bar -->
     <div class="dine-card-top">
       <div>
-        <div class="venue-name">Cafe Aura</div>
-        <div class="venue-sub">Вул. Саксаганського, 8 &nbsp;·&nbsp; 1-й поверх &nbsp;·&nbsp; Зал A</div>
+        <div class="venue-name">Cafe Aura · <span style="color:var(--grey-muted);font-weight:400;font-size:.9rem">Інтерактивний план залу</span></div>
+        <div class="venue-sub" id="venue-sub-text">Вул. Саксаганського, 8 &nbsp;·&nbsp; 1-й поверх &nbsp;·&nbsp; Зал A</div>
       </div>
       <div class="dine-meta">
-        <span class="live-badge" id="live-badge"><span class="live-dot"></span>Відкрито · до 22:30</span>
-        <span class="dine-count" id="avail-count">6 / 10 вільних</span>
+        <span class="dine-count" id="avail-count-small">6 / 10 вільних</span>
       </div>
     </div>
 
-    <!-- Skeleton loader (shown during async load) -->
-    <div class="dine-skeleton" id="dine-skeleton" aria-hidden="true">
-      <div class="skeleton-card" style="flex:1;min-height:360px">
-        <div class="skeleton sk-block" style="height:100%;border-radius:16px"></div>
-      </div>
-      <div class="skeleton-card" style="width:280px;flex-shrink:0">
-        <div style="display:flex;gap:0.75rem;align-items:center">
-          <div class="skeleton sk-circle"></div>
-          <div style="flex:1"><div class="skeleton sk-line medium" style="margin-bottom:0.5rem"></div><div class="skeleton sk-line short"></div></div>
-        </div>
-        <div class="skeleton sk-block" style="height:48px;margin-top:0.75rem"></div>
-        <div class="skeleton sk-line long"></div>
-        <div class="skeleton sk-line medium"></div>
-        <div class="skeleton sk-line short"></div>
-        <div class="skeleton sk-block" style="height:42px;border-radius:12px;margin-top:auto"></div>
-      </div>
-    </div>
+    <!-- Skeleton loader -->
+    <div class="dine-skeleton" id="dine-skeleton" aria-hidden="true" style="display:none"></div>
 
-    <!-- Empty state (no tables available) -->
+    <!-- Empty state -->
     <div class="dine-empty" id="dine-empty" style="display:none" aria-live="polite">
       <div class="empty-state">
         <div class="empty-icon">🍽</div>
         <div class="empty-title" id="dine-empty-title">Немає вільних столиків</div>
-        <div class="empty-desc" id="dine-empty-desc">Усі столи зайняті на обраний час. Спробуйте інший інтервал або зайдіть пізніше.</div>
+        <div class="empty-desc" id="dine-empty-desc">Усі столи зайняті на обраний час.</div>
       </div>
     </div>
 
+    <!-- Map + sidebar body -->
     <div class="dine-body">
-      <div class="dine-map">
-        <svg id="cafe-svg" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" aria-label="Інтерактивний план залу Cafe Aura">
-          <rect class="fp-shell" x="0.75" y="0.75" width="498.5" height="398.5" rx="8"/>
-          <rect class="fp-zone fp-zone-window" x="0" y="0" width="500" height="56"/>
-          <rect class="fp-zone fp-zone-bar" x="0" y="350" width="500" height="50"/>
-          <rect class="fp-zone fp-zone-host" x="14" y="68" width="94" height="34" rx="8"/>
-          <rect class="fp-zone fp-zone-wc" x="392" y="68" width="94" height="34" rx="8"/>
-          <rect class="fp-zone fp-zone-kitchen" x="14" y="288" width="120" height="50" rx="8"/>
-          <rect class="fp-zone fp-zone-pass" x="188" y="288" width="124" height="50" rx="8"/>
-          <rect class="fp-zone fp-zone-lounge" x="366" y="288" width="120" height="50" rx="8"/>
-          <rect class="fp-zone fp-zone-exit" x="8" y="356" width="48" height="34" rx="8"/>
-          <rect class="fp-zone fp-zone-exit" x="444" y="356" width="48" height="34" rx="8"/>
 
-          <rect class="fp-aisle" x="228" y="56" width="44" height="294" rx="14"/>
-          <line class="fp-divider" x1="0" y1="56" x2="500" y2="56"/>
-          <line class="fp-divider" x1="0" y1="350" x2="500" y2="350"/>
-
-          <rect class="fp-booth" x="20" y="62" width="94" height="30" rx="8"/>
-          <rect class="fp-booth" x="124" y="62" width="94" height="30" rx="8"/>
-          <rect class="fp-booth" x="282" y="62" width="94" height="30" rx="8"/>
-          <rect class="fp-booth" x="386" y="62" width="94" height="30" rx="8"/>
-
-          <g class="fp-labels">
-            <text class="fp-emoji" x="250" y="36" text-anchor="middle">🪟</text>
-            <text class="fp-emoji" x="250" y="381" text-anchor="middle">🍸🚪</text>
-            <text class="fp-emoji" x="61" y="90" text-anchor="middle">🧑‍💼</text>
-            <text class="fp-emoji" x="439" y="90" text-anchor="middle">🚻</text>
-            <text class="fp-emoji" x="74" y="318" text-anchor="middle">👨‍🍳</text>
-            <text class="fp-emoji" x="250" y="318" text-anchor="middle">🍽️</text>
-            <text class="fp-emoji" x="426" y="318" text-anchor="middle">🛋️</text>
-            <text class="fp-emoji" x="250" y="205" text-anchor="middle">↕️</text>
-            <text class="fp-emoji" x="32" y="377" text-anchor="middle">🚪</text>
-            <text class="fp-emoji" x="468" y="377" text-anchor="middle">🚪</text>
-          </g>
-
-          <!-- T1 booked -->
-          <g class="svg-table booked" data-id="1" aria-label="Стіл 1, зайнятий" role="img">
-            <circle class="t-ring" cx="74" cy="126" r="30"/><circle class="chair" cx="74" cy="90" r="6" stroke-width="1.2"/><circle class="chair" cx="44" cy="119" r="6" stroke-width="1.2"/><circle class="chair" cx="104" cy="119" r="6" stroke-width="1.2"/><circle class="t-circle" cx="74" cy="126" r="24"/><text class="t-label" x="74" y="130" text-anchor="middle">1</text>
-          </g>
-          <!-- T2 booked -->
-          <g class="svg-table booked" data-id="2" aria-label="Стіл 2, зайнятий" role="img">
-            <circle class="t-ring" cx="158" cy="126" r="30"/><circle class="chair" cx="158" cy="90" r="6" stroke-width="1.2"/><circle class="chair" cx="128" cy="119" r="6" stroke-width="1.2"/><circle class="chair" cx="188" cy="119" r="6" stroke-width="1.2"/><circle class="t-circle" cx="158" cy="126" r="24"/><text class="t-label" x="158" y="130" text-anchor="middle">2</text>
-          </g>
-          <!-- T3 booked -->
-          <g class="svg-table booked" data-id="3" aria-label="Стіл 3, зайнятий" role="img">
-            <circle class="t-ring" cx="342" cy="126" r="30"/><circle class="chair" cx="342" cy="90" r="6" stroke-width="1.2"/><circle class="chair" cx="310" cy="114" r="6" stroke-width="1.2"/><circle class="chair" cx="374" cy="114" r="6" stroke-width="1.2"/><circle class="chair" cx="342" cy="154" r="6" stroke-width="1.2"/><circle class="t-circle" cx="342" cy="126" r="24"/><text class="t-label" x="342" y="130" text-anchor="middle">3</text>
-          </g>
-          <!-- T4 booked -->
-          <g class="svg-table booked" data-id="4" aria-label="Стіл 4, зайнятий" role="img">
-            <circle class="t-ring" cx="426" cy="126" r="30"/><circle class="chair" cx="426" cy="90" r="6" stroke-width="1.2"/><circle class="chair" cx="394" cy="114" r="6" stroke-width="1.2"/><circle class="chair" cx="458" cy="114" r="6" stroke-width="1.2"/><circle class="chair" cx="426" cy="154" r="6" stroke-width="1.2"/><circle class="t-circle" cx="426" cy="126" r="24"/><text class="t-label" x="426" y="130" text-anchor="middle">4</text>
-          </g>
-          <!-- T5 available pre-selected -->
-          <g class="svg-table available is-selected" data-id="5" tabindex="0" role="button" aria-label="Стіл 5, обраний">
-            <circle class="t-ring" cx="74" cy="224" r="30"/><circle class="chair" cx="44" cy="214" r="6" stroke-width="1.2"/><circle class="chair" cx="104" cy="214" r="6" stroke-width="1.2"/><circle class="t-circle" cx="74" cy="224" r="24"/><text class="t-label" x="74" y="228" text-anchor="middle">5</text>
-          </g>
-          <!-- T6 -->
-          <g class="svg-table available" data-id="6" tabindex="0" role="button" aria-label="Стіл 6, вільний">
-            <circle class="t-ring" cx="170" cy="224" r="30"/><circle class="chair" cx="170" cy="188" r="6" stroke-width="1.2"/><circle class="chair" cx="138" cy="212" r="6" stroke-width="1.2"/><circle class="chair" cx="202" cy="212" r="6" stroke-width="1.2"/><circle class="chair" cx="170" cy="250" r="6" stroke-width="1.2"/><circle class="t-circle" cx="170" cy="224" r="24"/><text class="t-label" x="170" y="228" text-anchor="middle">6</text>
-          </g>
-          <!-- T7 -->
-          <g class="svg-table available" data-id="7" tabindex="0" role="button" aria-label="Стіл 7, вільний">
-            <circle class="t-ring" cx="330" cy="224" r="30"/><circle class="chair" cx="330" cy="188" r="6" stroke-width="1.2"/><circle class="chair" cx="298" cy="212" r="6" stroke-width="1.2"/><circle class="chair" cx="362" cy="212" r="6" stroke-width="1.2"/><circle class="chair" cx="330" cy="250" r="6" stroke-width="1.2"/><circle class="t-circle" cx="330" cy="224" r="24"/><text class="t-label" x="330" y="228" text-anchor="middle">7</text>
-          </g>
-          <!-- T8 -->
-          <g class="svg-table available" data-id="8" tabindex="0" role="button" aria-label="Стіл 8, вільний">
-            <circle class="t-ring" cx="426" cy="224" r="30"/><circle class="chair" cx="396" cy="214" r="6" stroke-width="1.2"/><circle class="chair" cx="456" cy="214" r="6" stroke-width="1.2"/><circle class="t-circle" cx="426" cy="224" r="24"/><text class="t-label" x="426" y="228" text-anchor="middle">8</text>
-          </g>
-          <!-- T9 -->
-          <g class="svg-table available" data-id="9" tabindex="0" role="button" aria-label="Стіл 9, вільний">
-            <circle class="t-ring" cx="170" cy="300" r="30"/><circle class="chair" cx="140" cy="280" r="6" stroke-width="1.2"/><circle class="chair" cx="200" cy="280" r="6" stroke-width="1.2"/><circle class="chair" cx="140" cy="320" r="6" stroke-width="1.2"/><circle class="chair" cx="200" cy="320" r="6" stroke-width="1.2"/><circle class="chair" cx="170" cy="266" r="6" stroke-width="1.2"/><circle class="chair" cx="170" cy="334" r="6" stroke-width="1.2"/><circle class="t-circle" cx="170" cy="300" r="24"/><text class="t-label" x="170" y="304" text-anchor="middle">9</text>
-          </g>
-          <!-- T10 -->
-          <g class="svg-table available" data-id="10" tabindex="0" role="button" aria-label="Стіл 10, вільний">
-            <circle class="t-ring" cx="330" cy="300" r="30"/><circle class="chair" cx="300" cy="280" r="6" stroke-width="1.2"/><circle class="chair" cx="360" cy="280" r="6" stroke-width="1.2"/><circle class="chair" cx="300" cy="320" r="6" stroke-width="1.2"/><circle class="chair" cx="360" cy="320" r="6" stroke-width="1.2"/><circle class="chair" cx="330" cy="266" r="6" stroke-width="1.2"/><circle class="chair" cx="330" cy="334" r="6" stroke-width="1.2"/><circle class="t-circle" cx="330" cy="300" r="24"/><text class="t-label" x="330" y="304" text-anchor="middle">10</text>
-          </g>
-        </svg>
+      <!-- ── Floor plan column ── -->
+      <div class="dine-map-col">
+        <!-- Legend -->
+        <div class="dine-legend">
+          <div class="legend-item"><span class="legend-dot ld-avail"></span>Вільний</div>
+          <div class="legend-item"><span class="legend-dot ld-booked"></span>Зайнятий</div>
+          <div class="legend-item"><span class="legend-dot ld-sel"></span>Обраний</div>
+        </div>
+        <!-- SVG map -->
+        <div class="dine-map">
+          <svg id="cafe-svg" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" aria-label="Інтерактивний план залу Cafe Aura">
+            <rect class="fp-shell"        x="0.75"  y="0.75"  width="498.5" height="398.5" rx="8"/>
+            <rect class="fp-zone fp-zone-window"  x="0"    y="0"    width="500"   height="56"/>
+            <rect class="fp-zone fp-zone-bar"     x="0"    y="350"  width="500"   height="50"/>
+            <rect class="fp-zone fp-zone-host"    x="14"   y="68"   width="94"    height="34" rx="8"/>
+            <rect class="fp-zone fp-zone-wc"      x="392"  y="68"   width="94"    height="34" rx="8"/>
+            <rect class="fp-zone fp-zone-kitchen" x="14"   y="288"  width="120"   height="50" rx="8"/>
+            <rect class="fp-zone fp-zone-pass"    x="188"  y="288"  width="124"   height="50" rx="8"/>
+            <rect class="fp-zone fp-zone-lounge"  x="366"  y="288"  width="120"   height="50" rx="8"/>
+            <rect class="fp-zone fp-zone-exit"    x="8"    y="356"  width="48"    height="34" rx="8"/>
+            <rect class="fp-zone fp-zone-exit"    x="444"  y="356"  width="48"    height="34" rx="8"/>
+            <rect class="fp-aisle"  x="228" y="56"  width="44"  height="294" rx="14"/>
+            <line class="fp-divider" x1="0" y1="56"  x2="500" y2="56"/>
+            <line class="fp-divider" x1="0" y1="350" x2="500" y2="350"/>
+            <rect class="fp-booth" x="20"  y="62" width="94" height="30" rx="8"/>
+            <rect class="fp-booth" x="124" y="62" width="94" height="30" rx="8"/>
+            <rect class="fp-booth" x="282" y="62" width="94" height="30" rx="8"/>
+            <rect class="fp-booth" x="386" y="62" width="94" height="30" rx="8"/>
+            <g class="fp-labels">
+              <text class="fp-emoji" x="250" y="36"  text-anchor="middle">🪟</text>
+              <text class="fp-emoji" x="250" y="381" text-anchor="middle">🍸🚪</text>
+              <text class="fp-emoji" x="61"  y="90"  text-anchor="middle">🧑‍💼</text>
+              <text class="fp-emoji" x="439" y="90"  text-anchor="middle">🚻</text>
+              <text class="fp-emoji" x="74"  y="318" text-anchor="middle">👨‍🍳</text>
+              <text class="fp-emoji" x="250" y="318" text-anchor="middle">🍽️</text>
+              <text class="fp-emoji" x="426" y="318" text-anchor="middle">🛋️</text>
+              <text class="fp-emoji" x="250" y="205" text-anchor="middle">↕️</text>
+              <text class="fp-emoji" x="32"  y="377" text-anchor="middle">🚪</text>
+              <text class="fp-emoji" x="468" y="377" text-anchor="middle">🚪</text>
+            </g>
+            <!-- T1 booked -->
+            <g class="svg-table booked" data-id="1" aria-label="Стіл 1, зайнятий" role="img">
+              <circle class="t-ring" cx="74" cy="126" r="30"/><circle class="chair" cx="74" cy="90" r="6" stroke-width="1.2"/><circle class="chair" cx="44" cy="119" r="6" stroke-width="1.2"/><circle class="chair" cx="104" cy="119" r="6" stroke-width="1.2"/><circle class="t-circle" cx="74" cy="126" r="24"/><text class="t-label" x="74" y="130" text-anchor="middle">1</text>
+            </g>
+            <!-- T2 booked -->
+            <g class="svg-table booked" data-id="2" aria-label="Стіл 2, зайнятий" role="img">
+              <circle class="t-ring" cx="158" cy="126" r="30"/><circle class="chair" cx="158" cy="90" r="6" stroke-width="1.2"/><circle class="chair" cx="128" cy="119" r="6" stroke-width="1.2"/><circle class="chair" cx="188" cy="119" r="6" stroke-width="1.2"/><circle class="t-circle" cx="158" cy="126" r="24"/><text class="t-label" x="158" y="130" text-anchor="middle">2</text>
+            </g>
+            <!-- T3 booked -->
+            <g class="svg-table booked" data-id="3" aria-label="Стіл 3, зайнятий" role="img">
+              <circle class="t-ring" cx="342" cy="126" r="30"/><circle class="chair" cx="342" cy="90" r="6" stroke-width="1.2"/><circle class="chair" cx="310" cy="114" r="6" stroke-width="1.2"/><circle class="chair" cx="374" cy="114" r="6" stroke-width="1.2"/><circle class="chair" cx="342" cy="154" r="6" stroke-width="1.2"/><circle class="t-circle" cx="342" cy="126" r="24"/><text class="t-label" x="342" y="130" text-anchor="middle">3</text>
+            </g>
+            <!-- T4 booked -->
+            <g class="svg-table booked" data-id="4" aria-label="Стіл 4, зайнятий" role="img">
+              <circle class="t-ring" cx="426" cy="126" r="30"/><circle class="chair" cx="426" cy="90" r="6" stroke-width="1.2"/><circle class="chair" cx="394" cy="114" r="6" stroke-width="1.2"/><circle class="chair" cx="458" cy="114" r="6" stroke-width="1.2"/><circle class="chair" cx="426" cy="154" r="6" stroke-width="1.2"/><circle class="t-circle" cx="426" cy="126" r="24"/><text class="t-label" x="426" y="130" text-anchor="middle">4</text>
+            </g>
+            <!-- T5 available pre-selected -->
+            <g class="svg-table available is-selected" data-id="5" tabindex="0" role="button" aria-label="Стіл 5, обраний">
+              <circle class="t-ring" cx="74" cy="224" r="30"/><circle class="chair" cx="44" cy="214" r="6" stroke-width="1.2"/><circle class="chair" cx="104" cy="214" r="6" stroke-width="1.2"/><circle class="t-circle" cx="74" cy="224" r="24"/><text class="t-label" x="74" y="228" text-anchor="middle">5</text>
+            </g>
+            <!-- T6 -->
+            <g class="svg-table available" data-id="6" tabindex="0" role="button" aria-label="Стіл 6, вільний">
+              <circle class="t-ring" cx="170" cy="224" r="30"/><circle class="chair" cx="170" cy="188" r="6" stroke-width="1.2"/><circle class="chair" cx="138" cy="212" r="6" stroke-width="1.2"/><circle class="chair" cx="202" cy="212" r="6" stroke-width="1.2"/><circle class="chair" cx="170" cy="250" r="6" stroke-width="1.2"/><circle class="t-circle" cx="170" cy="224" r="24"/><text class="t-label" x="170" y="228" text-anchor="middle">6</text>
+            </g>
+            <!-- T7 -->
+            <g class="svg-table available" data-id="7" tabindex="0" role="button" aria-label="Стіл 7, вільний">
+              <circle class="t-ring" cx="330" cy="224" r="30"/><circle class="chair" cx="330" cy="188" r="6" stroke-width="1.2"/><circle class="chair" cx="298" cy="212" r="6" stroke-width="1.2"/><circle class="chair" cx="362" cy="212" r="6" stroke-width="1.2"/><circle class="chair" cx="330" cy="250" r="6" stroke-width="1.2"/><circle class="t-circle" cx="330" cy="224" r="24"/><text class="t-label" x="330" y="228" text-anchor="middle">7</text>
+            </g>
+            <!-- T8 -->
+            <g class="svg-table available" data-id="8" tabindex="0" role="button" aria-label="Стіл 8, вільний">
+              <circle class="t-ring" cx="426" cy="224" r="30"/><circle class="chair" cx="396" cy="214" r="6" stroke-width="1.2"/><circle class="chair" cx="456" cy="214" r="6" stroke-width="1.2"/><circle class="t-circle" cx="426" cy="224" r="24"/><text class="t-label" x="426" y="228" text-anchor="middle">8</text>
+            </g>
+            <!-- T9 -->
+            <g class="svg-table available" data-id="9" tabindex="0" role="button" aria-label="Стіл 9, вільний">
+              <circle class="t-ring" cx="170" cy="300" r="30"/><circle class="chair" cx="140" cy="280" r="6" stroke-width="1.2"/><circle class="chair" cx="200" cy="280" r="6" stroke-width="1.2"/><circle class="chair" cx="140" cy="320" r="6" stroke-width="1.2"/><circle class="chair" cx="200" cy="320" r="6" stroke-width="1.2"/><circle class="chair" cx="170" cy="266" r="6" stroke-width="1.2"/><circle class="chair" cx="170" cy="334" r="6" stroke-width="1.2"/><circle class="t-circle" cx="170" cy="300" r="24"/><text class="t-label" x="170" y="304" text-anchor="middle">9</text>
+            </g>
+            <!-- T10 -->
+            <g class="svg-table available" data-id="10" tabindex="0" role="button" aria-label="Стіл 10, вільний">
+              <circle class="t-ring" cx="330" cy="300" r="30"/><circle class="chair" cx="300" cy="280" r="6" stroke-width="1.2"/><circle class="chair" cx="360" cy="280" r="6" stroke-width="1.2"/><circle class="chair" cx="300" cy="320" r="6" stroke-width="1.2"/><circle class="chair" cx="360" cy="320" r="6" stroke-width="1.2"/><circle class="chair" cx="330" cy="266" r="6" stroke-width="1.2"/><circle class="chair" cx="330" cy="334" r="6" stroke-width="1.2"/><circle class="t-circle" cx="330" cy="300" r="24"/><text class="t-label" x="330" y="304" text-anchor="middle">10</text>
+            </g>
+          </svg>
+        </div>
       </div>
 
-      <!-- Sidebar -->
-      <div class="dine-sidebar-wrap open" id="dine-sidebar-wrap">
-        <div class="dine-sidebar" id="dine-sidebar">
-          <div class="sb-booking-form" id="sb-booking-form">
-            <div class="sb-head">
-              <div class="sb-badge-wrap">
-                <div class="sb-badge" id="sb-badge">5</div>
-                <div class="sb-badge-text">
-                  <div class="sb-title" id="sb-title">Стіл №5</div>
-                  <div class="sb-sub" id="sb-sub">Зал A · Cafe Aura</div>
-                </div>
-              </div>
-              <button class="sb-close-btn" id="sb-close" aria-label="Закрити"><svg width="10" height="10" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg></button>
-            </div>
-            <div class="sb-divider"></div>
-            <div class="sb-details">
-              <div class="sb-section-label" id="sb-section-label">Деталі столу</div>
-              <div class="sb-row">
-                <span class="sb-row-k">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:-1px;margin-right:4px"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><path d="M8 2v16M16 6v16"/></svg>Вид
-                </span>
-                <span class="sb-row-v" id="sb-view">Вікно</span>
-              </div>
-              <div class="sb-row">
-                <span class="sb-row-k">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:-1px;margin-right:4px"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>Місць
-                </span>
-                <span class="sb-row-v" id="sb-seats">2 особи</span>
-              </div>
-              <div class="sb-row">
-                <span class="sb-row-k">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:-1px;margin-right:4px"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Зарядка
-                </span>
-                <span class="sb-row-v" id="sb-power">є розетка</span>
-              </div>
-              <div class="sb-row">
-                <span class="sb-row-k">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:-1px;margin-right:4px"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg>Wi-Fi
-                </span>
-                <span class="sb-row-v" id="sb-wifi">Сильний</span>
-              </div>
-              <div class="sb-row">
-                <span class="sb-row-k">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:-1px;margin-right:4px"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5"/><polyline points="17 3 21 3 21 7"/><line x1="21" y1="3" x2="9" y2="15"/></svg>Шум
-                </span>
-                <span class="sb-row-v" id="sb-noise">Тихо</span>
-              </div>
-              <div class="sb-row">
-                <span class="sb-row-k">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:-1px;margin-right:4px"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>Зона
-                </span>
-                <span class="sb-row-v" id="sb-zone">A · Вікно</span>
-              </div>
-              <div style="height:1px;background:var(--grey-line);margin:0.35rem 0"></div>
-              <div class="sb-row">
-                <span class="sb-row-k" id="sb-status-label">Статус</span>
-                <span class="sb-row-v free" id="sb-status">Вільний</span>
-              </div>
-            </div>
-            <div class="sb-divider"></div>
-            <div>
-              <div class="sb-time-label" id="sb-time-label">Час бронювання</div>
-              <div class="booked-notice" id="booked-notice"><strong>Зайнято</strong> · Цей столик зараз зайнятий.<br>Звільниться орієнтовно о 18:30.</div>
-              <div class="sb-slots" id="sb-slots">
-                <span class="sb-slot" data-time="18:00">18:00</span>
-                <span class="sb-slot" data-time="19:00">19:00</span>
-                <span class="sb-slot" data-time="20:00">20:00</span>
-                <span class="sb-slot" data-time="21:00">21:00</span>
-              </div>
-            </div>
-            <div class="oops-banner" id="oops-banner" role="alert">⚠ Оберіть час для бронювання</div>
-            <button class="sb-book btn-inactive" id="sb-book-btn">Забронювати</button>
-          </div>
-          <div class="sb-success" id="sb-success" aria-live="polite">
-            <div class="sb-success-check"><div class="sb-check-circle"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 12 10 16 18 8"/></svg></div></div>
-            <div class="sb-success-title" id="sb-success-title">Стіл зарезервовано.</div>
-            <div class="sb-success-sub" id="sb-success-sub">Чекаємо на вас!</div>
-            <div class="sb-success-detail" id="sb-success-detail">Стіл №5 · 19:00</div>
-            <button class="sb-success-new" id="sb-success-new">← Нове бронювання</button>
-          </div>
+      <!-- ── Sidebar column ── -->
+      <div class="dine-sidebar-col" id="dine-sidebar-wrap">
+
+        <!-- Placeholder (no table selected) -->
+        <div class="sb-placeholder" id="sb-placeholder" style="display:none">
+          <div class="sbp-icon">👆</div>
+          <div class="sbp-text" id="sbp-text">Виберіть стіл на плані</div>
         </div>
+
+        <!-- Booking form -->
+        <div class="sb-booking-form" id="sb-booking-form">
+          <div class="sb-head">
+            <div class="sb-badge-row">
+              <div class="sb-badge" id="sb-badge">5</div>
+              <div>
+                <div class="sb-title"  id="sb-title">Стіл №5</div>
+                <div class="sb-sub"   id="sb-sub">Зал A · Cafe Aura</div>
+              </div>
+            </div>
+            <button class="sb-close-btn" id="sb-close" aria-label="Закрити"><svg width="10" height="10" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg></button>
+          </div>
+
+          <div class="sb-divider"></div>
+
+          <div class="sb-details">
+            <div class="sb-section-label" id="sb-section-label">Деталі столу</div>
+            <div class="sb-row">
+              <span class="sb-row-k">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/></svg>Вид
+              </span>
+              <span class="sb-row-v" id="sb-view">Вікно</span>
+            </div>
+            <div class="sb-row">
+              <span class="sb-row-k">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>Місць
+              </span>
+              <span class="sb-row-v" id="sb-seats">2 особи</span>
+            </div>
+            <div class="sb-row">
+              <span class="sb-row-k">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Зарядка
+              </span>
+              <span class="sb-row-v" id="sb-power">є розетка</span>
+            </div>
+            <div class="sb-row">
+              <span class="sb-row-k">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg>Wi-Fi
+              </span>
+              <span class="sb-row-v" id="sb-wifi">Сильний</span>
+            </div>
+            <div class="sb-row">
+              <span class="sb-row-k">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5"/><polyline points="17 3 21 3 21 7"/><line x1="21" y1="3" x2="9" y2="15"/></svg>Шум
+              </span>
+              <span class="sb-row-v" id="sb-noise">Тихо</span>
+            </div>
+            <div class="sb-row">
+              <span class="sb-row-k">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>Зона
+              </span>
+              <span class="sb-row-v" id="sb-zone">A · Вікно</span>
+            </div>
+            <div class="sb-row" style="border-bottom:none">
+              <span class="sb-row-k" id="sb-status-label">Статус</span>
+              <span class="sb-row-v free" id="sb-status">Вільний</span>
+            </div>
+          </div>
+
+          <div class="sb-divider"></div>
+
+          <div class="booked-notice" id="booked-notice">
+            <strong>Зайнято</strong> · Цей столик зараз зайнятий.<br>Звільниться орієнтовно о 18:30.
+          </div>
+
+          <div class="sb-time-label" id="sb-time-label">Час бронювання</div>
+          <div class="sb-slots" id="sb-slots">
+            <span class="sb-slot" data-time="18:00">18:00</span>
+            <span class="sb-slot" data-time="19:00">19:00</span>
+            <span class="sb-slot" data-time="20:00">20:00</span>
+            <span class="sb-slot" data-time="21:00">21:00</span>
+          </div>
+
+          <div class="oops-banner" id="oops-banner" role="alert">⚠ Оберіть час для бронювання</div>
+
+          <button class="sb-book btn-inactive" id="sb-book-btn">
+            <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l6 3v5c0 3.8-2.6 7.3-6 8.5C4.6 17.3 2 13.8 2 10V5l8-3z"/></svg>
+            Забронювати
+          </button>
+        </div>
+
+        <!-- Success state -->
+        <div class="sb-success" id="sb-success" aria-live="polite">
+          <div class="sb-success-check">
+            <div class="sb-check-circle"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 12 10 16 18 8"/></svg></div>
+          </div>
+          <div class="sb-success-title" id="sb-success-title">Стіл зарезервовано.</div>
+          <div class="sb-success-sub"   id="sb-success-sub">Чекаємо на вас!</div>
+          <div class="sb-success-detail" id="sb-success-detail">Стіл №5 · 19:00</div>
+          <button class="sb-success-new" id="sb-success-new">← Нове бронювання</button>
+        </div>
+
       </div>
     </div>
   </div>
 
-  <!-- Digital Receipt -->
-  <div class="receipt-card reveal is-locked" id="receipt-card" style="margin-top:2rem">
+  <!-- ══ DIGITAL RECEIPT ══ -->
+  <div class="receipt-card is-locked" id="receipt-card">
     <div class="receipt-top">
-      <div><div class="receipt-venue-name">Cafe Aura</div><div class="receipt-meta-line" id="receipt-meta-line">Стіл #5 · Window View · 29.03.2026 · 09:41</div></div>
+      <div>
+        <div class="receipt-venue-name">Cafe Aura</div>
+        <div class="receipt-meta-line" id="receipt-meta-line">Стіл #5 · Window View · 29.03.2026 · 09:41</div>
+      </div>
       <div class="receipt-paid-stamp" id="receipt-paid-stamp" aria-label="Оплачено">PAID</div>
     </div>
     <div class="receipt-items">
@@ -352,12 +1004,22 @@
     </div>
     <div class="receipt-footer">
       <div class="receipt-qr-box" aria-label="QR-код чеку">
-        <span class="q1"></span><span class="q1"></span><span></span><span></span><span></span><span></span><span class="q1"></span><span class="q1"></span><span class="q1"></span><span></span><span></span><span></span><span></span><span></span><span class="q1"></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="q1"></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="q1"></span><span class="q1"></span><span class="q1"></span><span></span><span></span><span></span><span></span><span class="q1"></span>
+        <span class="q1"></span><span class="q1"></span><span></span><span></span><span></span><span></span><span class="q1"></span>
+        <span class="q1"></span><span></span><span></span><span></span><span></span><span></span><span class="q1"></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        <span class="q1"></span><span></span><span></span><span></span><span></span><span></span><span class="q1"></span>
+        <span class="q1"></span><span class="q1"></span><span class="q1"></span><span></span><span></span><span></span><span></span>
+        <span class="q1"></span><span></span><span class="q1"></span><span></span><span class="q1"></span><span></span><span class="q1"></span>
+        <span></span><span></span><span class="q1"></span><span class="q1"></span><span class="q1"></span><span></span><span></span>
       </div>
-      <div class="receipt-sign"><div class="receipt-diia-badge" id="receipt-diia-badge">✓ &nbsp;Підписано через Дія</div><br><span id="receipt-sign-lines">Транзакція: #PRX-2026-03291<br>Статус: Підтверджено · Безпечна оплата</span></div>
+      <div class="receipt-sign">
+        <div class="receipt-diia-badge" id="receipt-diia-badge">✓ &nbsp;Підписано через Дія</div><br>
+        <span id="receipt-sign-lines" style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.04em;color:rgba(255,255,255,.22);line-height:1.7">Транзакція: #PRX-2026-03291<br>Статус: Підтверджено · Безпечна оплата</span>
+      </div>
     </div>
   </div>
-</div>
+
+</div><!-- /.dine-page-wrap -->
 
 <!-- FOOTER -->
 <footer>
@@ -368,7 +1030,6 @@
   </div>
 </footer>
 
-<!-- Tooltip -->
 <div class="table-tooltip" id="table-tooltip" aria-hidden="true"></div>
 
 <button id="theme-toggle-fab" class="theme-fab hidden" type="button" aria-label="Змінити тему">
@@ -379,140 +1040,117 @@
 <script>
 function $(id){ return document.getElementById(id); }
 
-// Theme: follow device by default, allow one-click override
+/* ── Theme ── */
 (function(){
-  const fab = $('theme-toggle-fab');
-  const icon = $('theme-toggle-icon');
-  const label = $('theme-toggle-label');
-  const mq = window.matchMedia('(prefers-color-scheme: dark)');
-  const saved = localStorage.getItem('prostir_theme_choice');
-  function apply(theme){
-    document.body.classList.toggle('theme-noir', theme === 'dark');
-    if(icon) icon.textContent = theme === 'dark' ? '☾' : '☀';
-    if(label) label.textContent = theme === 'dark' ? 'Dark' : 'Light';
-  }
-  apply(saved || (mq.matches ? 'dark' : 'light'));
-  if(fab){
-    fab.classList.remove('hidden');
-    if(saved) fab.classList.add('ghosted');
-  }
-  mq.addEventListener('change', e => { if(!localStorage.getItem('prostir_theme_choice')) apply(e.matches ? 'dark' : 'light'); });
-  fab && fab.addEventListener('click', ()=>{
-    const next = document.body.classList.contains('theme-noir') ? 'light' : 'dark';
-    localStorage.setItem('prostir_theme_choice', next);
-    apply(next);
-    fab.classList.add('ghosted');
-  });
+  const fab=$('theme-toggle-fab'), icon=$('theme-toggle-icon'), label=$('theme-toggle-label');
+  const mq=window.matchMedia('(prefers-color-scheme: dark)'), saved=localStorage.getItem('prostir_theme_choice');
+  function apply(t){ document.body.classList.toggle('theme-noir',t==='dark'); if(icon) icon.textContent=t==='dark'?'☾':'☀'; if(label) label.textContent=t==='dark'?'Dark':'Light'; }
+  apply(saved||(mq.matches?'dark':'light'));
+  if(fab){ fab.classList.remove('hidden'); if(saved) fab.classList.add('ghosted'); }
+  mq.addEventListener('change',e=>{ if(!localStorage.getItem('prostir_theme_choice')) apply(e.matches?'dark':'light'); });
+  fab&&fab.addEventListener('click',()=>{ const n=document.body.classList.contains('theme-noir')?'light':'dark'; localStorage.setItem('prostir_theme_choice',n); apply(n); fab.classList.add('ghosted'); });
 })();
 
-// Header
-const dock = $('dock');
-window.addEventListener('scroll', () => {
-  dock.classList.toggle('scrolled', window.scrollY > 8);
-  document.documentElement.style.setProperty('--parallax-y', (-window.scrollY * 0.04).toFixed(2)+'px');
-}, { passive: true });
+/* ── Header scroll ── */
+const dock=$('dock');
+window.addEventListener('scroll',()=>{ dock.classList.toggle('scrolled',window.scrollY>8); document.documentElement.style.setProperty('--parallax-y',(-window.scrollY*.04).toFixed(2)+'px'); },{passive:true});
 
-// Hamburger
-const btn = $('hamburger'), drawer = $('mobile-nav');
-btn && btn.addEventListener('click', () => {
-  const open = drawer.classList.toggle('open');
-  btn.setAttribute('aria-expanded', open);
-  const s = btn.querySelectorAll('span');
-  if (open) { s[0].style.transform='translateY(6.5px) rotate(45deg)'; s[1].style.opacity='0'; s[2].style.transform='translateY(-6.5px) rotate(-45deg)'; }
-  else { s.forEach(x => { x.style.transform=''; x.style.opacity=''; }); }
+/* ── Hamburger ── */
+const _btn=$('hamburger'),_drawer=$('mobile-nav');
+_btn&&_btn.addEventListener('click',()=>{
+  const open=_drawer.classList.toggle('open'); _btn.setAttribute('aria-expanded',open);
+  const s=_btn.querySelectorAll('span');
+  if(open){s[0].style.transform='translateY(6.5px) rotate(45deg)';s[1].style.opacity='0';s[2].style.transform='translateY(-6.5px) rotate(-45deg)';}
+  else{s.forEach(x=>{x.style.transform='';x.style.opacity=''});}
 });
 
-// Reveal
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-}, { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+/* ── Reveal ── */
+const _io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');_io.unobserve(x.target);}}),{threshold:0.06});
+document.querySelectorAll('.reveal').forEach(el=>_io.observe(el));
 
-// QR
+/* ── QR ── */
 (function(){
-  const grid = $('qr-grid'); if(!grid) return;
-  [1,1,1,0,1,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,1,0,1,0,1,0,0,0,1,1,1,0,1,1,1,1,0,0,1,0,0,1,1,1,1,0,1,0,1].forEach(v => {
-    const c = document.createElement('div'); c.className='qr-cell'; c.style.background=v?'#0A0A0A':'#fff'; grid.appendChild(c);
+  const grid=$('qr-grid'); if(!grid) return;
+  [1,1,1,0,1,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,1,0,1,0,1,0,0,0,1,1,1,0,1,1,1,1,0,0,1,0,0,1,1,1,1,0,1,0,1].forEach(v=>{
+    const c=document.createElement('div'); c.className='qr-cell'; c.style.background=v?'#0A0A0A':'#fff'; grid.appendChild(c);
   });
 })();
 
-// Dine module
+/* ── Dine module ── */
 (function initDine(){
-  let currentLang = localStorage.getItem('prostir_lang') === 'en' ? 'en' : 'ua';
-  const tableData = {
-    1: { view:'Вікно (вул. Саксаганського)', seats:2, zone:'A · Вікно', status:'booked', freeAt:'17:30', power:'є розетка',    wifi:'Сильний',    noise:'Тихо',     light:'Денне світло' },
-    2: { view:'Вікно (вул. Саксаганського)', seats:2, zone:'A · Вікно', status:'booked', freeAt:'18:00', power:'є розетка',    wifi:'Сильний',    noise:'Тихо',     light:'Денне світло' },
-    3: { view:'Вікно — панорама',            seats:4, zone:'A · Вікно', status:'booked', freeAt:'18:30', power:'є розетка ×2', wifi:'Сильний',    noise:'Помірно',  light:'Денне світло' },
-    4: { view:'Вікно — панорама',            seats:4, zone:'A · Вікно', status:'booked', freeAt:'19:00', power:'є розетка ×2', wifi:'Сильний',    noise:'Помірно',  light:'Денне світло' },
-    5: { view:'Вікно — бічне',               seats:2, zone:'A · Вікно', status:'available', freeAt:null, power:'є розетка',   wifi:'Сильний',    noise:'Тихо',     light:'Денне світло' },
-    6: { view:'Центр залу',                  seats:4, zone:'A · Центр', status:'available', freeAt:null, power:'є розетка',   wifi:'Відмінний',  noise:'Помірно',  light:'Верхнє' },
-    7: { view:'Вид на внутрішній сад',       seats:4, zone:'A · Сад',   status:'available', freeAt:null, power:'є розетка ×2',wifi:'Відмінний',  noise:'Тихо',     light:'Природне' },
-    8: { view:'Бічна стіна · арт',           seats:2, zone:'A · Арт',   status:'available', freeAt:null, power:'немає',       wifi:'Сильний',    noise:'Тихо',     light:'Приглушене' },
-    9: { view:'Центр · великий стіл',        seats:6, zone:'A · Центр', status:'available', freeAt:null, power:'є розетка ×4',wifi:'Відмінний',  noise:'Активно',  light:'Верхнє' },
-   10: { view:'Центр · диванна зона',        seats:6, zone:'A · Диван', status:'available', freeAt:null, power:'є розетка ×2',wifi:'Відмінний',  noise:'Помірно',  light:'Верхнє' },
+  let currentLang=localStorage.getItem('prostir_lang')==='en'?'en':'ua';
+  const tableData={
+    1:{view:'Вікно (вул. Саксаганського)',seats:2,zone:'A · Вікно',status:'booked',freeAt:'17:30',power:'є розетка',wifi:'Сильний',noise:'Тихо',light:'Денне світло'},
+    2:{view:'Вікно (вул. Саксаганського)',seats:2,zone:'A · Вікно',status:'booked',freeAt:'18:00',power:'є розетка',wifi:'Сильний',noise:'Тихо',light:'Денне світло'},
+    3:{view:'Вікно — панорама',seats:4,zone:'A · Вікно',status:'booked',freeAt:'18:30',power:'є розетка ×2',wifi:'Сильний',noise:'Помірно',light:'Денне світло'},
+    4:{view:'Вікно — панорама',seats:4,zone:'A · Вікно',status:'booked',freeAt:'19:00',power:'є розетка ×2',wifi:'Сильний',noise:'Помірно',light:'Денне світло'},
+    5:{view:'Вікно — бічне',seats:2,zone:'A · Вікно',status:'available',freeAt:null,power:'є розетка',wifi:'Сильний',noise:'Тихо',light:'Денне світло'},
+    6:{view:'Центр залу',seats:4,zone:'A · Центр',status:'available',freeAt:null,power:'є розетка',wifi:'Відмінний',noise:'Помірно',light:'Верхнє'},
+    7:{view:'Вид на внутрішній сад',seats:4,zone:'A · Сад',status:'available',freeAt:null,power:'є розетка ×2',wifi:'Відмінний',noise:'Тихо',light:'Природне'},
+    8:{view:'Бічна стіна · арт',seats:2,zone:'A · Арт',status:'available',freeAt:null,power:'немає',wifi:'Сильний',noise:'Тихо',light:'Приглушене'},
+    9:{view:'Центр · великий стіл',seats:6,zone:'A · Центр',status:'available',freeAt:null,power:'є розетка ×4',wifi:'Відмінний',noise:'Активно',light:'Верхнє'},
+   10:{view:'Центр · диванна зона',seats:6,zone:'A · Диван',status:'available',freeAt:null,power:'є розетка ×2',wifi:'Відмінний',noise:'Помірно',light:'Верхнє'},
   };
 
-  // Disable past slots
-  const now = new Date();
-  document.querySelectorAll('.sb-slot[data-time]').forEach(slot => {
-    const [hh,mm] = slot.dataset.time.split(':').map(Number);
-    const d = new Date(now); d.setHours(hh,mm,0,0);
-    if(d <= now) slot.classList.add('past');
+  // Disable past time slots
+  const now=new Date();
+  document.querySelectorAll('.sb-slot[data-time]').forEach(slot=>{
+    const [hh,mm]=slot.dataset.time.split(':').map(Number);
+    const d=new Date(now); d.setHours(hh,mm,0,0);
+    if(d<=now) slot.classList.add('past');
   });
 
   // Fetch live data
   fetch('/api/tables/cafe-aura').then(r=>r.ok?r.json():Promise.reject()).then(tables=>{
     tables.forEach(t=>{
-      if(tableData[t.id]){ tableData[t.id].status=t.status; tableData[t.id].view=t.view; tableData[t.id].seats=t.seats; }
-      const g = document.querySelector(`#cafe-svg .svg-table[data-id="${t.id}"]`);
+      if(tableData[t.id]){tableData[t.id].status=t.status;tableData[t.id].view=t.view;tableData[t.id].seats=t.seats;}
+      const g=document.querySelector(`#cafe-svg .svg-table[data-id="${t.id}"]`);
       if(!g) return;
-      if(t.status==='booked'){ g.classList.remove('available','is-selected'); g.classList.add('booked'); g.removeAttribute('tabindex'); g.setAttribute('role','img'); }
+      if(t.status==='booked'){g.classList.remove('available','is-selected');g.classList.add('booked');g.removeAttribute('tabindex');g.setAttribute('role','img');}
     });
     updateAvailCount();
   }).catch(()=>{});
 
   function updateAvailCount(){
-    const avail = Object.values(tableData).filter(t=>t.status==='available').length;
-    const el = $('avail-count'); if(el) el.textContent=currentLang==='en'?`${avail} / ${Object.keys(tableData).length} free`:`${avail} / ${Object.keys(tableData).length} вільних`;
+    const avail=Object.values(tableData).filter(t=>t.status==='available').length;
+    const total=Object.keys(tableData).length;
+    const el=$('avail-count'); if(el) el.textContent=avail;
+    const et=$('avail-total'); if(et) et.textContent=currentLang==='en'?`/ ${total} free`:`/ ${total} вільних`;
+    const es=$('avail-count-small'); if(es) es.textContent=currentLang==='en'?`${avail} / ${total} free`:`${avail} / ${total} вільних`;
+    const sub=$('vh-avail-sub'); if(sub) sub.textContent=currentLang==='en'?'tables now':'столів зараз';
   }
 
-  let selectedId=5, selectedTime=null, activeBookingId=null;
-  const sidebarWrap=$('dine-sidebar-wrap'), badge=$('sb-badge'), sbTitle=$('sb-title'),
-        sbView=$('sb-view'), sbSeats=$('sb-seats'), sbZone=$('sb-zone'),
-        sbBookBtn=$('sb-book-btn'), sbClose=$('sb-close'),
-        bookedNotice=$('booked-notice'), oopsBanner=$('oops-banner'),
+  let selectedId=5,selectedTime=null,activeBookingId=null;
+  const badge=$('sb-badge'),sbTitle=$('sb-title'),sbView=$('sb-view'),sbSeats=$('sb-seats'),
+        sbZone=$('sb-zone'),sbBookBtn=$('sb-book-btn'),sbClose=$('sb-close'),
+        bookedNotice=$('booked-notice'),oopsBanner=$('oops-banner'),
         allTables=document.querySelectorAll('#cafe-svg .svg-table');
 
-  function seatsLabel(n){ return currentLang==='en' ? (n===1?'1 person':`${n} seats`) : (n===1?'1 особа':n<5?`${n} особи`:`${n} осіб`); }
-
+  function seatsLabel(n){ return currentLang==='en'?(n===1?'1 person':`${n} seats`):(n===1?'1 особа':n<5?`${n} особи`:`${n} осіб`); }
   function powerIcon(p){
-    if(!p || p==='немає') return '<span style="color:var(--red)">✕ '+(currentLang==='en'?'none':'немає')+'</span>';
+    if(!p||p==='немає') return '<span style="color:var(--red)">✕ '+(currentLang==='en'?'none':'немає')+'</span>';
     return '<span style="color:#16A34A">⚡ '+p+'</span>';
   }
   function wifiIcon(w){
-    const colors={'Відмінний':'#16A34A','Сильний':'#16A34A','Середній':'var(--amber)','Слабкий':'var(--red)','Excellent':'#16A34A','Strong':'#16A34A','Medium':'var(--amber)','Weak':'var(--red)'};
-    const label = currentLang==='en' ? ({'Відмінний':'Excellent','Сильний':'Strong','Середній':'Medium','Слабкий':'Weak'}[w]||w) : w;
+    const colors={Відмінний:'#16A34A',Сильний:'#16A34A',Середній:'var(--amber)',Слабкий:'var(--red)',Excellent:'#16A34A',Strong:'#16A34A',Medium:'var(--amber)',Weak:'var(--red)'};
+    const label=currentLang==='en'?({Відмінний:'Excellent',Сильний:'Strong',Середній:'Medium',Слабкий:'Weak'}[w]||w):w;
     return '<span style="color:'+(colors[label]||colors[w]||'var(--grey-soft)')+'">◉ '+label+'</span>';
   }
   function noiseIcon(n){
-    const colors={'Тихо':'#16A34A','Помірно':'var(--amber)','Активно':'var(--red)','Quiet':'#16A34A','Moderate':'var(--amber)','Active':'var(--red)'};
-    const label = currentLang==='en' ? ({'Тихо':'Quiet','Помірно':'Moderate','Активно':'Active'}[n]||n) : n;
+    const colors={Тихо:'#16A34A',Помірно:'var(--amber)',Активно:'var(--red)',Quiet:'#16A34A',Moderate:'var(--amber)',Active:'var(--red)'};
+    const label=currentLang==='en'?({Тихо:'Quiet',Помірно:'Moderate',Активно:'Active'}[n]||n):n;
     return '<span style="color:'+(colors[label]||colors[n]||'var(--grey-soft)')+'">'+label+'</span>';
   }
 
-  function updateSidebar(id, isBooked){
-    const d = tableData[id]; if(!d) return;
+  function updateSidebar(id,isBooked){
+    const d=tableData[id]; if(!d) return;
     badge.textContent=id; sbTitle.textContent=currentLang==='en'?`Table #${id}`:`Стіл №${id}`;
-    sbView.textContent=d.view;
-    sbSeats.textContent=seatsLabel(d.seats);
-    $('sb-zone').textContent=d.zone;
-    $('sb-power').innerHTML=powerIcon(d.power);
-    $('sb-wifi').innerHTML=wifiIcon(d.wifi);
-    $('sb-noise').innerHTML=noiseIcon(d.noise);
+    sbView.textContent=d.view; sbSeats.textContent=seatsLabel(d.seats); $('sb-zone').textContent=d.zone;
+    $('sb-power').innerHTML=powerIcon(d.power); $('sb-wifi').innerHTML=wifiIcon(d.wifi); $('sb-noise').innerHTML=noiseIcon(d.noise);
     if(isBooked){
       bookedNotice.innerHTML=currentLang==='en'
-        ? `<strong>Occupied</strong> · This table is currently occupied.${d.freeAt?'<br>Expected to be free at '+d.freeAt+'.':''}`
-        : `<strong>Зайнято</strong> · Цей столик зараз зайнятий.${d.freeAt?'<br>Звільниться орієнтовно о '+d.freeAt+'.':''}`;
+        ?`<strong>Occupied</strong> · This table is currently occupied.${d.freeAt?'<br>Expected free at '+d.freeAt+'.':''}`
+        :`<strong>Зайнято</strong> · Цей столик зараз зайнятий.${d.freeAt?'<br>Звільниться орієнтовно о '+d.freeAt+'.':''}`;
       bookedNotice.classList.add('visible');
       $('sb-status').textContent=currentLang==='en'?'Occupied':'Зайнятий'; $('sb-status').className='sb-row-v';
       $('sb-slots').style.opacity='0.3'; $('sb-slots').style.pointerEvents='none';
@@ -524,324 +1162,259 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
     }
   }
 
-  function clearSelection(){
-    allTables.forEach(g=>g.classList.remove('is-selected'));
-  }
+  function clearSelection(){ allTables.forEach(g=>g.classList.remove('is-selected')); }
 
   function selectTable(id){
     selectedId=id; selectedTime=null;
     document.querySelectorAll('.sb-slot').forEach(s=>s.classList.remove('active'));
     sbBookBtn.classList.add('btn-inactive');
-    sbBookBtn.textContent=currentLang==='en'?`Book Table #${id}`:`Забронювати Стіл №${id}`;
+    sbBookBtn.innerHTML=`<svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l6 3v5c0 3.8-2.6 7.3-6 8.5C4.6 17.3 2 13.8 2 10V5l8-3z"/></svg>${currentLang==='en'?`Book Table #${id}`:`Забронювати Стіл №${id}`}`;
     oopsBanner.classList.remove('visible');
-    clearSelection(); // hard single-select: only one selected table at a time
-    const g = document.querySelector(`#cafe-svg .svg-table[data-id="${id}"]`);
+    clearSelection();
+    const g=document.querySelector(`#cafe-svg .svg-table[data-id="${id}"]`);
     if(g) g.classList.add('is-selected');
-    sidebarWrap.classList.add('open');
-    updateSidebar(id, false);
+    updateSidebar(id,false);
   }
 
   function showBookedNotice(id){
-    clearSelection();
-    sidebarWrap.classList.add('open');
-    updateSidebar(id, true);
+    clearSelection(); updateSidebar(id,true);
     selectedId=null; selectedTime=null;
     sbBookBtn.classList.add('btn-inactive');
     sbBookBtn.textContent=currentLang==='en'?'Table occupied':'Стіл зайнятий';
   }
 
   allTables.forEach(g=>{
-    const id=parseInt(g.dataset.id), isBooked=g.classList.contains('booked');
-    if(isBooked){ g.style.cursor='pointer'; g.addEventListener('click',()=>showBookedNotice(id)); }
+    const id=parseInt(g.dataset.id),isBooked=g.classList.contains('booked');
+    if(isBooked){g.style.cursor='pointer';g.addEventListener('click',()=>showBookedNotice(id));}
     else{
       g.addEventListener('click',()=>selectTable(id));
-      g.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();selectTable(id);} });
+      g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectTable(id);}});
     }
   });
 
   // Tooltip
-  const tooltip = $('table-tooltip');
-  const ttTextUA = {1:'Стіл №1 · 2 місця · Вікно',2:'Стіл №2 · 2 місця · Вікно',3:'Стіл №3 · 4 місця · Вікно',4:'Стіл №4 · 4 місця · Вікно',5:'Стіл №5 · 2 місця · Вікно',6:'Стіл №6 · 4 місця · Центр',7:'Стіл №7 · 4 місця · Вид на парк',8:'Стіл №8 · 2 місця · Бічний',9:'Стіл №9 · 6 місць · Центр',10:'Стіл №10 · 6 місць · Центр'};
-  const ttTextEN = {1:'Table #1 · 2 seats · Window',2:'Table #2 · 2 seats · Window',3:'Table #3 · 4 seats · Window',4:'Table #4 · 4 seats · Window',5:'Table #5 · 2 seats · Window',6:'Table #6 · 4 seats · Center',7:'Table #7 · 4 seats · Park view',8:'Table #8 · 2 seats · Side',9:'Table #9 · 6 seats · Center',10:'Table #10 · 6 seats · Center'};
+  const tooltip=$('table-tooltip');
+  const ttUA={1:'Стіл №1 · 2 місця · Вікно',2:'Стіл №2 · 2 місця · Вікно',3:'Стіл №3 · 4 місця · Вікно',4:'Стіл №4 · 4 місця · Вікно',5:'Стіл №5 · 2 місця · Вікно',6:'Стіл №6 · 4 місця · Центр',7:'Стіл №7 · 4 місця · Сад',8:'Стіл №8 · 2 місця · Арт',9:'Стіл №9 · 6 місць · Центр',10:'Стіл №10 · 6 місць · Центр'};
+  const ttEN={1:'Table #1 · 2 seats · Window',2:'Table #2 · 2 seats · Window',3:'Table #3 · 4 seats · Window',4:'Table #4 · 4 seats · Window',5:'Table #5 · 2 seats · Window',6:'Table #6 · 4 seats · Center',7:'Table #7 · 4 seats · Garden',8:'Table #8 · 2 seats · Art wall',9:'Table #9 · 6 seats · Center',10:'Table #10 · 6 seats · Center'};
   allTables.forEach(g=>{
     const id=parseInt(g.dataset.id);
-    g.addEventListener('mouseenter',()=>{ const lg=(localStorage.getItem('prostir_lang')||'ua'); const tt = lg==='en'?ttTextEN:ttTextUA; tooltip.textContent=tt[id]||(lg==='en'?`Table #${id}`:`Стіл №${id}`); tooltip.classList.add('visible'); });
-    g.addEventListener('mousemove',e=>{ tooltip.style.left=(e.clientX+14)+'px'; tooltip.style.top=(e.clientY-28)+'px'; });
+    g.addEventListener('mouseenter',()=>{const lg=localStorage.getItem('prostir_lang')||'ua';tooltip.textContent=(lg==='en'?ttEN:ttUA)[id]||(lg==='en'?`Table #${id}`:`Стіл №${id}`);tooltip.classList.add('visible');});
+    g.addEventListener('mousemove',e=>{tooltip.style.left=(e.clientX+14)+'px';tooltip.style.top=(e.clientY-28)+'px';});
     g.addEventListener('mouseleave',()=>tooltip.classList.remove('visible'));
   });
 
-  sbClose && sbClose.addEventListener('click',()=>{
-    sidebarWrap.classList.remove('open');
-    clearSelection();
-    selectedId=null; bookedNotice.classList.remove('visible');
-  });
+  sbClose&&sbClose.addEventListener('click',()=>{clearSelection();selectedId=null;bookedNotice.classList.remove('visible');});
 
   document.querySelectorAll('.sb-slot:not(.past)').forEach(slot=>{
     slot.addEventListener('click',()=>{
       document.querySelectorAll('.sb-slot').forEach(s=>s.classList.remove('active'));
       slot.classList.add('active'); selectedTime=slot.dataset.time;
       sbBookBtn.classList.remove('btn-inactive');
-      sbBookBtn.textContent=selectedId?(currentLang==='en'?`Book Table #${selectedId} · ${selectedTime}`:`Забронювати Стіл №${selectedId} · ${selectedTime}`):(currentLang==='en'?'Book now':'Забронювати');
+      sbBookBtn.innerHTML=`<svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l6 3v5c0 3.8-2.6 7.3-6 8.5C4.6 17.3 2 13.8 2 10V5l8-3z"/></svg>${selectedId?(currentLang==='en'?`Book Table #${selectedId} · ${selectedTime}`:`Забронювати Стіл №${selectedId} · ${selectedTime}`):(currentLang==='en'?'Book now':'Забронювати')}`;
       oopsBanner.classList.remove('visible');
     });
   });
 
-  sbBookBtn.textContent=currentLang==='en'?'Book Table #5':'Забронювати Стіл №5';
-  updateSidebar(5, false);
+  updateSidebar(5,false);
 
   // Modal
-  const modal=$('diia-modal'), modalClose=$('modal-close'),
-        step1=$('modal-step-1'), step2=$('modal-step-2'), step3=$('modal-step-3'),
-        step1Btn=$('modal-step1-btn'), doneBtn=$('modal-done-btn');
-
-  function openModal(){ step1.classList.add('active'); step2.classList.remove('active'); step3.classList.remove('active'); modal.classList.add('open'); document.body.style.overflow='hidden'; }
-  function closeModal(){ modal.classList.remove('open'); document.body.style.overflow=''; }
-  function goStep(n){ [step1,step2,step3].forEach((s,i)=>s&&s.classList.toggle('active',i+1===n)); }
+  const modal=$('diia-modal'),modalClose=$('modal-close'),
+        step1=$('modal-step-1'),step2=$('modal-step-2'),step3=$('modal-step-3'),
+        step1Btn=$('modal-step1-btn'),doneBtn=$('modal-done-btn');
+  function openModal(){step1.classList.add('active');step2.classList.remove('active');step3.classList.remove('active');modal.classList.add('open');document.body.style.overflow='hidden';}
+  function closeModal(){modal.classList.remove('open');document.body.style.overflow='';}
+  function goStep(n){[step1,step2,step3].forEach((s,i)=>s&&s.classList.toggle('active',i+1===n));}
 
   sbBookBtn.addEventListener('click',()=>{
-    if(!selectedId){ oopsBanner.textContent=currentLang==='en'?'⚠ Select a table on the floorplan':'⚠ Оберіть столик на плані'; oopsBanner.classList.add('visible'); oopsBanner.style.animation='none'; oopsBanner.offsetHeight; oopsBanner.style.animation=''; return; }
-    if(!selectedTime){ oopsBanner.textContent=currentLang==='en'?'⚠ Select a booking time':'⚠ Оберіть час для бронювання'; oopsBanner.classList.add('visible'); oopsBanner.style.animation='none'; oopsBanner.offsetHeight; oopsBanner.style.animation=''; return; }
+    if(!selectedId){oopsBanner.textContent=currentLang==='en'?'⚠ Select a table on the floorplan':'⚠ Оберіть столик на плані';oopsBanner.classList.add('visible');oopsBanner.style.animation='none';oopsBanner.offsetHeight;oopsBanner.style.animation='';return;}
+    if(!selectedTime){oopsBanner.textContent=currentLang==='en'?'⚠ Select a booking time':'⚠ Оберіть час для бронювання';oopsBanner.classList.add('visible');oopsBanner.style.animation='none';oopsBanner.offsetHeight;oopsBanner.style.animation='';return;}
     openModal();
   });
 
   modalClose.addEventListener('click',closeModal);
-  modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
+  modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
 
-  step1Btn && step1Btn.addEventListener('click',()=>{
+  step1Btn&&step1Btn.addEventListener('click',()=>{
     goStep(2);
     const d2=tableData[selectedId]||{};
-    fetch('/api/book',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({tableId:selectedId,time:selectedTime,userId:'user-001'})}).then(r=>r.json()).then(res=>{if(res.booking) activeBookingId=res.booking.id;}).catch(()=>{});
+    fetch('/api/book',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({tableId:selectedId,time:selectedTime,userId:'user-001'})}).then(r=>r.json()).then(res=>{if(res.booking)activeBookingId=res.booking.id;}).catch(()=>{});
     setTimeout(()=>{
       goStep(3);
-      if(tableData[selectedId]) tableData[selectedId].status='booked';
+      if(tableData[selectedId])tableData[selectedId].status='booked';
       updateAvailCount();
       $('bcd-table').textContent=`№${selectedId} · ${d2.view||''}`;
       $('bcd-time').textContent=selectedTime||'–';
       $('bcd-seats').textContent=seatsLabel(d2.seats||2);
-    }, 3000);
+    },3000);
   });
 
-  doneBtn && doneBtn.addEventListener('click',()=>{
+  doneBtn&&doneBtn.addEventListener('click',()=>{
     closeModal();
-    showSEW(selectedId, selectedTime, tableData[selectedId]);
-    showSidebarSuccess(selectedId, selectedTime);
-    updateReceipt(selectedId, selectedTime);
+    showSEW(selectedId,selectedTime,tableData[selectedId]);
+    showSidebarSuccess(selectedId,selectedTime);
+    updateReceipt(selectedId,selectedTime);
     revealReceipt();
   });
 
-  const sbSuccess=$('sb-success'), sbBookingForm=$('sb-booking-form'),
-        sbSuccessDetail=$('sb-success-detail'), sbSuccessNew=$('sb-success-new'),
-        receiptCard=$('receipt-card'), paidStamp=$('receipt-paid-stamp');
+  const sbSuccess=$('sb-success'),sbBookingForm=$('sb-booking-form'),
+        sbSuccessDetail=$('sb-success-detail'),sbSuccessNew=$('sb-success-new'),
+        receiptCard=$('receipt-card'),paidStamp=$('receipt-paid-stamp');
 
-  function formatNow(){
-    const d = new Date();
-    const dd = String(d.getDate()).padStart(2,'0');
-    const mm = String(d.getMonth()+1).padStart(2,'0');
-    const yyyy = d.getFullYear();
-    const hh = String(d.getHours()).padStart(2,'0');
-    const min = String(d.getMinutes()).padStart(2,'0');
-    return `${dd}.${mm}.${yyyy} · ${hh}:${min}`;
-  }
+  function formatNow(){const d=new Date();return `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()} · ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;}
+  function calcReceipt(tableId,seats){const coffee=85,breakfast=145+(seats>=4?20:0),latte=75+(tableId%2===0?12:0);return{coffee,breakfast,latte,total:coffee+breakfast+latte};}
 
-  function calcReceipt(tableId, seats){
-    const coffee = 85;
-    const breakfast = 145 + (seats >= 4 ? 20 : 0);
-    const latte = 75 + (tableId % 2 === 0 ? 12 : 0);
-    return { coffee, breakfast, latte, total: coffee + breakfast + latte };
-  }
-
-  function updateReceipt(tableId, time){
-    const d = tableData[tableId] || {};
-    const seats = Number(d.seats || 2);
-    const r = calcReceipt(tableId, seats);
-
-    const meta = $('receipt-meta-line');
-    if(meta){
-      meta.textContent = currentLang === 'en'
-        ? `Table #${tableId} · ${d.view || 'Hall view'} · ${formatNow()}`
-        : `Стіл #${tableId} · ${d.view || 'Вид на зал'} · ${formatNow()}`;
-    }
-
-    const rows = document.querySelectorAll('.receipt-items .receipt-row');
-    if(rows[0]) rows[0].querySelector('.receipt-row-price').textContent = `${r.coffee}₴`;
-    if(rows[1]) rows[1].querySelector('.receipt-row-price').textContent = `${r.breakfast}₴`;
-    if(rows[2]) rows[2].querySelector('.receipt-row-price').textContent = `${r.latte}₴`;
-    const total = document.querySelector('.receipt-total .receipt-row-price');
-    if(total) total.textContent = `${r.total}₴`;
-
-    const tx = `PRX-${new Date().getFullYear()}-${String(tableId).padStart(2,'0')}${String((time||'00:00').replace(':','')).padStart(4,'0')}`;
-    const sign = $('receipt-sign-lines');
-    if(sign){
-      sign.innerHTML = currentLang === 'en'
-        ? `Transaction: #${tx}<br>Status: Confirmed · Secure payment`
-        : `Транзакція: #${tx}<br>Статус: Підтверджено · Безпечна оплата`;
-    }
+  function updateReceipt(tableId,time){
+    const d=tableData[tableId]||{},seats=Number(d.seats||2),r=calcReceipt(tableId,seats);
+    const meta=$('receipt-meta-line');
+    if(meta) meta.textContent=currentLang==='en'?`Table #${tableId} · ${d.view||'Hall view'} · ${formatNow()}`:`Стіл #${tableId} · ${d.view||'Вид на зал'} · ${formatNow()}`;
+    const rows=document.querySelectorAll('.receipt-items .receipt-row');
+    if(rows[0])rows[0].querySelector('.receipt-row-price').textContent=`${r.coffee}₴`;
+    if(rows[1])rows[1].querySelector('.receipt-row-price').textContent=`${r.breakfast}₴`;
+    if(rows[2])rows[2].querySelector('.receipt-row-price').textContent=`${r.latte}₴`;
+    const total=document.querySelector('.receipt-total .receipt-row-price');
+    if(total)total.textContent=`${r.total}₴`;
+    const tx=`PRX-${new Date().getFullYear()}-${String(tableId).padStart(2,'0')}${String((time||'00:00').replace(':','')).padStart(4,'0')}`;
+    const sign=$('receipt-sign-lines');
+    if(sign) sign.innerHTML=currentLang==='en'?`Transaction: #${tx}<br>Status: Confirmed · Secure payment`:`Транзакція: #${tx}<br>Статус: Підтверджено · Безпечна оплата`;
   }
 
   function revealReceipt(){
     if(!receiptCard) return;
-    receiptCard.classList.remove('is-locked');
-    receiptCard.classList.remove('is-revealed');
-    paidStamp && paidStamp.classList.remove('stamp-in');
-    void receiptCard.offsetWidth;
+    receiptCard.classList.remove('is-locked','is-revealed'); void receiptCard.offsetWidth;
     receiptCard.classList.add('is-revealed');
-    setTimeout(()=>{ paidStamp && paidStamp.classList.add('stamp-in'); }, 260);
+    setTimeout(()=>{paidStamp&&paidStamp.classList.add('stamp-in');},260);
   }
 
-  function showSidebarSuccess(tableId, time){
+  function showSidebarSuccess(tableId,time){
     if(!sbSuccess||!sbBookingForm) return;
     sbBookingForm.classList.add('hidden'); sbSuccess.classList.add('visible');
     if(sbSuccessDetail) sbSuccessDetail.textContent=currentLang==='en'?`Table #${tableId} · ${time||''}`:`Стіл №${tableId} · ${time||''}`;
-    sidebarWrap.classList.add('open');
   }
 
-  sbSuccessNew && sbSuccessNew.addEventListener('click',()=>{
+  sbSuccessNew&&sbSuccessNew.addEventListener('click',()=>{
     sbSuccess.classList.remove('visible'); sbBookingForm.classList.remove('hidden');
     selectedId=null; selectedTime=null;
-    sbBookBtn.textContent=currentLang==='en'?'Book now':'Забронювати'; sbBookBtn.classList.add('btn-inactive');
+    sbBookBtn.innerHTML=`<svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l6 3v5c0 3.8-2.6 7.3-6 8.5C4.6 17.3 2 13.8 2 10V5l8-3z"/></svg>${currentLang==='en'?'Book now':'Забронювати'}`;
+    sbBookBtn.classList.add('btn-inactive');
     document.querySelectorAll('.sb-slot').forEach(s=>s.classList.remove('active'));
     clearSelection();
-    sidebarWrap.classList.remove('open');
-    if(receiptCard){ receiptCard.classList.remove('is-revealed'); receiptCard.classList.add('is-locked'); }
-    paidStamp && paidStamp.classList.remove('stamp-in');
+    if(receiptCard){receiptCard.classList.remove('is-revealed');receiptCard.classList.add('is-locked');}
+    paidStamp&&paidStamp.classList.remove('stamp-in');
   });
-  window.__setDineLang = function(lang){
-    currentLang = lang==='en'?'en':'ua';
+
+  window.__setDineLang=function(lang){
+    currentLang=lang==='en'?'en':'ua';
     updateAvailCount();
-    updateSidebar(selectedId||5, false);
+    if(selectedId) updateSidebar(selectedId,false);
   };
 })();
 
-// Safe Exit Widget
-let sewSec=15*60, sewInterval=null;
-function showSEW(tableId, time, info){
+/* ── Safe Exit Widget ── */
+let sewSec=15*60,sewInterval=null;
+function showSEW(tableId,time,info){
   const sew=$('sew');
-  const _lang = localStorage.getItem('prostir_lang') === 'en' ? 'en' : 'ua';
+  const _lang=localStorage.getItem('prostir_lang')==='en'?'en':'ua';
   $('sew-venue').textContent='Cafe Aura';
   $('sew-detail').textContent=_lang==='en'?`Table #${tableId} · ${info?.view||''} · ${time||''}`:`Стіл #${tableId} · ${info?.view||''} · ${time||''}`;
   sew.classList.add('active');
   if(sewInterval) clearInterval(sewInterval);
   sewSec=15*60;
-  sewInterval=setInterval(()=>{
-    sewSec=sewSec<=0?15*60:sewSec-1;
-    $('sew-timer').textContent=String(Math.floor(sewSec/60)).padStart(2,'0')+':'+String(sewSec%60).padStart(2,'0');
-  },1000);
+  sewInterval=setInterval(()=>{sewSec=sewSec<=0?15*60:sewSec-1;$('sew-timer').textContent=String(Math.floor(sewSec/60)).padStart(2,'0')+':'+String(sewSec%60).padStart(2,'0');},1000);
 }
-$('sew-close').addEventListener('click',()=>{ $('sew').classList.remove('active'); clearInterval(sewInterval); });
-$('sew-cancel').addEventListener('click',()=>{ $('sew').classList.remove('active'); clearInterval(sewInterval); });
+$('sew-close').addEventListener('click',()=>{$('sew').classList.remove('active');clearInterval(sewInterval);});
+$('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active');clearInterval(sewInterval);});
 
-// Master timer
+/* ── Master timer ── */
 (function(){
   let sec=14*60+32;
   const els=['asa-timer'].map(id=>document.getElementById(id));
-  setInterval(()=>{ sec=sec<=0?15*60:sec-1; const t=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0'); els.forEach(el=>{if(el)el.textContent=t;}); },1000);
+  setInterval(()=>{sec=sec<=0?15*60:sec-1;const t=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');els.forEach(el=>{if(el)el.textContent=t;});},1000);
 })();
 
-// Language switcher (UA / EN)
+/* ── Language switcher ── */
 (function(){
-  const switcher = document.getElementById('lang-switch');
-  if(!switcher) return;
-
-  const t = {
-    ua: {
-      nav: { dine: 'Dine', working: 'Working', moments: 'Moments' },
-      common:{ quickLogin:'Швидкий вхід з Дія' },
-      hero: {
-        eyebrow: '01 &nbsp;·&nbsp; Dine',
-        title: 'Обери свій стіл.<br>До <span class="accent">останнього</span> місця.',
-        desc: 'Інтерактивний план залу Cafe Aura в реальному часі. Клікни на стіл, обери час — і підпиши бронювання через Дію за секунди. Без черг. Без дзвінків.'
-      },
+  const switcher=document.getElementById('lang-switch'); if(!switcher) return;
+  const T={
+    ua:{
+      nav:{dine:'Dine',working:'Working',moments:'Moments'},
+      common:{quickLogin:'Швидкий вхід з Дія'},
+      hero:{eyebrow:'01 · Dine'},
       labels:{
-        activeSession:'Активна сесія', liveOpen:'Відкрито · до 22:30', details:'Деталі столу', status:'Статус', bookingTime:'Час бронювання',
-        successTitle:'Стіл зарезервовано.', successSub:'Чекаємо на вас!', total:'Разом', signed:'✓ Підписано через Дія',
-        receiptLines:'Транзакція: #PRX-2026-03291<br>Статус: Підтверджено · Безпечна оплата',
-        modalTitle1:'Відкрийте застосунок Дія', modalSub1:'Відскануйте QR-код для верифікації особистості та підписання бронювання.',
-        modalBtn1:'Симулювати підпис Дія →', modalTitle2:'Підпис Дія у процесі...', modalSub2:'Перевіряємо вашу особистість та застосовуємо цифровий підпис.',
-        modalTitle3:'Бронювання підтверджено', modalDone:'Закрити', newBooking:'← Нове бронювання'
+        activeSession:'Активна сесія',liveOpen:'Відкрито · до 22:30',details:'Деталі столу',status:'Статус',
+        bookingTime:'Час бронювання',successTitle:'Стіл зарезервовано.',successSub:'Чекаємо на вас!',
+        total:'Разом',signed:'✓ Підписано через Дія',
+        modalTitle1:'Відкрийте застосунок Дія',modalSub1:'Відскануйте QR-код для верифікації особистості та підписання бронювання.',
+        modalBtn1:'Симулювати підпис Дія →',modalTitle2:'Підпис Дія у процесі...',modalSub2:'Перевіряємо вашу особистість та застосовуємо цифровий підпис.',
+        modalTitle3:'Бронювання підтверджено',modalDone:'Закрити',newBooking:'← Нове бронювання',
+        vhLive:'Live · Зал оновлено',tablesNow:'столів зараз',available:'вільних',
+        sbPlaceholder:'Виберіть стіл на плані',
       }
     },
-    en: {
-      nav: { dine: 'Dine', working: 'Working', moments: 'Moments' },
-      common:{ quickLogin:'Quick Sign-in with Diia' },
-      hero: {
-        eyebrow: '01 &nbsp;·&nbsp; Dine',
-        title: 'Choose your table.<br>Until the <span class="accent">last</span> available seat.',
-        desc: 'Cafe Aura live floorplan in real time. Tap a table, pick a time slot — and confirm booking via Diia in seconds. No queues. No calls.'
-      },
+    en:{
+      nav:{dine:'Dine',working:'Working',moments:'Moments'},
+      common:{quickLogin:'Quick Sign-in with Diia'},
+      hero:{eyebrow:'01 · Dine'},
       labels:{
-        activeSession:'Active session', liveOpen:'Open · until 22:30', details:'Table details', status:'Status', bookingTime:'Booking time',
-        successTitle:'Table reserved.', successSub:'See you soon!', total:'Total', signed:'✓ Signed via Diia',
-        receiptLines:'Transaction: #PRX-2026-03291<br>Status: Confirmed · Secure payment',
-        modalTitle1:'Open the Diia app', modalSub1:'Scan the QR code to verify identity and sign the booking.',
-        modalBtn1:'Simulate Diia signature →', modalTitle2:'Diia signature in progress...', modalSub2:'Verifying your identity and applying digital signature.',
-        modalTitle3:'Booking confirmed', modalDone:'Close', newBooking:'← New booking'
+        activeSession:'Active session',liveOpen:'Open · until 22:30',details:'Table details',status:'Status',
+        bookingTime:'Booking time',successTitle:'Table reserved.',successSub:'See you soon!',
+        total:'Total',signed:'✓ Signed via Diia',
+        modalTitle1:'Open the Diia app',modalSub1:'Scan the QR code to verify identity and sign the booking.',
+        modalBtn1:'Simulate Diia signature →',modalTitle2:'Diia signature in progress...',modalSub2:'Verifying your identity and applying digital signature.',
+        modalTitle3:'Booking confirmed',modalDone:'Close',newBooking:'← New booking',
+        vhLive:'Live · Hall updated',tablesNow:'tables now',available:'free',
+        sbPlaceholder:'Select a table on the map',
       }
     }
   };
 
-  const heroEyebrow = $('hero-eyebrow');
-  const heroTitle = $('hero-title');
-  const heroDesc = $('hero-desc');
-
   function apply(lang){
-    document.querySelectorAll('[data-nav]').forEach(a=>{
-      const k = a.dataset.nav;
-      if(t[lang].nav[k]) a.textContent = t[lang].nav[k];
-    });
-    if(heroEyebrow) heroEyebrow.innerHTML = t[lang].hero.eyebrow;
-    if(heroTitle) heroTitle.innerHTML = t[lang].hero.title;
-    if(heroDesc) heroDesc.textContent = t[lang].hero.desc;
-    const btnLabel = document.querySelector('.diia-btn .btn-label'); if(btnLabel) btnLabel.textContent = t[lang].common.quickLogin;
-    const asaTitle = $('asa-title'); if(asaTitle) asaTitle.textContent = t[lang].labels.activeSession;
-    const liveBadge = $('live-badge'); if(liveBadge) liveBadge.innerHTML = '<span class="live-dot"></span>'+t[lang].labels.liveOpen;
-    const secLabel = $('sb-section-label'); if(secLabel) secLabel.textContent = t[lang].labels.details;
-    const stLabel = $('sb-status-label'); if(stLabel) stLabel.textContent = t[lang].labels.status;
-    const timeLabel = $('sb-time-label'); if(timeLabel) timeLabel.textContent = t[lang].labels.bookingTime;
-    const sucT = $('sb-success-title'); if(sucT) sucT.textContent = t[lang].labels.successTitle;
-    const sucS = $('sb-success-sub'); if(sucS) sucS.textContent = t[lang].labels.successSub;
-    const totalL = $('receipt-total-label'); if(totalL) totalL.textContent = t[lang].labels.total;
-    const signed = $('receipt-diia-badge'); if(signed) signed.textContent = t[lang].labels.signed;
-    const receiptLines = $('receipt-sign-lines'); if(receiptLines) receiptLines.innerHTML = t[lang].labels.receiptLines;
-    const mt1 = document.querySelector('#modal-step-1 .modal-title'); if(mt1) mt1.textContent = t[lang].labels.modalTitle1;
-    const ms1 = document.querySelector('#modal-step-1 .modal-sub'); if(ms1) ms1.textContent = t[lang].labels.modalSub1;
-    const mb1 = $('modal-step1-btn'); if(mb1) mb1.textContent = t[lang].labels.modalBtn1;
-    const mt2 = document.querySelector('#modal-step-2 .modal-title'); if(mt2) mt2.textContent = t[lang].labels.modalTitle2;
-    const ms2 = document.querySelector('#modal-step-2 .modal-sub'); if(ms2) ms2.textContent = t[lang].labels.modalSub2;
-    const mt3 = document.querySelector('#modal-step-3 .modal-title'); if(mt3) mt3.textContent = t[lang].labels.modalTitle3;
-    const md = $('modal-done-btn'); if(md) md.textContent = t[lang].labels.modalDone;
-    const nB = $('sb-success-new'); if(nB) nB.textContent = t[lang].labels.newBooking;
-    const footerLinks = document.querySelectorAll('.footer-links a');
-    if(footerLinks[0]) footerLinks[0].textContent = lang==='en'?'Terms':'Умови';
-    if(footerLinks[1]) footerLinks[1].textContent = lang==='en'?'Privacy':'Конфіденційність';
-    if(footerLinks[2]) footerLinks[2].textContent = lang==='en'?'Contacts':'Контакти';
+    const t=T[lang].labels;
+    document.querySelectorAll('[data-nav]').forEach(a=>{const k=a.dataset.nav;if(T[lang].nav[k])a.textContent=T[lang].nav[k];});
+    const ey=$('hero-eyebrow'); if(ey) ey.textContent=T[lang].hero.eyebrow;
+    const btnLbl=document.querySelector('.diia-btn .btn-label'); if(btnLbl) btnLbl.textContent=T[lang].common.quickLogin;
+    const lv=$('live-badge'); if(lv) lv.innerHTML=`<span class="live-dot"></span>${t.liveOpen}`;
+    const vhl=$('vh-live-label'); if(vhl) vhl.textContent=t.vhLive;
+    const sub=$('vh-avail-sub'); if(sub) sub.textContent=t.tablesNow;
+    const at=$('avail-total'); if(at) at.textContent=`/ 10 ${t.available}`;
+    const secL=$('sb-section-label'); if(secL) secL.textContent=t.details;
+    const stL=$('sb-status-label'); if(stL) stL.textContent=t.status;
+    const timL=$('sb-time-label'); if(timL) timL.textContent=t.bookingTime;
+    const sucT=$('sb-success-title'); if(sucT) sucT.textContent=t.successTitle;
+    const sucS=$('sb-success-sub'); if(sucS) sucS.textContent=t.successSub;
+    const totL=$('receipt-total-label'); if(totL) totL.textContent=t.total;
+    const sgn=$('receipt-diia-badge'); if(sgn) sgn.textContent=t.signed;
+    const mt1=document.querySelector('#modal-step-1 .modal-title'); if(mt1) mt1.textContent=t.modalTitle1;
+    const ms1=document.querySelector('#modal-step-1 .modal-sub'); if(ms1) ms1.textContent=t.modalSub1;
+    const mb1=$('modal-step1-btn'); if(mb1) mb1.textContent=t.modalBtn1;
+    const mt2=document.querySelector('#modal-step-2 .modal-title'); if(mt2) mt2.textContent=t.modalTitle2;
+    const ms2=document.querySelector('#modal-step-2 .modal-sub'); if(ms2) ms2.textContent=t.modalSub2;
+    const mt3=document.querySelector('#modal-step-3 .modal-title'); if(mt3) mt3.textContent=t.modalTitle3;
+    const md=$('modal-done-btn'); if(md) md.textContent=t.modalDone;
+    const nB=$('sb-success-new'); if(nB) nB.textContent=t.newBooking;
+    const sp=$('sbp-text'); if(sp) sp.textContent=t.sbPlaceholder;
+    const asaT=$('asa-title'); if(asaT) asaT.textContent=t.activeSession;
+    const footerLinks=document.querySelectorAll('.footer-links a');
+    if(footerLinks[0]) footerLinks[0].textContent=lang==='en'?'Terms':'Умови';
+    if(footerLinks[1]) footerLinks[1].textContent=lang==='en'?'Privacy':'Конфіденційність';
+    if(footerLinks[2]) footerLinks[2].textContent=lang==='en'?'Contacts':'Контакти';
     if(window.__setDineLang) window.__setDineLang(lang);
-
-    switcher.querySelectorAll('.lang-btn').forEach(b=>{
-      const on = b.dataset.lang === lang;
-      b.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
+    switcher.querySelectorAll('.lang-btn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===lang?'true':'false'));
   }
 
-  const saved = localStorage.getItem('prostir_lang') || 'ua';
-  const initial = saved === 'en' ? 'en' : 'ua';
-  apply(initial);
-
+  const saved=localStorage.getItem('prostir_lang')||'ua';
+  apply(saved==='en'?'en':'ua');
   switcher.querySelectorAll('.lang-btn').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      const lang = b.dataset.lang === 'en' ? 'en' : 'ua';
-      localStorage.setItem('prostir_lang', lang);
-      apply(lang);
-    });
+    b.addEventListener('click',()=>{const l=b.dataset.lang==='en'?'en':'ua';localStorage.setItem('prostir_lang',l);apply(l);});
   });
 })();
 </script>
 
-<!-- Magnetic Button Effect (spring physics, single RAF loop) -->
+<!-- Magnetic Button Effect -->
 <script>
 (function(){if(window.matchMedia("(hover: none)").matches)return;if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;const K=150,D=15;function spring(){return{pos:0,vel:0,target:0};}function stepSpring(s,dt){const F=-K*(s.pos-s.target)-D*s.vel;s.vel+=F*dt;s.pos+=s.vel*dt;}function atRest(s){return Math.abs(s.pos-s.target)<0.015&&Math.abs(s.vel)<0.015;}let mx=-9999,my=-9999;document.addEventListener("mousemove",e=>{mx=e.clientX;my=e.clientY;},{passive:true});const buttons=[];let lastT=0;function loop(now){const dt=Math.min((now-(lastT||now))/1000,0.05);lastT=now;for(const b of buttons){const r=b.el.getBoundingClientRect();const cx=r.left+r.width*.5,cy=r.top+r.height*.5;const dx=mx-cx,dy=my-cy;const dist=Math.hypot(dx,dy);if(dist<b.radius){const pull=(1-dist/b.radius);b.sx.target=(dx/b.radius)*b.maxShift*pull;b.sy.target=(dy/b.radius)*b.maxShift*pull;b.near=true;}else{b.sx.target=b.sy.target=0;b.near=false;}stepSpring(b.sx,dt);stepSpring(b.sy,dt);const x=b.sx.pos,y=b.sy.pos;b.el.style.transform="translate("+x.toFixed(2)+"px,"+y.toFixed(2)+"px)";if(b.inner){b.inner.style.transform="translate("+(x*b.innerR).toFixed(2)+"px,"+(y*b.innerR).toFixed(2)+"px)";}const g=b.near?Math.max(0,(b.radius-dist)/b.radius):0;const gq=Math.round(g*32)/32;if(gq!==b._gq){b._gq=gq;if(gq>0.01){const s1=(18+gq*32).toFixed(0);const a1=(0.10+gq*0.40).toFixed(2);b.el.style.boxShadow="0 0 "+s1+"px rgba(139,92,246,"+a1+"),0 0 "+(gq*72).toFixed(0)+"px rgba(139,92,246,"+(gq*0.12).toFixed(2)+")";}else if(atRest(b.sx)&&atRest(b.sy)){b.el.style.boxShadow="";b.el.style.transform="";if(b.inner)b.inner.style.transform="";}}}requestAnimationFrame(loop);}function initButton(el){if(el._magInit)return;el._magInit=true;const radius=parseInt(el.dataset.magR,10)||70;const maxShift=parseInt(el.dataset.magS,10)||18;const innerR=parseFloat(el.dataset.magI)||0.45;let inner=el.querySelector(":scope > .mag-inner");if(!inner){inner=document.createElement("span");inner.className="mag-inner";while(el.firstChild)inner.appendChild(el.firstChild);el.appendChild(inner);}buttons.push({el,inner,radius,maxShift,innerR,sx:spring(),sy:spring(),near:false,_gq:-1});}function init(){document.querySelectorAll(".cta-btn,.diia-btn,[data-magnetic]").forEach(initButton);if(buttons.length)requestAnimationFrame(loop);}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",init);}else{requestAnimationFrame(init);}})();
 </script>
 <script src="/delight.js" defer></script>
-<script src="/faq.js" defer></script>
-<script src="/legal.js" defer></script>
+<script src="/faq.js"    defer></script>
+<script src="/legal.js"  defer></script>
 </body>
 </html>
