@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Moments — Ghost Mode · PROSTIR</title>
+  <link rel="stylesheet" href="/app.css"/>
+  <style>
+    .page-content { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem 6rem; }
+    @media (max-width: 720px) { .page-content { padding: 0 1.5rem 4rem; } }
+
+    /* Extra moments styles */
+    .moments-card {
+      background: rgba(7,7,7,0.88);
+      border: 1px solid rgba(139,92,246,0.28);
+      box-shadow: 0 24px 90px rgba(0,0,0,0.42), 0 0 0 1px rgba(139,92,246,0.08);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      transform: translateZ(0);
+    }
+    .moments-card:hover {
+      border-color: rgba(139,92,246,0.42);
+      box-shadow: 0 34px 110px rgba(0,0,0,0.48), 0 0 0 1px rgba(139,92,246,0.16);
+    }
+    .moments-title {
+      position: relative;
+    }
+    .moments-title::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -10px;
+      width: 92px; height: 2px;
+      background: linear-gradient(90deg, rgba(139,92,246,0.0), rgba(139,92,246,0.85), rgba(139,92,246,0.0));
+      opacity: 0.9;
+      filter: drop-shadow(0 0 14px rgba(139,92,246,0.45));
+    }
+    .ghost-icon { opacity: 0.78; filter: drop-shadow(0 0 18px rgba(139,92,246,0.35)); }
+
+    /* Premium toast (top-right) */
+    .moments-toast {
+      position: fixed;
+      top: 86px; right: 20px;
+      z-index: 1100;
+      width: min(430px, calc(100vw - 40px));
+      background: rgba(12,12,14,0.86);
+      border: 1px solid rgba(139,92,246,0.28);
+      border-radius: 20px;
+      padding: 0.95rem 1rem 0.9rem;
+      color: rgba(255,255,255,0.92);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 22px 80px rgba(0,0,0,0.55);
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+    }
+    .moments-toast.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .moments-toast-row {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+    }
+    .moments-toast-accent {
+      width: 34px; height: 34px;
+      border-radius: 14px;
+      background: rgba(139,92,246,0.14);
+      border: 1px solid rgba(139,92,246,0.25);
+      box-shadow: 0 0 26px rgba(139,92,246,0.22);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .moments-toast-accent::after{
+      content:'';
+      position:absolute; inset:-8px;
+      border-radius: 18px;
+      border: 1px solid rgba(139,92,246,0.22);
+      opacity: 0.55;
+      animation: toastPulse 2.4s ease-in-out infinite;
+    }
+    @keyframes toastPulse {
+      0%,100% { transform: scale(0.98); opacity: 0.35; }
+      50%      { transform: scale(1.06); opacity: 0.75; }
+    }
+    .moments-toast-title {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.2rem;
+    }
+    .moments-toast-sub {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.5;
+    }
+    .moments-toast-close {
+      margin-left: auto;
+      width: 30px; height: 30px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .moments-toast-close:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(139,92,246,0.25);
+      color: rgba(255,255,255,0.95);
+    }
+
+    .moments-toast-actions{
+      display:flex;
+      gap:0.7rem;
+      margin-top:0.95rem;
+    }
+    .moments-toast-accept{
+      flex:1;
+      min-height:44px;
+      border:none;
+      border-radius:14px;
+      background: rgba(139,92,246,0.14);
+      color: rgba(255,255,255,0.95);
+      border: 1px solid rgba(139,92,246,0.45);
+      cursor:pointer;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.02em;
+      transition: all 0.25s var(--ease);
+      box-shadow: 0 10px 40px rgba(139,92,246,0.12);
+    }
+    .moments-toast-accept:hover{
+      transform: translateY(-1px);
+      background: rgba(139,92,246,0.22);
+      box-shadow: 0 14px 54px rgba(139,92,246,0.16);
+    }
+    .moments-toast-decline{
+      flex:1;
+      min-height:44px;
+      border-radius:14px;
+      cursor:pointer;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.75);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.02em;
+      transition: all 0.25s var(--ease);
+    }
+    .moments-toast-decline:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.92);
+    }
+
+    .moments-features { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-top: 3.5rem; }
+    .moments-feat-card { border: 1px solid var(--grey-line); border-radius: 18px; padding: 1.75rem 1.6rem; background: var(--bg); box-shadow: var(--card-shadow); transition: border-color 0.28s var(--ease), transform 0.28s var(--ease-out); }
+    .moments-feat-card:hover { border-color: var(--violet); transform: translateY(-3px); }
+    .mfc-icon { font-size: 1.75rem; margin-bottom: 0.85rem; opacity: 0.8; }
+    .mfc-title { font-size: 1rem; font-weight: 700; color: var(--jet); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+    .mfc-desc  { font-size: 0.82rem; color: var(--grey-soft); line-height: 1.6; }
+    @media (max-width: 680px) { .moments-features { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body class="moments-page">
+<div class="grain" aria-hidden="true"></div>
+
+<header id="dock">
+  <a class="logo" href="/" aria-label="PROSTIR home"><span class="lp">PR</span><span class="lo">O</span><span class="lrest">STIR</span></a>
+  <nav aria-label="Main navigation">
+    <a href="/dine.html" data-magnetic data-mag-r="44" data-mag-s="7" data-nav="dine">Dine</a>
+    <a href="/working.html" data-magnetic data-mag-r="44" data-mag-s="7" data-nav="working">Working</a>
+    <a href="/moments.html" class="nav-active" data-magnetic data-mag-r="44" data-mag-s="7" data-nav="moments">Moments</a>
+    <a href="/business.html" data-magnetic data-mag-r="44" data-mag-s="7">Business</a>
+  </nav>
+  <div class="header-right">
+    <a href="#" class="diia-btn"><span class="diia-logo" aria-hidden="true">Дія</span><span class="btn-label">Швидкий вхід з Дія</span></a>
+    <div class="lang-switch" id="lang-switch" role="group" aria-label="Language">
+      <button type="button" class="lang-btn" data-lang="ua" aria-pressed="true" aria-label="Українська">
+        <span class="lang-flag" aria-hidden="true">🇺🇦</span><span class="lang-code">UA</span>
+      </button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false" aria-label="English">
+        <span class="lang-flag" aria-hidden="true">🇬🇧</span><span class="lang-code">EN</span>
+      </button>
+    </div>
+    <div class="user-avatar" id="user-avatar" title="Профіль">
+      <div class="moments-ring" aria-hidden="true"></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="mobile-nav" id="mobile-nav">
+  <a href="/dine.html" data-magnetic data-mag-r="44" data-mag-s="7" data-nav="dine">Dine</a>
+  <a href="/working.html" data-magnetic data-mag-r="44" data-mag-s="7" data-nav="working">Working</a>
+  <a href="/moments.html" class="nav-active" data-magnetic data-mag-r="44" data-mag-s="7" data-nav="moments">Moments</a>
+  <a href="/business.html" data-magnetic data-mag-r="44" data-mag-s="7">Business</a>
+</div>
+
+<div class="page-hero">
+  <p class="page-hero-eyebrow" id="hero-eyebrow">04 &nbsp;·&nbsp; Moments</p>
+  <h1 class="page-hero-h1" id="hero-title">Будь тут.<br><span class="accent" id="hero-accent">Або ні.</span></h1>
+  <p class="page-hero-p" id="hero-desc">Ghost Mode за замовчуванням. Твоя присутність — твій вибір. Ніхто не бачить тебе, якщо ти не вирішив відкритися. Момент — і з'єднання відбулось.</p>
+  <div class="page-hero-divider"></div>
+</div>
+
+<div class="page-content">
+  <div class="moments-wrap reveal">
+    <div class="moments-card">
+      <div class="ghost-icon" role="img" aria-label="Ghost" aria-hidden="false">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M8 20v-9a4 4 0 0 1 8 0v9" />
+          <path d="M9.5 14.5c.6.6 1.5.6 2.1 0" />
+          <path d="M12 16c.8.8 2 .8 2.8 0" />
+          <path d="M6.5 20c0-1.5 1-2.5 2.5-2.5" />
+          <path d="M17.5 20c0-1.5-1-2.5-2.5-2.5" />
+          <path d="M10 8.5h0" />
+          <path d="M14 8.5h0" />
+        </svg>
+      </div>
+      <div class="moments-title" id="moments-main-title">Ghost Mode</div>
+      <div class="moments-desc" id="moments-main-desc">Ти невидимий для інших відвідувачів. Увімкни Open Mode, щоб з'єднатися з тими, хто поруч.</div>
+      <div class="moments-toggle-wrap">
+        <span class="moments-toggle-label" id="toggle-label-off">Ghost</span>
+        <label class="toggle-switch" for="moments-toggle" aria-label="Перемкнути Ghost / Open Mode">
+          <input type="checkbox" id="moments-toggle">
+          <div class="toggle-track"><div class="toggle-thumb"></div></div>
+        </label>
+        <span class="moments-toggle-label" id="toggle-label-on">Open</span>
+      </div>
+      <div class="moments-active-desc" id="moments-active-desc">
+        ◉ &nbsp;Open Mode активний &nbsp;·&nbsp; Ти відкритий для з'єднань
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="moments-toast" id="moments-toast" role="status" aria-live="polite">
+    <div class="moments-toast-row">
+      <div class="moments-toast-accent" aria-hidden="true">✦</div>
+      <div style="min-width:0">
+        <div class="moments-toast-title" id="moments-toast-title">Хтось поруч хоче познайомитись</div>
+        <div class="moments-toast-sub" id="moments-toast-sub">зі столика №7</div>
+      </div>
+      <button class="moments-toast-close" id="moments-toast-close" aria-label="Закрити сповіщення">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M1 1l12 12M13 1L1 13"/>
+        </svg>
+      </button>
+    </div>
+    <div class="moments-toast-actions">
+      <button class="moments-toast-accept" id="moments-toast-accept" type="button">Прийняти</button>
+      <button class="moments-toast-decline" id="moments-toast-decline" type="button">Не цікаво</button>
+    </div>
+  </div>
+
+  <!-- Feature cards -->
+  <div class="moments-features">
+    <div class="moments-feat-card reveal">
+      <div class="mfc-icon">🎭</div>
+      <div class="mfc-title">Повна анонімність</div>
+      <div class="mfc-desc">У Ghost Mode ніхто — ані інші користувачі, ані заклад — не бачить твій профіль або активність.</div>
+    </div>
+    <div class="moments-feat-card reveal reveal-delay">
+      <div class="mfc-icon">⚡</div>
+      <div class="mfc-title">Моментальний контакт</div>
+      <div class="mfc-desc">Один клік — і людина поруч отримує сповіщення. Без реєстрації, без пошуку. Просто будьте в одному місці.</div>
+    </div>
+    <div class="moments-feat-card reveal reveal-delay2">
+      <div class="mfc-icon">🔐</div>
+      <div class="mfc-title">Особистість верифікована</div>
+      <div class="mfc-desc">Кожен, хто доступний в Open Mode, верифікований через Дію. Ніяких ботів або фейків.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a class="footer-logo" href="/"><span class="lp">PR</span><span class="lo">O</span><span class="lrest">STIR</span></a>
+    <span class="footer-copy">© 2026 PROSTIR · Urban OS · Kyiv &nbsp;·&nbsp; <span style="color:rgba(139,92,246,0.7);font-size:0.6rem;">✓ verified by Дія</span></span>
+    <nav class="footer-links"><a href="#">Умови</a><a href="#">Конфіденційність</a><a href="#">Контакти</a><a href="#" class="faq-link">FAQ</a><a href="/profile.html">Профіль</a></nav>
+  </div>
+</footer>
+
+<button id="theme-toggle-fab" class="theme-fab hidden" type="button" aria-label="Змінити тему">
+  <span id="theme-toggle-icon" aria-hidden="true">◐</span>
+  <span id="theme-toggle-label">Theme</span>
+</button>
+
+<script>
+function $(id){ return document.getElementById(id); }
+
+// Theme: follow device by default, allow one-click override
+(function(){
+  const fab = $('theme-toggle-fab');
+  const icon = $('theme-toggle-icon');
+  const label = $('theme-toggle-label');
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  const saved = localStorage.getItem('prostir_theme_choice');
+  function apply(theme){
+    document.body.classList.toggle('theme-noir', theme === 'dark');
+    if(icon) icon.textContent = theme === 'dark' ? '☾' : '☀';
+    if(label) label.textContent = theme === 'dark' ? 'Dark' : 'Light';
+  }
+  apply(saved || (mq.matches ? 'dark' : 'light'));
+  if(fab){
+    fab.classList.remove('hidden');
+    if(saved) fab.classList.add('ghosted');
+  }
+  mq.addEventListener('change', e => { if(!localStorage.getItem('prostir_theme_choice')) apply(e.matches ? 'dark' : 'light'); });
+  fab && fab.addEventListener('click', ()=>{
+    const next = document.body.classList.contains('theme-noir') ? 'light' : 'dark';
+    localStorage.setItem('prostir_theme_choice', next);
+    apply(next);
+    fab.classList.add('ghosted');
+  });
+})();
+const dock = $('dock');
+window.addEventListener('scroll', () => { dock.classList.toggle('scrolled', window.scrollY > 8); document.documentElement.style.setProperty('--parallax-y', (-window.scrollY*0.04).toFixed(2)+'px'); }, { passive: true });
+const btn = $('hamburger'), drawer = $('mobile-nav');
+btn && btn.addEventListener('click', () => {
+  const open = drawer.classList.toggle('open'); btn.setAttribute('aria-expanded', open);
+  const s = btn.querySelectorAll('span');
+  if(open){s[0].style.transform='translateY(6.5px) rotate(45deg)';s[1].style.opacity='0';s[2].style.transform='translateY(-6.5px) rotate(-45deg)';}
+  else{s.forEach(x=>{x.style.transform='';x.style.opacity='';}); }
+});
+const io = new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}}),{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// Moments toggle
+const toggle=$('moments-toggle'), avatar=$('user-avatar'), desc=$('moments-active-desc');
+const toast=$('moments-toast'), toastClose=$('moments-toast-close'), toastSub=$('moments-toast-sub');
+const toastAccept=$('moments-toast-accept'), toastDecline=$('moments-toast-decline');
+let toastTimer = null;
+
+function showToast(tableNo){
+  if(!toast) return;
+  if(toastTimer) clearTimeout(toastTimer);
+  const lang = localStorage.getItem('prostir_lang') || 'ua';
+  toastSub.textContent = lang === 'en' ? `from table #${tableNo}` : `зі столика №${tableNo}`;
+  toast.classList.add('open');
+  toastTimer = setTimeout(()=>{ toast.classList.remove('open'); }, 5200);
+}
+
+function hideToast(){
+  if(!toast) return;
+  if(toastTimer) clearTimeout(toastTimer);
+  toast.classList.remove('open');
+}
+
+toggle && toggle.addEventListener('change',()=>{
+  const on=toggle.checked;
+  if(desc) desc.classList.toggle('visible',on);
+  if(avatar) avatar.classList.toggle('open-to-chat',on);
+  if(on){
+    // Example: someone wants to connect from table 7.
+    showToast(7);
+  } else {
+    hideToast();
+  }
+});
+
+toastClose && toastClose.addEventListener('click', hideToast);
+toastAccept && toastAccept.addEventListener('click', () => {
+  // Confirm connection intent (UI only).
+  hideToast();
+});
+toastDecline && toastDecline.addEventListener('click', () => {
+  // Back to Ghost Mode.
+  hideToast();
+  if(toggle){
+    toggle.checked = false;
+    toggle.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+});
+
+// Language switcher (UA / EN)
+(function(){
+  const switcher = document.getElementById('lang-switch');
+  if(!switcher) return;
+
+  const t = {
+    ua: {
+      nav: { dine: 'Dine', working: 'Working', moments: 'Moments' },
+      hero: {
+        eyebrow: '04 &nbsp;·&nbsp; Moments',
+        title: 'Будь тут.<br><span class="accent">Або ні.</span>',
+        desc: 'Ghost Mode за замовчуванням. Твоя присутність — твій вибір. Ніхто не бачить тебе, якщо ти не вирішив відкритися. Момент — і з\'єднання відбулось.'
+      },
+      moments: {
+        mainTitle: 'Ghost Mode',
+        mainDesc: 'Ти невидимий для інших відвідувачів. Увімкни Open Mode, щоб з\'єднатися з тими, хто поруч.',
+        toggleOff: 'Ghost',
+        toggleOn: 'Open',
+        activeDesc: '◉ Open Mode активний &nbsp;·&nbsp; Ти відкритий для з\'єднань',
+        toastTitle: 'Хтось поруч хоче познайомитись',
+        toastAccept: 'Прийняти',
+        toastDecline: 'Не цікаво',
+        feat1t:'Повна анонімність', feat1d:'У Ghost Mode ніхто — ані інші користувачі, ані заклад — не бачить твій профіль або активність.',
+        feat2t:'Моментальний контакт', feat2d:'Один клік — і людина поруч отримує сповіщення. Без реєстрації, без пошуку. Просто будьте в одному місці.',
+        feat3t:'Особистість верифікована', feat3d:'Кожен, хто доступний в Open Mode, верифікований через Дію. Ніяких ботів або фейків.',
+      }
+    },
+    en: {
+      nav: { dine: 'Dine', working: 'Working', moments: 'Moments' },
+      hero: {
+        eyebrow: '04 &nbsp;·&nbsp; Moments',
+        title: 'Be here.<br><span class="accent">Or not.</span>',
+        desc: 'Ghost Mode by default. Your presence is your choice. No one sees you unless you decide to open up. A moment — and the connection happens.'
+      },
+      moments: {
+        mainTitle: 'Ghost Mode',
+        mainDesc: 'You are invisible to other visitors. Turn on Open Mode to connect with people nearby.',
+        toggleOff: 'Ghost',
+        toggleOn: 'Open',
+        activeDesc: '◉ Open Mode is active &nbsp;·&nbsp; You are open to connections',
+        toastTitle: 'Someone nearby wants to meet you',
+        toastAccept: 'Accept',
+        toastDecline: 'Not interested',
+        feat1t:'Full anonymity', feat1d:'In Ghost Mode, neither other users nor the venue can see your profile or activity.',
+        feat2t:'Instant contact', feat2d:'One tap and a person nearby gets a notification. No registration, no search. Just be in the same place.',
+        feat3t:'Verified identity', feat3d:'Everyone available in Open Mode is verified through Diia. No bots or fakes.',
+      }
+    }
+  };
+
+  const heroEyebrow = $('hero-eyebrow');
+  const heroTitle = $('hero-title');
+  const heroDesc = $('hero-desc');
+
+  const mainTitle = $('moments-main-title');
+  const mainDesc = $('moments-main-desc');
+  const toggleOff = $('toggle-label-off');
+  const toggleOn = $('toggle-label-on');
+  const activeDesc = $('moments-active-desc');
+
+  const toastTitle = $('moments-toast-title');
+  const toastAccept = $('moments-toast-accept');
+  const toastDecline = $('moments-toast-decline');
+
+  function apply(lang){
+    document.querySelectorAll('[data-nav]').forEach(a=>{
+      const k = a.dataset.nav;
+      if(t[lang].nav[k]) a.textContent = t[lang].nav[k];
+    });
+
+    if(heroEyebrow) heroEyebrow.innerHTML = t[lang].hero.eyebrow;
+    if(heroTitle) heroTitle.innerHTML = t[lang].hero.title;
+    if(heroDesc) heroDesc.textContent = t[lang].hero.desc;
+
+    if(mainTitle) mainTitle.textContent = t[lang].moments.mainTitle;
+    if(mainDesc) mainDesc.textContent = t[lang].moments.mainDesc;
+    if(toggleOff) toggleOff.textContent = t[lang].moments.toggleOff;
+    if(toggleOn) toggleOn.textContent = t[lang].moments.toggleOn;
+    if(activeDesc) activeDesc.innerHTML = t[lang].moments.activeDesc;
+    if(toastTitle) toastTitle.textContent = t[lang].moments.toastTitle;
+    const toastSub = $('moments-toast-sub');
+    if(toastSub){
+      toastSub.textContent = lang === 'en' ? 'from table #7' : 'зі столика №7';
+    }
+    if(toastAccept) toastAccept.textContent = t[lang].moments.toastAccept;
+    if(toastDecline) toastDecline.textContent = t[lang].moments.toastDecline;
+    const btnLabel = document.querySelector('.diia-btn .btn-label'); if(btnLabel) btnLabel.textContent = lang==='en'?'Quick Sign-in with Diia':'Швидкий вхід з Дія';
+    const feats = document.querySelectorAll('.moments-feat-card');
+    if(feats[0]){ feats[0].querySelector('.mfc-title').textContent=t[lang].moments.feat1t; feats[0].querySelector('.mfc-desc').textContent=t[lang].moments.feat1d; }
+    if(feats[1]){ feats[1].querySelector('.mfc-title').textContent=t[lang].moments.feat2t; feats[1].querySelector('.mfc-desc').textContent=t[lang].moments.feat2d; }
+    if(feats[2]){ feats[2].querySelector('.mfc-title').textContent=t[lang].moments.feat3t; feats[2].querySelector('.mfc-desc').textContent=t[lang].moments.feat3d; }
+    const footerLinks = document.querySelectorAll('.footer-links a');
+    if(footerLinks[0]) footerLinks[0].textContent = lang==='en'?'Terms':'Умови';
+    if(footerLinks[1]) footerLinks[1].textContent = lang==='en'?'Privacy':'Конфіденційність';
+    if(footerLinks[2]) footerLinks[2].textContent = lang==='en'?'Contacts':'Контакти';
+
+    switcher.querySelectorAll('.lang-btn').forEach(b=>{
+      const on = b.dataset.lang === lang;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+
+  const saved = localStorage.getItem('prostir_lang') || 'ua';
+  const initial = saved === 'en' ? 'en' : 'ua';
+  apply(initial);
+
+  switcher.querySelectorAll('.lang-btn').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const lang = b.dataset.lang === 'en' ? 'en' : 'ua';
+      localStorage.setItem('prostir_lang', lang);
+      apply(lang);
+    });
+  });
+})();
+</script>
+
+<!-- Magnetic Button Effect (spring physics, single RAF loop) -->
+<script>
+(function(){if(window.matchMedia("(hover: none)").matches)return;if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;const K=150,D=15;function spring(){return{pos:0,vel:0,target:0};}function stepSpring(s,dt){const F=-K*(s.pos-s.target)-D*s.vel;s.vel+=F*dt;s.pos+=s.vel*dt;}function atRest(s){return Math.abs(s.pos-s.target)<0.015&&Math.abs(s.vel)<0.015;}let mx=-9999,my=-9999;document.addEventListener("mousemove",e=>{mx=e.clientX;my=e.clientY;},{passive:true});const buttons=[];let lastT=0;function loop(now){const dt=Math.min((now-(lastT||now))/1000,0.05);lastT=now;for(const b of buttons){const r=b.el.getBoundingClientRect();const cx=r.left+r.width*.5,cy=r.top+r.height*.5;const dx=mx-cx,dy=my-cy;const dist=Math.hypot(dx,dy);if(dist<b.radius){const pull=(1-dist/b.radius);b.sx.target=(dx/b.radius)*b.maxShift*pull;b.sy.target=(dy/b.radius)*b.maxShift*pull;b.near=true;}else{b.sx.target=b.sy.target=0;b.near=false;}stepSpring(b.sx,dt);stepSpring(b.sy,dt);const x=b.sx.pos,y=b.sy.pos;b.el.style.transform="translate("+x.toFixed(2)+"px,"+y.toFixed(2)+"px)";if(b.inner){b.inner.style.transform="translate("+(x*b.innerR).toFixed(2)+"px,"+(y*b.innerR).toFixed(2)+"px)";}const g=b.near?Math.max(0,(b.radius-dist)/b.radius):0;const gq=Math.round(g*32)/32;if(gq!==b._gq){b._gq=gq;if(gq>0.01){const s1=(18+gq*32).toFixed(0);const a1=(0.10+gq*0.40).toFixed(2);b.el.style.boxShadow="0 0 "+s1+"px rgba(139,92,246,"+a1+"),0 0 "+(gq*72).toFixed(0)+"px rgba(139,92,246,"+(gq*0.12).toFixed(2)+")";}else if(atRest(b.sx)&&atRest(b.sy)){b.el.style.boxShadow="";b.el.style.transform="";if(b.inner)b.inner.style.transform="";}}}requestAnimationFrame(loop);}function initButton(el){if(el._magInit)return;el._magInit=true;const radius=parseInt(el.dataset.magR,10)||70;const maxShift=parseInt(el.dataset.magS,10)||18;const innerR=parseFloat(el.dataset.magI)||0.45;let inner=el.querySelector(":scope > .mag-inner");if(!inner){inner=document.createElement("span");inner.className="mag-inner";while(el.firstChild)inner.appendChild(el.firstChild);el.appendChild(inner);}buttons.push({el,inner,radius,maxShift,innerR,sx:spring(),sy:spring(),near:false,_gq:-1});}function init(){document.querySelectorAll(".cta-btn,.diia-btn,[data-magnetic]").forEach(initButton);if(buttons.length)requestAnimationFrame(loop);}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",init);}else{requestAnimationFrame(init);}})();
+</script>
+<script src="/delight.js" defer></script>
+<script src="/faq.js" defer></script>
+</body>
+</html>

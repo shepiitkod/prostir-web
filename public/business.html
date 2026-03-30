@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PROSTIR for Business — Керуй своїм закладом у ритмі міста</title>
+  <link rel="stylesheet" href="/app.css"/>
+  <style>
+    /* ════════════════════════════════════════════
+       BUSINESS PAGE — base resets
+       ════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body.biz-page {
+      background: #000;
+      color: #fff;
+      --bv: 139,92,246;
+      --violet-rgb: 139,92,246;
+    }
+    body.biz-page header {
+      background: rgba(0,0,0,0.82);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    body.biz-page nav a { color: rgba(255,255,255,0.52); }
+    body.biz-page nav a:hover,
+    body.biz-page nav a.nav-active {
+      color: #fff; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1);
+    }
+    body.biz-page .logo .lp  { color: #fff; }
+    body.biz-page .logo .lrest { color: rgba(255,255,255,0.3); }
+    body.biz-page .diia-btn {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.72);
+    }
+    body.biz-page .hamburger span { background: rgba(255,255,255,0.7); }
+    body.biz-page .mobile-nav {
+      background: rgba(10,10,10,0.97);
+      border-color: rgba(255,255,255,0.07);
+    }
+    body.biz-page .mobile-nav a { color: rgba(255,255,255,0.52); }
+    body.biz-page .mobile-nav a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+
+    /* ── Architectural grid background shared ── */
+    .biz-grid-bg {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+    .biz-grid-bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(139,92,246,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,92,246,.035) 1px, transparent 1px),
+        linear-gradient(rgba(139,92,246,.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,92,246,.015) 1px, transparent 1px);
+      background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+      mask-image: radial-gradient(ellipse 85% 70% at 50% 50%, black 0%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 85% 70% at 50% 50%, black 0%, transparent 100%);
+    }
+    .biz-grid-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(135deg, transparent 40%, rgba(139,92,246,.025) 55%, transparent 70%),
+        linear-gradient(-45deg,  transparent 45%, rgba(139,92,246,.02)  60%, transparent 75%),
+        linear-gradient(80deg,   transparent 30%, rgba(109,40,217,.018) 50%, transparent 70%);
+    }
+
+    /* ════════════════════════════════════════════
+       HERO SECTION
+       ════════════════════════════════════════════ */
+    .biz-hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 10rem 2rem 6rem;
+      position: relative; overflow: hidden;
+      background: #000;
+    }
+    .biz-hero-content { position: relative; z-index: 1; }
+    .biz-hero::before {
+      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 65% 55% at 50% 45%, rgba(139,92,246,0.16) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 35% at 15% 20%, rgba(124,58,237,0.11) 0%, transparent 60%),
+        radial-gradient(ellipse 35% 40% at 85% 15%, rgba(167,139,250,0.09) 0%, transparent 58%),
+        radial-gradient(ellipse 50% 28% at 70% 75%, rgba(109,40,217,0.07) 0%, transparent 62%);
+    }
+    .biz-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.35);
+      margin-bottom: 2rem;
+      opacity: 0; animation: fadeUp 0.8s 0.1s var(--ease-out) forwards;
+    }
+    .biz-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--violet); }
+    .biz-hero h1 {
+      font-size: clamp(2.6rem, 7.5vw, 6.4rem);
+      font-weight: 700; letter-spacing: -0.045em; line-height: 1.0;
+      color: #fff; margin-bottom: 1.5rem; max-width: 18ch;
+      opacity: 0; animation: fadeUp 0.9s 0.22s var(--ease-out) forwards;
+    }
+    .biz-hero h1 .accent {
+      background: linear-gradient(100deg,
+        #6B21D6 0%, #8B3FFF 12%, #A855F7 24%, #7C3AED 36%,
+        #6366F1 46%, #3B82F6 56%, #60A5FA 66%, #3B82F6 74%,
+        #7C3AED 84%, #A855F7 94%, #6B21D6 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: accentShimmer 5s linear infinite;
+    }
+    @keyframes accentShimmer {
+      0%   { background-position: 0%   center; }
+      100% { background-position: 200% center; }
+    }
+    .biz-hero p {
+      font-size: clamp(0.95rem, 2vw, 1.15rem); color: rgba(255,255,255,0.48);
+      max-width: 50ch; line-height: 1.72; margin: 0 auto 2.5rem;
+      opacity: 0; animation: fadeUp 0.9s 0.38s var(--ease-out) forwards;
+    }
+    .biz-hero-btns {
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.9s 0.52s var(--ease-out) forwards;
+    }
+    .biz-primary-btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.9rem 2.2rem; border-radius: 12px;
+      background: var(--violet); color: #fff; border: none;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer;
+      position: relative; overflow: hidden;
+      transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    }
+    .biz-primary-btn:hover {
+      background: #7C3AED;
+      box-shadow: 0 0 32px rgba(139,92,246,0.45), 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .biz-outline-btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.9rem 2.2rem; border-radius: 12px;
+      background: transparent; color: rgba(255,255,255,0.72);
+      border: 1px solid rgba(255,255,255,0.18);
+      font-size: 0.9rem; font-weight: 500; cursor: pointer;
+      transition: border-color 0.3s var(--ease), color 0.3s var(--ease), background 0.3s var(--ease);
+    }
+    .biz-outline-btn:hover {
+      border-color: rgba(139,92,246,0.5); color: #fff;
+      background: rgba(139,92,246,0.07);
+    }
+    .biz-hero-stats {
+      display: flex; align-items: center; justify-content: center;
+      gap: 2.5rem; flex-wrap: wrap;
+      margin-top: 4rem; padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      opacity: 0; animation: fadeUp 0.9s 0.7s var(--ease-out) forwards;
+    }
+    .biz-stat { text-align: center; }
+    .biz-stat-val {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700;
+      letter-spacing: -0.04em; color: #fff; line-height: 1;
+    }
+    .biz-stat-val span { color: var(--violet); }
+    .biz-stat-label {
+      font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 0.4rem;
+    }
+    .biz-stat-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.08); }
+
+    /* ════════════════════════════════════════════
+       ADMIN DASHBOARD SECTION
+       ════════════════════════════════════════════ */
+    .admin-section {
+      padding: 7rem 2rem 8rem;
+      background: #030303;
+      position: relative; overflow: hidden;
+    }
+    .admin-wrap {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1.35fr;
+      gap: 5rem; align-items: center;
+    }
+    .admin-copy .biz-section-eyebrow {
+      font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+      display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem;
+    }
+    .admin-copy .biz-section-eyebrow::after {
+      content: ''; flex: 1; max-width: 40px; height: 1px; background: rgba(255,255,255,0.08);
+    }
+    .admin-copy h2 {
+      font-size: clamp(1.7rem, 3.5vw, 2.5rem); font-weight: 700;
+      letter-spacing: -0.04em; line-height: 1.1; color: #fff; margin-bottom: 1rem;
+    }
+    .admin-copy p {
+      font-size: 1rem; color: rgba(255,255,255,0.44); line-height: 1.72; margin-bottom: 2rem;
+    }
+    .admin-feature-list { display: flex; flex-direction: column; gap: 1rem; }
+    .admin-feature-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+    }
+    .admin-feature-item:hover {
+      border-color: rgba(139,92,246,0.2); background: rgba(139,92,246,0.04);
+    }
+    .afi-icon {
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.2);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .afi-icon svg { width: 16px; height: 16px; stroke: var(--violet); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .afi-text h4 { font-size: 0.88rem; font-weight: 600; color: #fff; margin-bottom: 0.2rem; }
+    .afi-text p  { font-size: 0.78rem; color: rgba(255,255,255,0.4); line-height: 1.55; }
+
+    /* ── Admin panel mockup ── */
+    .admin-panel {
+      background: #0D0D0F; border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px; overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04),
+        0 24px 80px rgba(0,0,0,0.7),
+        0 0 60px rgba(139,92,246,0.06);
+    }
+    .ap-titlebar {
+      display: flex; align-items: center; gap: 0.65rem;
+      padding: 0.75rem 1rem;
+      background: #111113; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .ap-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .ap-dot.red   { background: #FF453A; }
+    .ap-dot.amber { background: #FF9F0A; }
+    .ap-dot.green { background: #32D74B; }
+    .ap-title {
+      font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.3); text-transform: uppercase; margin-left: 0.35rem;
+    }
+    .ap-tabs {
+      display: flex; gap: 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 0 1rem;
+    }
+    .ap-tab {
+      font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+      padding: 0.65rem 1rem; cursor: pointer; border-bottom: 2px solid transparent;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .ap-tab.active { color: var(--violet); border-color: var(--violet); }
+    .ap-body { padding: 1.25rem; }
+
+    /* Floorplan tab */
+    .ap-floor { display: none; }
+    .ap-floor.active { display: block; }
+    .ap-floor-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .ap-floor-title { font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.7); }
+    .ap-floor-tag {
+      font-family: var(--font-mono); font-size: 0.52rem; letter-spacing: 0.08em;
+      color: var(--violet); background: rgba(139,92,246,0.12);
+      border: 1px solid rgba(139,92,246,0.2); border-radius: 999px; padding: 0.2rem 0.6rem;
+    }
+    .ap-floorplan {
+      background: #0A0A0C; border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 14px; padding: 1rem; position: relative;
+    }
+    .ap-fp-grid {
+      display: grid; grid-template-columns: repeat(6,1fr); gap: 0.5rem;
+      position: relative;
+    }
+    .ap-fp-table {
+      aspect-ratio: 1; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 0.5rem; color: rgba(255,255,255,0.3);
+      cursor: grab; transition: all 0.2s ease; position: relative;
+    }
+    .ap-fp-table:hover { border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.06); }
+    .ap-fp-table.booked { background: rgba(139,92,246,0.15); border-color: rgba(139,92,246,0.4); color: rgba(139,92,246,0.9); }
+    .ap-fp-table.active-sel {
+      background: rgba(139,92,246,0.25); border-color: var(--violet); color: #fff;
+      box-shadow: 0 0 12px rgba(139,92,246,0.4);
+    }
+    .ap-fp-table.empty-zone { background: transparent; border-style: dashed; border-color: rgba(255,255,255,0.05); }
+    .ap-drag-hint {
+      font-family: var(--font-mono); font-size: 0.5rem; letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.18); text-align: center; margin-top: 0.75rem;
+      display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    }
+
+    /* Revenue tab */
+    .ap-revenue { display: none; }
+    .ap-revenue.active { display: block; }
+    .ap-rev-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .ap-rev-big { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.04em; color: #fff; line-height: 1; }
+    .ap-rev-sub { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.3); margin-top: 0.25rem; }
+    .ap-rev-badge {
+      font-family: var(--font-mono); font-size: 0.58rem; padding: 0.25rem 0.65rem;
+      border-radius: 999px; background: rgba(52,211,153,0.12); color: #34d399;
+      border: 1px solid rgba(52,211,153,0.2);
+    }
+    .ap-chart-wrap { position: relative; height: 120px; }
+    .ap-chart-wrap svg { width: 100%; height: 100%; overflow: visible; }
+    .ap-chart-grid line { stroke: rgba(255,255,255,0.05); stroke-width: 1; }
+    .ap-chart-area { fill: url(#revGrad); opacity: 0.6; }
+    .ap-chart-line { stroke: var(--violet); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .ap-chart-dot  { fill: var(--violet); }
+
+    /* ── Draw-in tip animations ── */
+    #rev-tip-ring {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: revTipRing 1s ease-out infinite;
+    }
+    @keyframes revTipRing {
+      0%   { r: 5;  opacity: 0.55; }
+      100% { r: 14; opacity: 0; }
+    }
+    /* Peak dot fade-in after draw completes */
+    #rev-peak-dot, #rev-peak-ring {
+      transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .ap-chart-labels { display: flex; justify-content: space-between; margin-top: 0.5rem; }
+    .ap-chart-label { font-family: var(--font-mono); font-size: 0.48rem; color: rgba(255,255,255,0.25); }
+    .ap-rev-peaks {
+      display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap;
+    }
+    .ap-peak-pill {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-family: var(--font-mono); font-size: 0.52rem; letter-spacing: 0.06em;
+      padding: 0.22rem 0.6rem; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.35);
+    }
+    .ap-peak-pill.active { border-color: rgba(139,92,246,0.3); color: var(--violet); background: rgba(139,92,246,0.08); }
+    .ap-peak-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+    /* Flow tab */
+    .ap-flow { display: none; }
+    .ap-flow.active { display: block; }
+    .ap-flow-counter {
+      display: flex; align-items: baseline; gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .ap-flow-num {
+      font-size: 3rem; font-weight: 700; letter-spacing: -0.06em;
+      color: #fff; line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .ap-flow-unit { font-family: var(--font-mono); font-size: 0.62rem; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; text-transform: uppercase; }
+    .ap-flow-live {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-mono); font-size: 0.55rem; color: #34d399;
+      padding: 0.25rem 0.65rem; border-radius: 999px;
+      border: 1px solid rgba(52,211,153,0.25); background: rgba(52,211,153,0.08);
+      margin-bottom: 1rem;
+    }
+    .ap-flow-live-dot { width: 5px; height: 5px; border-radius: 50%; background: #34d399; animation: blink 1.5s ease-in-out infinite; }
+    .ap-flow-bars {
+      display: flex; align-items: flex-end; gap: 4px; height: 64px; margin-bottom: 0.6rem;
+    }
+    .ap-flow-bar {
+      flex: 1; border-radius: 4px 4px 0 0;
+      background: linear-gradient(180deg, rgba(139,92,246,0.5) 0%, rgba(139,92,246,0.15) 100%);
+      height: 0; /* JS animates to target */
+      transition: height 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.4s ease;
+    }
+    .ap-flow-bar.peak {
+      background: linear-gradient(180deg, var(--violet) 0%, rgba(139,92,246,0.3) 100%);
+    }
+    .ap-flow-bar.peak.grown {
+      box-shadow: 0 -6px 18px rgba(139,92,246,0.55), 0 -2px 6px rgba(139,92,246,0.35);
+    }
+    /* counter roll */
+    .ap-flow-num { transition: none; }
+    .ap-flow-hours { display: flex; justify-content: space-between; }
+    .ap-flow-hour { font-family: var(--font-mono); font-size: 0.46rem; color: rgba(255,255,255,0.22); }
+
+    @media (max-width: 900px) {
+      .admin-wrap { grid-template-columns: 1fr; gap: 3rem; }
+      .admin-copy { order: 2; }
+      .admin-panel { order: 1; }
+    }
+
+    /* ════════════════════════════════════════════
+       SAFE EXIT VALUE SECTION
+       ════════════════════════════════════════════ */
+    .safe-value-section {
+      padding: 7rem 2rem 8rem;
+      background: #000;
+      position: relative; overflow: hidden;
+    }
+    .sv-wrap { max-width: 1100px; margin: 0 auto; }
+    .sv-header { text-align: center; margin-bottom: 4rem; }
+    .sv-header h2 { font-size: clamp(1.8rem,4vw,3rem); font-weight: 700; letter-spacing: -0.04em; color: #fff; margin-bottom: 0.75rem; }
+    .sv-header p { font-size: 1rem; color: rgba(255,255,255,0.4); max-width: 50ch; margin: 0 auto; line-height: 1.7; }
+    .sv-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .sv-card {
+      background: #0D0D0F; border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px; padding: 2rem;
+      position: relative; overflow: hidden;
+      transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+    .sv-card:hover { border-color: rgba(139,92,246,0.25); transform: translateY(-4px); }
+    .sv-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139,92,246,.35), transparent);
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .sv-card:hover::before { opacity: 1; }
+    .sv-card-num {
+      font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 1.5rem;
+    }
+    .sv-stat-val { font-size: 2.8rem; font-weight: 700; letter-spacing: -0.05em; line-height: 1; margin-bottom: 0.5rem; }
+    .sv-stat-val.green  { color: #34d399; }
+    .sv-stat-val.violet { color: var(--violet); }
+    .sv-stat-val.white  { color: #fff; }
+    .sv-card-title { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+    .sv-card-desc  { font-size: 0.84rem; color: rgba(255,255,255,0.38); line-height: 1.65; }
+    .sv-divider {
+      margin: 5rem auto; max-width: 860px;
+      border: none; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.06) 80%, transparent);
+    }
+    .sv-comparison {
+      max-width: 860px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 60px 1fr; gap: 1.5rem; align-items: center;
+    }
+    .sv-before, .sv-after {
+      padding: 1.5rem; border-radius: 16px;
+    }
+    .sv-before {
+      background: rgba(255,59,48,0.06); border: 1px solid rgba(255,59,48,0.14);
+    }
+    .sv-after {
+      background: rgba(52,211,153,0.06); border: 1px solid rgba(52,211,153,0.14);
+    }
+    .sv-compare-label {
+      font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 0.75rem;
+    }
+    .sv-before .sv-compare-label { color: rgba(255,59,48,0.6); }
+    .sv-after .sv-compare-label  { color: rgba(52,211,153,0.7); }
+    .sv-compare-title { font-size: 0.95rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+    .sv-compare-desc  { font-size: 0.8rem; color: rgba(255,255,255,0.38); line-height: 1.6; }
+    .sv-vs {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700;
+      color: rgba(255,255,255,0.4); margin: 0 auto;
+    }
+    @media (max-width: 720px) {
+      .sv-cards { grid-template-columns: 1fr; }
+      .sv-comparison { grid-template-columns: 1fr; }
+      .sv-vs { display: none; }
+    }
+
+    /* ════════════════════════════════════════════
+       THREE PILLARS — EFFICIENCY / SECURITY / GROWTH
+       ════════════════════════════════════════════ */
+    .pillars-section {
+      padding: 7rem 2rem 8rem;
+      background: #030303;
+      position: relative; overflow: hidden;
+    }
+    .pillars-wrap { max-width: 1100px; margin: 0 auto; }
+    .pillars-header { text-align: center; margin-bottom: 4.5rem; }
+    .pillars-header h2 { font-size: clamp(1.8rem,4vw,3rem); font-weight: 700; letter-spacing: -0.04em; color: #fff; margin-bottom: 0.75rem; }
+    .pillars-header p { font-size: 1rem; color: rgba(255,255,255,0.4); max-width: 48ch; margin: 0 auto; line-height: 1.7; }
+    .pillars-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; }
+    .pillar-card {
+      padding: 2.5rem 2rem;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.02);
+      position: relative; overflow: hidden;
+      transition: border-color 0.3s var(--ease), background 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+    .pillar-card:hover {
+      border-color: rgba(139,92,246,0.22);
+      background: rgba(139,92,246,0.03);
+      transform: translateY(-5px);
+    }
+    .pillar-icon {
+      width: 56px; height: 56px; border-radius: 16px; margin-bottom: 1.5rem;
+      border: 1px solid rgba(139,92,246,0.22);
+      background: rgba(139,92,246,0.08);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pillar-icon svg {
+      width: 24px; height: 24px; stroke: var(--violet); fill: none;
+      stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .pillar-num {
+      position: absolute; top: 1.75rem; right: 2rem;
+      font-family: var(--font-mono); font-size: 0.52rem; letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.12);
+    }
+    .pillar-card h3 { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.03em; color: #fff; margin-bottom: 0.65rem; }
+    .pillar-card p  { font-size: 0.86rem; color: rgba(255,255,255,0.38); line-height: 1.68; }
+
+    /* ══════════════════════════════════════════
+       PILLAR ICON ANIMATIONS
+       ══════════════════════════════════════════ */
+
+    /* ── Efficiency: electric bolt zap ── */
+    @keyframes boltIdleGlow {
+      0%,100% { filter: drop-shadow(0 0 3px rgba(139,92,246,0.45)); }
+      45%     { filter: drop-shadow(0 0 2px rgba(139,92,246,0.25)); }
+      50%     { filter: drop-shadow(0 0 11px rgba(190,160,255,0.85)) drop-shadow(0 0 22px rgba(139,92,246,0.4)); }
+      55%     { filter: drop-shadow(0 0 3px rgba(139,92,246,0.45)); }
+    }
+    @keyframes boltIdleBg {
+      0%,100% { background: rgba(139,92,246,0.08); }
+      50%     { background: rgba(139,92,246,0.18); }
+    }
+    @keyframes boltZapHover {
+      0%   { filter: drop-shadow(0 0 3px rgba(139,92,246,0.5)); transform: scale(1) rotate(0deg); }
+      15%  { filter: drop-shadow(0 0 24px rgba(255,255,255,0.9)) drop-shadow(0 0 40px rgba(139,92,246,0.7)); transform: scale(1.2) rotate(-3deg); }
+      30%  { filter: drop-shadow(0 0 8px rgba(139,92,246,0.6)); transform: scale(0.92) rotate(2deg); }
+      50%  { filter: drop-shadow(0 0 14px rgba(200,170,255,0.8)); transform: scale(1.08) rotate(-1deg); }
+      100% { filter: drop-shadow(0 0 4px rgba(139,92,246,0.5)); transform: scale(1) rotate(0deg); }
+    }
+    #pi-efficiency { animation: boltIdleBg 2.6s ease-in-out infinite; }
+    #bolt-svg      { animation: boltIdleGlow 2.6s ease-in-out infinite; transition: filter 0.3s; }
+    [data-pillar="efficiency"]:hover #bolt-svg {
+      animation: boltZapHover 0.55s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+    [data-pillar="efficiency"]:hover #pi-efficiency {
+      background: rgba(139,92,246,0.22);
+      box-shadow: 0 0 0 6px rgba(139,92,246,0.10), 0 0 0 14px rgba(139,92,246,0.04);
+    }
+
+    /* ── Security: sonar ping rings ── */
+    .pillar-icon { position: relative; }
+    .shield-ring {
+      position: absolute; inset: 0; border-radius: inherit;
+      border: 1px solid rgba(139,92,246,0.55);
+      transform: scale(1); opacity: 0;
+      pointer-events: none;
+      animation: shieldPing 3s ease-out infinite;
+    }
+    .shield-ring-2 { animation-delay: 1.5s; }
+    @keyframes shieldPing {
+      0%   { transform: scale(1);   opacity: 0.65; }
+      100% { transform: scale(1.9); opacity: 0; }
+    }
+    @keyframes shieldGlowIdle {
+      0%,100% { filter: drop-shadow(0 0 3px rgba(139,92,246,0.4)); }
+      50%     { filter: drop-shadow(0 0 8px rgba(139,92,246,0.75)); }
+    }
+    @keyframes shieldScanLine {
+      0%   { stroke: rgba(139,92,246,0.0); stroke-dashoffset: 20; }
+      10%  { stroke: rgba(190,160,255,0.9); }
+      80%  { stroke: rgba(139,92,246,0.0); stroke-dashoffset: -20; }
+      100% { stroke: rgba(139,92,246,0.0); stroke-dashoffset: -20; }
+    }
+    #shield-svg  { animation: shieldGlowIdle 2.4s ease-in-out infinite; }
+    #shield-scan { stroke-dasharray: 14 2; animation: shieldScanLine 2.4s ease-in-out infinite; }
+    [data-pillar="security"]:hover .shield-ring  { animation-duration: 1s; }
+    [data-pillar="security"]:hover .shield-ring-2 { animation-duration: 1s; animation-delay: 0.5s; }
+    [data-pillar="security"]:hover #shield-svg {
+      animation: shieldGlowIdle 0.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 10px rgba(139,92,246,0.9));
+    }
+    [data-pillar="security"]:hover #shield-path { stroke: #c4b5fd; }
+
+    /* ── Growth: signal trace crawling along the chart ── */
+    @keyframes chartSignal {
+      0%   { stroke-dashoffset: 36; opacity: 0; }
+      8%   { opacity: 1; }
+      85%  { opacity: 1; stroke-dashoffset: -2; }
+      100% { opacity: 0; stroke-dashoffset: -2; }
+    }
+    @keyframes arrowSignal {
+      0%,55% { stroke-dashoffset: 13; opacity: 0; }
+      60%    { opacity: 1; }
+      90%    { stroke-dashoffset: 0; opacity: 1; }
+      100%   { stroke-dashoffset: 0; opacity: 0; }
+    }
+    @keyframes tipPulse {
+      0%,100% { r: 1.8; opacity: 0.7; fill: var(--violet); }
+      50%     { r: 2.8; opacity: 1;   fill: #c4b5fd; filter: drop-shadow(0 0 5px rgba(139,92,246,0.8)); }
+    }
+    @keyframes growthBgIdle {
+      0%,100% { background: rgba(139,92,246,0.08); }
+      70%     { background: rgba(139,92,246,0.16); }
+    }
+    #growth-line  { stroke-dasharray: 10 26; animation: chartSignal 3s cubic-bezier(0.22,1,0.36,1) infinite; }
+    #growth-arrow { stroke-dasharray: 13;    animation: arrowSignal 3s cubic-bezier(0.22,1,0.36,1) infinite; }
+    #growth-tip   { fill: var(--violet);     animation: tipPulse 3s ease-in-out infinite; }
+    #pi-growth    { animation: growthBgIdle 3s ease-in-out infinite; }
+    [data-pillar="growth"]:hover #growth-line  { animation-duration: 1.2s; }
+    [data-pillar="growth"]:hover #growth-arrow { animation-duration: 1.2s; }
+    [data-pillar="growth"]:hover #growth-tip   { animation-duration: 1.2s; }
+    [data-pillar="growth"]:hover #pi-growth {
+      background: rgba(139,92,246,0.2);
+      box-shadow: 0 0 0 5px rgba(139,92,246,0.08), 0 0 0 12px rgba(139,92,246,0.03);
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce) {
+      #bolt-svg, #shield-svg, #growth-line, #growth-arrow, #growth-tip,
+      .shield-ring, #pi-efficiency, #pi-growth, #pi-security { animation: none !important; }
+    }
+    .pillar-metric {
+      margin-top: 1.5rem; padding-top: 1.25rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .pillar-metric-val { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.04em; color: var(--violet); }
+    .pillar-metric-label { font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.3); text-transform: uppercase; }
+    @media (max-width: 720px) { .pillars-grid { grid-template-columns: 1fr; } }
+
+    /* ════════════════════════════════════════════
+       PARTNER CTA SECTION
+       ════════════════════════════════════════════ */
+    .partner-cta {
+      padding: 9rem 2rem 10rem;
+      background: #000;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .partner-cta::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 55% at 50% 50%, rgba(139,92,246,0.14) 0%, transparent 65%);
+    }
+    .partner-cta-content { position: relative; z-index: 1; }
+    .partner-cta h2 {
+      font-size: clamp(2.2rem,6vw,5rem); font-weight: 700;
+      letter-spacing: -0.045em; line-height: 1.0;
+      color: #fff; margin-bottom: 1.25rem; max-width: 22ch; margin-left: auto; margin-right: auto;
+    }
+    .partner-cta p {
+      font-size: 1.05rem; color: rgba(255,255,255,0.42);
+      max-width: 46ch; margin: 0 auto 3rem; line-height: 1.72;
+    }
+    .partner-cta-btns {
+      display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap;
+    }
+    .biz-cta-primary {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      padding: 1rem 2.5rem; border-radius: 14px;
+      background: var(--violet); color: #fff; border: none;
+      font-size: 1rem; font-weight: 600; cursor: pointer; letter-spacing: -0.01em;
+      position: relative; overflow: hidden;
+      box-shadow: 0 8px 32px rgba(139,92,246,0.35), 0 2px 8px rgba(0,0,0,0.4);
+      transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease), transform 0.3s var(--ease-out);
+    }
+    .biz-cta-primary:hover {
+      background: #7C3AED;
+      box-shadow: 0 12px 48px rgba(139,92,246,0.55), 0 4px 16px rgba(0,0,0,0.5);
+      transform: translateY(-2px);
+    }
+    .biz-cta-secondary {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 1rem 2.2rem; border-radius: 14px;
+      background: transparent; color: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.14);
+      font-size: 1rem; font-weight: 500; cursor: pointer;
+      transition: border-color 0.3s var(--ease), color 0.3s var(--ease), background 0.3s var(--ease);
+    }
+    .biz-cta-secondary:hover {
+      border-color: rgba(139,92,246,0.4); color: #fff;
+      background: rgba(139,92,246,0.07);
+    }
+    .partner-fine {
+      margin-top: 2.25rem; font-family: var(--font-mono);
+      font-size: 0.58rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.22);
+    }
+
+    /* ════════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════════ */
+    .biz-footer {
+      background: #030303; border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 2.5rem 2rem;
+    }
+    .biz-footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .biz-footer-left { display: flex; align-items: center; gap: 0.75rem; }
+    .biz-footer-logo { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.04em; }
+    .biz-footer-logo .lo { color: var(--violet); }
+    .biz-footer-tag {
+      font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.25);
+      padding: 0.18rem 0.6rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 999px;
+    }
+    .biz-footer-links { display: flex; gap: 2rem; }
+    .biz-footer-links a {
+      font-size: 0.78rem; color: rgba(255,255,255,0.32); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .biz-footer-links a:hover { color: rgba(255,255,255,0.7); }
+    .biz-footer-copy {
+      font-family: var(--font-mono); font-size: 0.55rem;
+      color: rgba(255,255,255,0.2); letter-spacing: 0.06em;
+    }
+    @media (max-width: 620px) {
+      .biz-footer-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    }
+
+    /* ══════════════════════════════════════════
+       PRICING SECTION — INTERACTIVE
+       ══════════════════════════════════════════ */
+    .pricing-section { padding: 7rem 0; position: relative; background: #040408; }
+    .pricing-wrap { max-width: 1060px; margin: 0 auto; padding: 0 2rem; }
+    .pricing-header { text-align: center; margin-bottom: 3.5rem; }
+    .pricing-header h2 {
+      font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 800;
+      letter-spacing: -0.04em; color: #fff; margin: 0.75rem 0 1rem; line-height: 1.1;
+    }
+    .pricing-header p { font-size: 0.96rem; color: rgba(255,255,255,0.42); margin-bottom: 2rem; }
+
+    /* ── Billing toggle ── */
+    .pt-toggle-row {
+      display: inline-flex; align-items: center; gap: 0.85rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px; padding: 0.45rem 1rem;
+      margin-top: 0.25rem;
+    }
+    .pt-label {
+      font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.32); transition: color 0.25s;
+      user-select: none; cursor: pointer;
+    }
+    .pt-label.pt-label-active { color: #fff; }
+    .pt-toggle {
+      width: 42px; height: 24px; border-radius: 999px;
+      background: rgba(139,92,246,0.25); border: 1px solid rgba(139,92,246,0.4);
+      position: relative; cursor: pointer;
+      transition: background 0.3s cubic-bezier(0.22,1,0.36,1);
+      flex-shrink: 0;
+    }
+    .pt-toggle.on { background: #8B5CF6; border-color: #8B5CF6; }
+    .pt-knob {
+      position: absolute; top: 2px; left: 2px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+      transition: transform 0.32s cubic-bezier(0.22,1,0.36,1);
+    }
+    .pt-toggle.on .pt-knob { transform: translateX(18px); }
+    .pt-save {
+      font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em;
+      color: #22c55e; background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.25); border-radius: 999px;
+      padding: 0.18rem 0.55rem;
+      opacity: 0; transform: translateX(-4px);
+      transition: opacity 0.3s, transform 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    .pt-save.visible { opacity: 1; transform: translateX(0); }
+
+    /* ── Grid ── */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.25rem; align-items: start;
+    }
+    @media (max-width: 860px) { .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; } }
+
+    /* ── Card base ── */
+    .pricing-card {
+      padding: 2.25rem 1.75rem;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 24px; background: rgba(255,255,255,0.02);
+      display: flex; flex-direction: column; gap: 0;
+      position: relative; overflow: hidden;
+      will-change: transform;
+      /* JS handles transform & box-shadow for spring hover */
+      transition: border-color 0.3s;
+    }
+    /* grain texture on hover */
+    .pricing-card::after {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      background: radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.08) 0%, transparent 70%);
+      opacity: 0; transition: opacity 0.35s; pointer-events: none;
+    }
+    .pricing-card:hover::after { opacity: 1; }
+
+    /* ── Featured card: animated neon border ── */
+    @property --neon-a {
+      syntax: '<angle>'; initial-value: 0deg; inherits: false;
+    }
+    .pricing-card-featured {
+      background: rgba(139,92,246,0.05);
+      border: none;
+      padding: calc(2.25rem + 1.5px) calc(1.75rem + 1.5px);
+    }
+    .pricing-card-featured::before {
+      content: ''; position: absolute; inset: -1.5px;
+      border-radius: 25.5px; z-index: -1;
+      background: conic-gradient(
+        from var(--neon-a),
+        #8B5CF6 0deg,
+        #c4b5fd 60deg,
+        rgba(255,255,255,0.55) 120deg,
+        #8B5CF6 180deg,
+        #4c1d95 240deg,
+        rgba(255,255,255,0.3) 300deg,
+        #8B5CF6 360deg
+      );
+      animation: neonSpin 4s linear infinite;
+    }
+    @keyframes neonSpin { to { --neon-a: 360deg; } }
+    .pricing-card-featured::after {
+      background: radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.18) 0%, transparent 70%);
+    }
+
+    /* ── Glassmorphism "Most Popular" badge ── */
+    .pc-popular-badge {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      align-self: flex-start; margin-bottom: 1rem;
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-top: 1px solid rgba(255,255,255,0.3);
+      border-radius: 999px; padding: 0.28rem 0.8rem;
+      font-family: var(--font-mono); font-size: 0.6rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.15),
+                  0 4px 16px rgba(139,92,246,0.2);
+    }
+    .pcpb-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #22c55e; flex-shrink: 0;
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    .pricing-tier {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 0.75rem;
+    }
+    .pricing-price {
+      display: flex; align-items: baseline; gap: 0.1rem; margin-bottom: 0.6rem;
+    }
+    .pp-currency { font-size: 1.1rem; font-weight: 700; color: rgba(255,255,255,0.55); margin-right: 0.05rem; }
+    .pp-prefix   { font-size: 0.82rem; color: rgba(255,255,255,0.35); }
+    .pp-val {
+      font-size: 2rem; font-weight: 800; letter-spacing: -0.05em; color: #fff;
+      transition: opacity 0.15s;
+    }
+    .pp-val.counting { opacity: 0.5; }
+    .pp-period { font-size: 0.82rem; color: rgba(255,255,255,0.35); font-family: var(--font-mono); margin-left: 0.2rem; }
+    .pricing-desc { font-size: 0.82rem; color: rgba(255,255,255,0.35); margin-bottom: 1.5rem; line-height: 1.5; }
+
+    /* ── Animated SVG checkmarks ── */
+    .pricing-features {
+      list-style: none; margin: 0 0 1.75rem; padding: 0;
+      display: flex; flex-direction: column; gap: 0.65rem; flex: 1;
+    }
+    .pricing-features li {
+      font-size: 0.84rem; color: rgba(255,255,255,0.65);
+      display: flex; gap: 0.6rem; align-items: center;
+    }
+    .pf-svg { width: 16px; height: 16px; flex-shrink: 0; overflow: visible; }
+    .pf-ring {
+      stroke: rgba(34,197,94,0.35); fill: rgba(34,197,94,0.07);
+      stroke-width: 1; stroke-dasharray: 47.1; stroke-dashoffset: 47.1;
+      transition: stroke-dashoffset 0.55s cubic-bezier(0.22,1,0.36,1);
+    }
+    .pf-tick {
+      stroke: #22c55e; stroke-width: 1.8;
+      stroke-linecap: round; stroke-linejoin: round;
+      stroke-dasharray: 11; stroke-dashoffset: 11;
+      transition: stroke-dashoffset 0.38s cubic-bezier(0.22,1,0.36,1) 0.25s;
+    }
+    .pf-svg-off { opacity: 0.28; }
+    /* Trigger when card gets .checks-in class */
+    .pricing-card.checks-in .pf-ring { stroke-dashoffset: 0; }
+    .pricing-card.checks-in .pf-tick { stroke-dashoffset: 0; }
+    /* Stagger per feature item */
+    .pricing-features li:nth-child(1) .pf-ring { transition-delay: 0.00s; }
+    .pricing-features li:nth-child(1) .pf-tick  { transition-delay: 0.22s; }
+    .pricing-features li:nth-child(2) .pf-ring { transition-delay: 0.08s; }
+    .pricing-features li:nth-child(2) .pf-tick  { transition-delay: 0.30s; }
+    .pricing-features li:nth-child(3) .pf-ring { transition-delay: 0.16s; }
+    .pricing-features li:nth-child(3) .pf-tick  { transition-delay: 0.38s; }
+    .pricing-features li:nth-child(4) .pf-ring { transition-delay: 0.24s; }
+    .pricing-features li:nth-child(4) .pf-tick  { transition-delay: 0.46s; }
+    .pricing-features li:nth-child(5) .pf-ring { transition-delay: 0.32s; }
+    .pricing-features li:nth-child(5) .pf-tick  { transition-delay: 0.54s; }
+    .pricing-features li:nth-child(6) .pf-ring { transition-delay: 0.40s; }
+    .pricing-features li:nth-child(6) .pf-tick  { transition-delay: 0.62s; }
+    .pf-off { opacity: 0.3; }
+
+    .pricing-btn-primary {
+      width: 100%; padding: 0.9rem 1.25rem;
+      background: #8B5CF6; color: #fff; border: none; border-radius: 14px;
+      font-size: 0.84rem; font-weight: 600; cursor: pointer; font-family: inherit;
+      letter-spacing: -0.01em;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .pricing-btn-primary:hover {
+      background: #7c3aed; transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(139,92,246,0.45);
+    }
+    .pricing-btn-primary:active { transform: scale(0.97); }
+    .pricing-btn-outline {
+      width: 100%; padding: 0.9rem 1.25rem;
+      background: transparent; color: rgba(255,255,255,0.65);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 14px;
+      font-size: 0.84rem; font-weight: 500; cursor: pointer; font-family: inherit;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .pricing-btn-outline:hover {
+      border-color: rgba(139,92,246,0.45); color: #fff;
+      background: rgba(139,92,246,0.08);
+    }
+    .pricing-btn-outline:active { transform: scale(0.97); }
+    .pricing-fine {
+      text-align: center; margin-top: 2rem;
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.06em; color: rgba(255,255,255,0.18); text-transform: uppercase;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pricing-card-featured::before { animation: none; }
+      .pf-ring, .pf-tick { transition: none; }
+    }
+
+    /* ── Shared section eyebrow ── */
+    .biz-section-eyebrow {
+      font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+      display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem;
+    }
+    .biz-section-eyebrow::after {
+      content: ''; flex: 1; max-width: 40px; height: 1px; background: rgba(255,255,255,0.08);
+    }
+
+    /* ── Scroll reveal ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="biz-page">
+<div class="grain" aria-hidden="true"></div>
+
+<!-- HEADER -->
+<header id="dock">
+  <a class="logo" href="/" aria-label="PROSTIR home">
+    <span class="lp">PR</span><span class="lo">O</span><span class="lrest">STIR</span>
+  </a>
+  <nav aria-label="Main navigation">
+    <a href="/dine.html" data-i18n="nav.dine" data-magnetic data-mag-r="44" data-mag-s="7">Dine</a>
+    <a href="/working.html" data-i18n="nav.working" data-magnetic data-mag-r="44" data-mag-s="7">Working</a>
+    <a href="/moments.html" data-i18n="nav.moments" data-magnetic data-mag-r="44" data-mag-s="7">Moments</a>
+    <a href="/business.html" class="nav-active" data-magnetic data-mag-r="44" data-mag-s="7">Business</a>
+  </nav>
+  <div class="header-right">
+    <a href="#partner-cta" class="diia-btn" aria-label="Стати партнером">
+      <span class="diia-logo" aria-hidden="true">B2B</span>
+      <span class="btn-label">Стати партнером</span>
+    </a>
+    <div class="lang-switch" id="lang-switch" role="group" aria-label="Language">
+      <button type="button" class="lang-btn" data-lang="ua" aria-pressed="true" aria-label="Українська">
+        <span class="lang-flag" aria-hidden="true">🇺🇦</span><span class="lang-code">UA</span>
+      </button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false" aria-label="English">
+        <span class="lang-flag" aria-hidden="true">🇬🇧</span><span class="lang-code">EN</span>
+      </button>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Меню" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Мобільне меню">
+  <a href="/dine.html">Dine</a>
+  <a href="/working.html">Working</a>
+  <a href="/moments.html">Moments</a>
+  <a href="/business.html" class="nav-active">Business</a>
+</div>
+
+<!-- ════════════════════════════════════════════
+     HERO
+     ════════════════════════════════════════════ -->
+<section class="biz-hero" aria-labelledby="biz-h1">
+  <div class="biz-grid-bg" aria-hidden="true"></div>
+  <div class="biz-hero-content">
+    <p class="biz-eyebrow">
+      <span class="biz-eyebrow-dot" aria-hidden="true"></span>
+      PROSTIR for Business · B2B Platform
+    </p>
+    <h1 id="biz-h1">
+      Керуй своїм закладом<br>у <span class="accent">ритмі</span> міста
+    </h1>
+    <p>Повна автоматизація бронювань, аналітика трафіку та безшовна оплата Safe Exit — все в одній платформі.</p>
+    <div class="biz-hero-btns">
+      <button class="biz-cta-primary" data-magnetic data-mag-r="60" data-mag-s="14" onclick="document.getElementById('partner-cta').scrollIntoView({behavior:'smooth'})">
+        Стати партнером PROSTIR →
+      </button>
+      <button class="biz-outline-btn" data-magnetic data-mag-r="55" data-mag-s="10" onclick="document.getElementById('admin-section').scrollIntoView({behavior:'smooth'})">
+        Переглянути демо
+      </button>
+    </div>
+    <div class="biz-hero-stats">
+      <div class="biz-stat">
+        <div class="biz-stat-val">150<span>+</span></div>
+        <div class="biz-stat-label">Партнерів у місті</div>
+      </div>
+      <div class="biz-stat-divider" aria-hidden="true"></div>
+      <div class="biz-stat">
+        <div class="biz-stat-val">15<span>%</span></div>
+        <div class="biz-stat-label">Менше часу персоналу</div>
+      </div>
+      <div class="biz-stat-divider" aria-hidden="true"></div>
+      <div class="biz-stat">
+        <div class="biz-stat-val">4.8<span>★</span></div>
+        <div class="biz-stat-label">Середня оцінка закладів</div>
+      </div>
+      <div class="biz-stat-divider" aria-hidden="true"></div>
+      <div class="biz-stat">
+        <div class="biz-stat-val"><span>&lt;</span>14с</div>
+        <div class="biz-stat-label">End-to-end checkout</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     ADMIN DASHBOARD SECTION
+     ════════════════════════════════════════════ -->
+<section class="admin-section" id="admin-section" aria-labelledby="admin-h2">
+  <div class="biz-grid-bg" aria-hidden="true"></div>
+  <div class="admin-wrap">
+    <div class="admin-copy reveal" style="animation-delay:0s">
+      <p class="biz-section-eyebrow">01 · Admin Panel</p>
+      <h2 id="admin-h2">Повний контроль у режимі реального часу</h2>
+      <p>Панель PROSTIR Admin дає власнику закладу моментальний огляд усього, що відбувається — від розташування гостей до пікових годин виручки.</p>
+      <div class="admin-feature-list">
+        <div class="admin-feature-item">
+          <div class="afi-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </div>
+          <div class="afi-text">
+            <h4>Live Floorplan Editor</h4>
+            <p>Drag-and-drop столики, зони, бар та вхід — без перезавантаження сторінки.</p>
+          </div>
+        </div>
+        <div class="admin-feature-item">
+          <div class="afi-icon">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="afi-text">
+            <h4>Revenue Insights</h4>
+            <p>Графік виручки з піковими годинами, порівняння тижнів та прогноз на завтра.</p>
+          </div>
+        </div>
+        <div class="admin-feature-item">
+          <div class="afi-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="afi-text">
+            <h4>Customer Flow</h4>
+            <p>Лічильник верифікованих Дія-користувачів у закладі прямо зараз.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin panel mockup -->
+    <div class="admin-panel reveal" style="animation-delay:.2s">
+      <div class="ap-titlebar">
+        <span class="ap-dot red"></span>
+        <span class="ap-dot amber"></span>
+        <span class="ap-dot green"></span>
+        <span class="ap-title">PROSTIR Admin · Cafe Aura</span>
+      </div>
+      <div class="ap-tabs" role="tablist">
+        <div class="ap-tab active" role="tab" data-panel="ap-floor" tabindex="0">Floorplan</div>
+        <div class="ap-tab" role="tab" data-panel="ap-revenue" tabindex="0">Revenue</div>
+        <div class="ap-tab" role="tab" data-panel="ap-flow" tabindex="0">Flow</div>
+      </div>
+      <div class="ap-body">
+
+        <!-- Floorplan tab -->
+        <div class="ap-floor active" id="ap-floor">
+          <div class="ap-floor-header">
+            <span class="ap-floor-title">Main Hall · 14 tables</span>
+            <span class="ap-floor-tag">● Edit mode</span>
+          </div>
+          <div class="ap-floorplan">
+            <div class="ap-fp-grid">
+              <div class="ap-fp-table booked">01</div>
+              <div class="ap-fp-table booked">02</div>
+              <div class="ap-fp-table">03</div>
+              <div class="ap-fp-table">04</div>
+              <div class="ap-fp-table booked">05</div>
+              <div class="ap-fp-table">06</div>
+              <div class="ap-fp-table active-sel">07</div>
+              <div class="ap-fp-table">08</div>
+              <div class="ap-fp-table booked">09</div>
+              <div class="ap-fp-table">10</div>
+              <div class="ap-fp-table empty-zone"></div>
+              <div class="ap-fp-table">11</div>
+              <div class="ap-fp-table">12</div>
+              <div class="ap-fp-table booked">13</div>
+              <div class="ap-fp-table">14</div>
+              <div class="ap-fp-table empty-zone"></div>
+              <div class="ap-fp-table empty-zone"></div>
+              <div class="ap-fp-table empty-zone"></div>
+            </div>
+            <div class="ap-drag-hint" aria-hidden="true">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 9 2 12 5 15"/><polyline points="9 5 12 2 15 5"/><polyline points="15 19 12 22 9 19"/><polyline points="19 9 22 12 19 15"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+              Drag to reposition · Click to select
+            </div>
+          </div>
+        </div>
+
+        <!-- Revenue tab -->
+        <div class="ap-revenue" id="ap-revenue">
+          <div class="ap-rev-header">
+            <div>
+              <div class="ap-rev-big">₴ 48,320</div>
+              <div class="ap-rev-sub">Сьогодні · оновлено о 19:42</div>
+            </div>
+            <div class="ap-rev-badge">↑ +22% від учора</div>
+          </div>
+          <div class="ap-chart-wrap">
+            <svg id="rev-svg" viewBox="0 0 300 100" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stop-color="rgba(139,92,246,0.45)"/>
+                  <stop offset="100%" stop-color="rgba(139,92,246,0)"/>
+                </linearGradient>
+                <!-- Soft glow for the line -->
+                <filter id="lineGlow" x="-10%" y="-40%" width="120%" height="180%">
+                  <feGaussianBlur stdDeviation="1.8" result="blur"/>
+                  <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+                <!-- Stronger glow for the drawing tip -->
+                <filter id="tipGlow" x="-150%" y="-150%" width="400%" height="400%">
+                  <feGaussianBlur stdDeviation="4" result="blur"/>
+                  <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              <!-- Subtle grid -->
+              <g class="ap-chart-grid">
+                <line x1="0" y1="25" x2="300" y2="25"/>
+                <line x1="0" y1="50" x2="300" y2="50"/>
+                <line x1="0" y1="75" x2="300" y2="75"/>
+              </g>
+              <!-- Area fill — animated -->
+              <path id="rev-area" class="ap-chart-area"
+                d="M0,100 L30,100 L60,100 L90,100 L120,100 L150,100 L180,100 L210,100 L240,100 L270,100 L300,100 L300,100 L0,100 Z"/>
+              <!-- Line — animated -->
+              <path id="rev-line" class="ap-chart-line" filter="url(#lineGlow)"
+                d="M0,100 L30,100 L60,100 L90,100 L120,100 L150,100 L180,100 L210,100 L240,100 L270,100 L300,100"/>
+              <!-- Pulsing ring around drawing tip -->
+              <circle id="rev-tip-ring" cx="0" cy="100" r="8" fill="none" stroke="rgba(139,92,246,0.35)" stroke-width="1.5" style="opacity:0"/>
+              <!-- Glowing dot at drawing tip -->
+              <circle id="rev-tip" cx="0" cy="100" r="3.5" fill="#8B5CF6" filter="url(#tipGlow)" style="opacity:0"/>
+              <!-- Static peak dot — appears after animation -->
+              <circle id="rev-peak-dot" class="ap-chart-dot" cx="240" cy="20" r="3.5" style="opacity:0"/>
+              <circle id="rev-peak-ring" cx="240" cy="20" r="7" fill="rgba(139,92,246,0.2)" style="opacity:0"/>
+            </svg>
+          </div>
+          <div class="ap-chart-labels">
+            <span class="ap-chart-label">09:00</span>
+            <span class="ap-chart-label">11:00</span>
+            <span class="ap-chart-label">13:00</span>
+            <span class="ap-chart-label">15:00</span>
+            <span class="ap-chart-label">17:00</span>
+            <span class="ap-chart-label">19:00</span>
+          </div>
+          <div class="ap-rev-peaks">
+            <div class="ap-peak-pill active"><span class="ap-peak-dot"></span>Пік: 19:00–20:00</div>
+            <div class="ap-peak-pill"><span class="ap-peak-dot"></span>Пік: 13:00–14:00</div>
+            <div class="ap-peak-pill"><span class="ap-peak-dot"></span>Спад: 09:00–11:00</div>
+          </div>
+        </div>
+
+        <!-- Flow tab -->
+        <div class="ap-flow" id="ap-flow">
+          <div class="ap-flow-live">
+            <span class="ap-flow-live-dot"></span>
+            Live · оновлюється кожні 5с
+          </div>
+          <div class="ap-flow-counter">
+            <div class="ap-flow-num" id="biz-flow-num">47</div>
+            <div class="ap-flow-unit">гостей зараз</div>
+          </div>
+          <div class="ap-flow-bars" id="biz-flow-bars">
+            <div class="ap-flow-bar" data-h="25%"></div>
+            <div class="ap-flow-bar" data-h="35%"></div>
+            <div class="ap-flow-bar" data-h="45%"></div>
+            <div class="ap-flow-bar" data-h="65%"></div>
+            <div class="ap-flow-bar peak" data-h="88%"></div>
+            <div class="ap-flow-bar peak" data-h="100%"></div>
+            <div class="ap-flow-bar" data-h="80%"></div>
+            <div class="ap-flow-bar" data-h="72%"></div>
+            <div class="ap-flow-bar" data-h="60%"></div>
+            <div class="ap-flow-bar" data-h="42%"></div>
+            <div class="ap-flow-bar" data-h="55%"></div>
+            <div class="ap-flow-bar" data-h="68%"></div>
+          </div>
+          <div class="ap-flow-hours">
+            <span class="ap-flow-hour">09</span>
+            <span class="ap-flow-hour">11</span>
+            <span class="ap-flow-hour">13</span>
+            <span class="ap-flow-hour">15</span>
+            <span class="ap-flow-hour">17</span>
+            <span class="ap-flow-hour">19</span>
+            <span class="ap-flow-hour">21</span>
+            <span class="ap-flow-hour">23</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     SAFE EXIT BUSINESS VALUE
+     ════════════════════════════════════════════ -->
+<section class="safe-value-section" aria-labelledby="sv-h2">
+  <div class="biz-grid-bg" aria-hidden="true"></div>
+  <div class="sv-wrap">
+    <div class="sv-header reveal">
+      <p class="biz-section-eyebrow" style="justify-content:center">02 · Safe Exit Value</p>
+      <h2 id="sv-h2">Як Safe Exit заощаджує час вашого персоналу</h2>
+      <p>Автоматизований checkout — це не просто зручно для гостя. Це 15% повернутого робочого часу офіціанта щодня.</p>
+    </div>
+
+    <div class="sv-cards">
+      <div class="sv-card reveal" style="animation-delay:.05s">
+        <div class="sv-card-num">01 / SAVINGS</div>
+        <div class="sv-stat-val green">15%</div>
+        <div class="sv-card-title">Менше часу на checkout</div>
+        <div class="sv-card-desc">Офіціант більше не чекає, поки гість вирішить рахунок. Safe Exit автоматично ініціює оплату перед закінченням бронювання.</div>
+      </div>
+      <div class="sv-card reveal" style="animation-delay:.1s">
+        <div class="sv-card-num">02 / SPEED</div>
+        <div class="sv-stat-val violet">&lt;14с</div>
+        <div class="sv-card-title">End-to-end транзакція</div>
+        <div class="sv-card-desc">Від натискання «Підтвердити» до отримання цифрового чеку — менше 14 секунд. Без PIN, без черги, без паперу.</div>
+      </div>
+      <div class="sv-card reveal" style="animation-delay:.15s">
+        <div class="sv-card-num">03 / TRUST</div>
+        <div class="sv-stat-val white">100%</div>
+        <div class="sv-card-title">Верифіковані гості</div>
+        <div class="sv-card-desc">Кожен гість авторизується через Дія. Жодного анонімного бронювання — лише реальні, підтверджені особи.</div>
+      </div>
+    </div>
+
+    <hr class="sv-divider" aria-hidden="true"/>
+
+    <div class="sv-comparison reveal">
+      <div class="sv-before">
+        <div class="sv-compare-label">До PROSTIR</div>
+        <div class="sv-compare-title">Ручний checkout</div>
+        <div class="sv-compare-desc">Офіціант підходить до столика, подає рахунок, чекає рішення гостя, обробляє оплату вручну, закриває зміну в POS-системі — 4–6 хвилин на стіл.</div>
+      </div>
+      <div class="sv-vs" aria-hidden="true">VS</div>
+      <div class="sv-after">
+        <div class="sv-compare-label">З PROSTIR Safe Exit</div>
+        <div class="sv-compare-title">Автоматичний checkout</div>
+        <div class="sv-compare-desc">Таймер відраховує час бронювання. За 2 хвилини до кінця — push-нотифікація гостю. Оплата підтверджується за 14 секунд. Офіціант навіть не підходить.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     THREE PILLARS
+     ════════════════════════════════════════════ -->
+<section class="pillars-section" aria-labelledby="pillars-h2">
+  <div class="biz-grid-bg" aria-hidden="true"></div>
+  <div class="pillars-wrap">
+    <div class="pillars-header reveal">
+      <p class="biz-section-eyebrow" style="justify-content:center">03 · Infrastructure</p>
+      <h2 id="pillars-h2">Побудовано для масштабу</h2>
+      <p>Три принципи, що стоять за кожним рядком PROSTIR Business — від першого столика до мережі по всій Україні.</p>
+    </div>
+    <div class="pillars-grid">
+
+      <!-- Efficiency -->
+      <div class="pillar-card reveal" data-pillar="efficiency" style="animation-delay:.05s">
+        <span class="pillar-num">01</span>
+        <div class="pillar-icon" id="pi-efficiency">
+          <svg viewBox="0 0 24 24" id="bolt-svg">
+            <path id="bolt-path" d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <h3>Efficiency</h3>
+        <p>Автоматизація бронювань, черг та оплат скорочує операційне навантаження на команду на 15–20% щотижня. Менше рутини — більше гостинності.</p>
+        <div class="pillar-metric">
+          <div class="pillar-metric-val">−20%</div>
+          <div class="pillar-metric-label">Операційних витрат</div>
+        </div>
+      </div>
+
+      <!-- Security -->
+      <div class="pillar-card reveal" data-pillar="security" style="animation-delay:.1s">
+        <span class="pillar-num">02</span>
+        <div class="pillar-icon" id="pi-security">
+          <span class="shield-ring" aria-hidden="true"></span>
+          <span class="shield-ring shield-ring-2" aria-hidden="true"></span>
+          <svg viewBox="0 0 24 24" id="shield-svg">
+            <path id="shield-path" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <line id="shield-scan" x1="5" y1="9" x2="19" y2="9" stroke-linecap="round" stroke-width="1.4" stroke="rgba(139,92,246,0.0)"/>
+          </svg>
+        </div>
+        <h3>Security</h3>
+        <p>Ідентифікація через Дія гарантує, що в закладі лише верифіковані гості. Ніяких chargebacks, ніяких фіктивних бронювань, нульова анонімність.</p>
+        <div class="pillar-metric">
+          <div class="pillar-metric-val">0%</div>
+          <div class="pillar-metric-label">Анонімних транзакцій</div>
+        </div>
+      </div>
+
+      <!-- Growth -->
+      <div class="pillar-card reveal" data-pillar="growth" style="animation-delay:.15s">
+        <span class="pillar-num">03</span>
+        <div class="pillar-icon" id="pi-growth">
+          <svg viewBox="0 0 24 24" id="growth-svg" overflow="visible">
+            <polyline id="growth-line" points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+            <polyline id="growth-arrow" points="17 6 23 6 23 12"/>
+            <circle id="growth-tip" cx="1" cy="18" r="1.8" stroke="none"/>
+          </svg>
+        </div>
+        <h3>Growth</h3>
+        <p>Аналітика трафіку, геофенсинг та Moments-сповіщення перетворюють кожного гостя на потенційного постійного відвідувача. Персоналізований маркетинг без cookies.</p>
+        <div class="pillar-metric">
+          <div class="pillar-metric-val">+34%</div>
+          <div class="pillar-metric-label">Повторних відвідин</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     PARTNER CTA
+     ════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════
+     PRICING SECTION
+     ════════════════════════════════════════════ -->
+<section class="pricing-section" id="pricing" aria-labelledby="pricing-h2">
+  <div class="biz-grid-bg" aria-hidden="true"></div>
+  <div class="pricing-wrap">
+
+    <div class="pricing-header reveal">
+      <p class="biz-section-eyebrow" style="justify-content:center" id="pricing-eyebrow">04 · Pricing</p>
+      <h2 id="pricing-h2">Прозорі тарифи.<br>Нуль прихованих комісій.</h2>
+      <p id="pricing-sub">Починайте безкоштовно — масштабуйтесь разом із закладом.</p>
+
+      <!-- Monthly / Yearly toggle -->
+      <div class="pt-toggle-row reveal" style="animation-delay:.1s">
+        <span class="pt-label pt-label-active" id="pt-monthly-label">Щомісяця</span>
+        <button class="pt-toggle" id="pt-toggle" role="switch" aria-checked="false" aria-label="Перемкнути на щорічну оплату">
+          <span class="pt-knob"></span>
+        </button>
+        <span class="pt-label" id="pt-yearly-label">Щорічно</span>
+        <span class="pt-save" id="pt-save-badge">−20%</span>
+      </div>
+    </div>
+
+    <div class="pricing-grid">
+
+      <!-- Starter -->
+      <div class="pricing-card reveal" id="pc-starter" style="animation-delay:.05s">
+        <div class="pricing-tier" id="tier1-name">Starter</div>
+        <div class="pricing-price">
+          <span class="pp-val" id="tier1-price" data-monthly="0" data-yearly="0" data-free="true">Безкоштовно</span>
+        </div>
+        <div class="pricing-desc" id="tier1-desc">Для невеликих закладів, що тільки починають</div>
+        <ul class="pricing-features" id="tier1-features">
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t1f1">1 заклад</span></li>
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t1f2">До 20 столів/desk-ів</span></li>
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t1f3">Базова аналітика</span></li>
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t1f4">Diia верифікація</span></li>
+          <li class="pf-off"><svg class="pf-svg pf-svg-off" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="7.5" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><path d="M6.5 11.5l5-5M11.5 11.5l-5-5" stroke="rgba(255,255,255,0.2)" stroke-width="1.4" stroke-linecap="round"/></svg><span id="t1f5">Safe Exit автоплата</span></li>
+          <li class="pf-off"><svg class="pf-svg pf-svg-off" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="7.5" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><path d="M6.5 11.5l5-5M11.5 11.5l-5-5" stroke="rgba(255,255,255,0.2)" stroke-width="1.4" stroke-linecap="round"/></svg><span id="t1f6">API доступ</span></li>
+        </ul>
+        <button class="pricing-btn-outline" id="tier1-btn">Почати безкоштовно</button>
+      </div>
+
+      <!-- Growth — FEATURED -->
+      <div class="pricing-card pricing-card-featured reveal" id="pc-growth" style="animation-delay:.1s">
+        <!-- Glassmorphism badge -->
+        <div class="pc-popular-badge" id="pricing-popular-badge">
+          <span class="pcpb-dot" aria-hidden="true"></span>
+          <span id="pcpb-text">Most Popular</span>
+        </div>
+        <div class="pricing-tier" id="tier2-name">Growth</div>
+        <div class="pricing-price">
+          <span class="pp-currency">₴</span>
+          <span class="pp-val pp-num" id="tier2-price" data-monthly="990" data-yearly="792">990</span>
+          <span class="pp-period" id="tier2-period">/міс</span>
+        </div>
+        <div class="pricing-desc" id="tier2-desc">Для активних закладів з прицілом на зростання</div>
+        <ul class="pricing-features" id="tier2-features">
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t2f1">До 3 закладів</span></li>
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t2f2">Необмежено столів</span></li>
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t2f3">Повна аналітика + прогнози</span></li>
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t2f4">Safe Exit автоплата</span></li>
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t2f5">Live Floorplan Editor</span></li>
+          <li class="pf-off"><svg class="pf-svg pf-svg-off" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="7.5" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><path d="M6.5 11.5l5-5M11.5 11.5l-5-5" stroke="rgba(255,255,255,0.2)" stroke-width="1.4" stroke-linecap="round"/></svg><span id="t2f6">White-label API</span></li>
+        </ul>
+        <button class="pricing-btn-primary" id="tier2-btn">Спробувати 14 днів безкоштовно →</button>
+      </div>
+
+      <!-- Scale -->
+      <div class="pricing-card reveal" id="pc-scale" style="animation-delay:.15s">
+        <div class="pricing-tier" id="tier3-name">Scale</div>
+        <div class="pricing-price">
+          <span class="pp-prefix" id="tier3-prefix">від </span>
+          <span class="pp-currency">₴</span>
+          <span class="pp-val pp-num" id="tier3-price" data-monthly="2990" data-yearly="2392">2990</span>
+          <span class="pp-period" id="tier3-period">/міс</span>
+        </div>
+        <div class="pricing-desc" id="tier3-desc">Для мереж та великих операторів</div>
+        <ul class="pricing-features" id="tier3-features">
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t3f1">Необмежено закладів</span></li>
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t3f2">White-label рішення</span></li>
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t3f3">API + вебхуки</span></li>
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t3f4">Виділений менеджер</span></li>
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t3f5">Підтримка 24/7 · SLA</span></li>
+          <li><svg class="pf-svg" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle class="pf-ring" cx="9" cy="9" r="7.5"/><path class="pf-tick" d="M6 9l2.5 2.5L12 6"/></svg><span id="t3f6">Кастомна інтеграція POS</span></li>
+        </ul>
+        <button class="pricing-btn-outline" id="tier3-btn">Зв'язатися з командою</button>
+      </div>
+
+    </div>
+    <p class="pricing-fine" id="pricing-fine">Усі тарифи включають верифікацію через Дія · Без прихованих транзакційних зборів</p>
+  </div>
+</section>
+
+<section class="partner-cta" id="partner-cta" aria-labelledby="cta-h2">
+  <div class="biz-grid-bg" aria-hidden="true"></div>
+  <div class="partner-cta-content reveal">
+    <p class="biz-section-eyebrow" style="justify-content:center">04 · Partnership</p>
+    <h2 id="cta-h2">Готові стати частиною Urban OS?</h2>
+    <p>Долучайтесь до 150+ закладів, які вже автоматизували бронювання, аналітику та checkout через PROSTIR.</p>
+    <div class="partner-cta-btns">
+      <button class="biz-cta-primary" data-magnetic data-mag-r="70" data-mag-s="16">
+        Стати партнером PROSTIR →
+      </button>
+      <button class="biz-cta-secondary" data-magnetic data-mag-r="60" data-mag-s="10">
+        Завантажити презентацію
+      </button>
+    </div>
+    <p class="partner-fine">Інтеграція займає менше 48 годин · Підтримка 24/7 · Без прихованих комісій</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="biz-footer">
+  <div class="biz-footer-inner">
+    <div class="biz-footer-left">
+      <div class="biz-footer-logo">PR<span class="lo">O</span>STIR</div>
+      <span class="biz-footer-tag">for Business</span>
+    </div>
+    <nav class="biz-footer-links" aria-label="Footer navigation">
+      <a href="/" id="biz-footer-home">Головна</a>
+      <a href="/dine.html">Dine</a>
+      <a href="/working.html">Working</a>
+      <a href="/moments.html">Moments</a>
+      <a href="#" class="faq-link">FAQ</a>
+    </nav>
+    <div class="biz-footer-copy">© 2026 PROSTIR · Urban OS</div>
+  </div>
+</footer>
+
+<script>
+/* ── Header scroll ── */
+(function(){
+  const h = document.getElementById('dock');
+  if(h) window.addEventListener('scroll', () => {
+    h.classList.toggle('scrolled', window.scrollY > 10);
+  }, {passive: true});
+})();
+
+/* ── Mobile nav hamburger ── */
+(function(){
+  const btn = document.getElementById('hamburger');
+  const nav = document.getElementById('mobile-nav');
+  if(btn && nav) btn.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+})();
+
+/* ── Revenue chart draw-in animation ── */
+(function () {
+  'use strict';
+
+  /* ── Data points in SVG coordinate space (viewBox 0 0 300 100) ── */
+  const PTS      = [[0,85],[30,70],[60,72],[90,45],[120,50],[150,28],[180,22],[210,35],[240,20],[270,30],[300,15]];
+  const W        = 300;
+  const FLOOR    = 100;          // flat-baseline y
+  const DURATION = 1350;         // total draw time (ms)
+  const RISE_W   = 55;           // px "rise window" per data point
+
+  /* Approximate cubic-bezier(0.22, 1, 0.36, 1) — fast start, long smooth tail */
+  function ease(t) { return 1 - Math.pow(1 - t, 3.2); }
+
+  /* Interpolated y at x during draw progress  */
+  function yAt(x, frontierX) {
+    /* locate surrounding points */
+    let a = PTS[0], b = PTS[PTS.length - 1];
+    for (let i = 0; i < PTS.length - 1; i++) {
+      if (PTS[i][0] <= x && PTS[i + 1][0] >= x) { a = PTS[i]; b = PTS[i + 1]; break; }
+    }
+    const span   = Math.max(b[0] - a[0], 1);
+    const actualY = a[1] + (b[1] - a[1]) * ((x - a[0]) / span);
+    const riseP  = Math.min(1, Math.max(0, (frontierX - x) / RISE_W));
+    return FLOOR + (actualY - FLOOR) * ease(riseP);
+  }
+
+  function linePath(fx) {
+    return 'M' + PTS.map(([x]) => x + ',' + yAt(x, fx).toFixed(2)).join(' L');
+  }
+  function areaPath(fx) {
+    return linePath(fx) + ` L${W},${FLOOR} L0,${FLOOR} Z`;
+  }
+
+  let raf = null, startT = null;
+
+  function animate(fx, lineEl, areaEl, tipEl, tipRing, ts) {
+    if (!startT) startT = ts;
+    const raw = Math.min((ts - startT) / DURATION, 1);
+    fx       = ease(raw) * (W + RISE_W);           // frontier advances with easing
+
+    lineEl.setAttribute('d', linePath(fx));
+    areaEl.setAttribute('d', areaPath(fx));
+
+    /* tip position: evaluate at clamped frontier */
+    const tipX = Math.min(fx, W);
+    const tipY = yAt(tipX, fx);
+    tipEl.setAttribute('cx',   tipX.toFixed(2));
+    tipEl.setAttribute('cy',   tipY.toFixed(2));
+    tipRing.setAttribute('cx', tipX.toFixed(2));
+    tipRing.setAttribute('cy', tipY.toFixed(2));
+
+    const alive = raw < 0.97;
+    tipEl.style.opacity   = alive ? '1'   : '0';
+    tipRing.style.opacity = alive ? '0.6' : '0';   /* CSS keyframe handles ring expansion */
+
+    if (raw < 1) {
+      raf = requestAnimationFrame(t => animate(fx, lineEl, areaEl, tipEl, tipRing, t));
+    } else {
+      /* Draw complete — set exact final paths, show peak markers */
+      lineEl.setAttribute('d', linePath(W + RISE_W));
+      areaEl.setAttribute('d', areaPath(W + RISE_W));
+      const dot  = document.getElementById('rev-peak-dot');
+      const ring = document.getElementById('rev-peak-ring');
+      if (dot)  dot.style.opacity  = '1';
+      if (ring) ring.style.opacity = '1';
+    }
+  }
+
+  function reset() {
+    const flat = 'M' + PTS.map(([x]) => `${x},${FLOOR}`).join(' L');
+    const lineEl  = document.getElementById('rev-line');
+    const areaEl  = document.getElementById('rev-area');
+    const tipEl   = document.getElementById('rev-tip');
+    const tipRing = document.getElementById('rev-tip-ring');
+    const dot     = document.getElementById('rev-peak-dot');
+    const ring    = document.getElementById('rev-peak-ring');
+    if (!lineEl || !areaEl) return;
+
+    if (raf) { cancelAnimationFrame(raf); raf = null; }
+    startT = null;
+
+    lineEl.setAttribute('d', flat);
+    areaEl.setAttribute('d', flat + ` L${W},${FLOOR} L0,${FLOOR} Z`);
+    tipEl.setAttribute('cx', '0'); tipEl.setAttribute('cy', String(FLOOR));
+    tipRing.setAttribute('cx', '0'); tipRing.setAttribute('cy', String(FLOOR));
+    tipEl.style.opacity   = '0';
+    tipRing.style.opacity = '0';
+    if (dot)  dot.style.opacity  = '0';
+    if (ring) ring.style.opacity = '0';
+  }
+
+  function start() {
+    reset();
+    const lineEl  = document.getElementById('rev-line');
+    const areaEl  = document.getElementById('rev-area');
+    const tipEl   = document.getElementById('rev-tip');
+    const tipRing = document.getElementById('rev-tip-ring');
+    if (!lineEl) return;
+    raf = requestAnimationFrame(t => animate(0, lineEl, areaEl, tipEl, tipRing, t));
+  }
+
+  /* Re-trigger every time the admin section enters the viewport */
+  const section = document.getElementById('admin-section');
+  if (section) {
+    let wasVisible = false;
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !wasVisible) {
+          wasVisible = true;
+          const rev  = document.getElementById('ap-revenue');
+          const flow = document.getElementById('ap-flow');
+          if (rev  && rev.classList.contains('active'))  setTimeout(start, 120);
+          if (flow && flow.classList.contains('active') && window._bizFlowStart)
+            setTimeout(window._bizFlowStart, 120);
+        } else if (!e.isIntersecting) {
+          wasVisible = false;
+        }
+      });
+    }, { threshold: 0.25 }).observe(section);
+  }
+
+  /* Also trigger when user clicks the Revenue tab */
+  window._bizChartStart = start;
+})();
+
+/* ── Admin panel tab switching ── */
+(function(){
+  const tabs = document.querySelectorAll('.ap-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.ap-floor,.ap-revenue,.ap-flow').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(tab.dataset.panel);
+      if(target) target.classList.add('active');
+      /* fire chart animation when Revenue tab becomes visible */
+      if (tab.dataset.panel === 'ap-revenue' && typeof window._bizChartStart === 'function') {
+        setTimeout(window._bizChartStart, 60);
+      }
+      /* fire flow animation when Flow tab becomes visible */
+      if (tab.dataset.panel === 'ap-flow' && typeof window._bizFlowStart === 'function') {
+        setTimeout(window._bizFlowStart, 60);
+      }
+    });
+    tab.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tab.click(); }
+    });
+  });
+})();
+
+/* ── Flow bar + counter draw-in animation ── */
+(function () {
+  'use strict';
+
+  const TARGET_COUNT = 47;
+  const BAR_STAGGER  = 55;   // ms between each bar rising
+  const COUNT_DUR    = 820;  // ms for counter roll
+  const APPLE        = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+  /* ease-out spring approximation */
+  function ease(t) { return 1 - Math.pow(1 - t, 3.2); }
+
+  /* Reset all bars to height 0, remove glow */
+  function resetBars() {
+    const bars = document.querySelectorAll('#biz-flow-bars .ap-flow-bar');
+    bars.forEach(b => {
+      b.style.transitionDelay = '0ms';
+      b.style.height = '0';
+      b.classList.remove('grown');
+    });
+  }
+
+  /* Animate bars left-to-right with staggered delay */
+  function animateBars() {
+    const bars = document.querySelectorAll('#biz-flow-bars .ap-flow-bar');
+    bars.forEach((b, i) => {
+      const delay = i * BAR_STAGGER;
+      b.style.transitionDelay = delay + 'ms';
+      /* small timeout to let CSS pick up height:0 before we change it */
+      setTimeout(() => {
+        b.style.height = b.dataset.h || '50%';
+        if (b.classList.contains('peak')) {
+          /* add glow after bar finishes growing */
+          setTimeout(() => b.classList.add('grown'), delay + 800);
+        }
+      }, 16); /* one frame after reset */
+    });
+  }
+
+  /* Roll counter from 0 → target */
+  function animateCounter(target) {
+    const el = document.getElementById('biz-flow-num');
+    if (!el) return;
+    el.textContent = '0';
+    let startT = null;
+    function tick(ts) {
+      if (!startT) startT = ts;
+      const p = Math.min((ts - startT) / COUNT_DUR, 1);
+      el.textContent = Math.round(ease(p) * target);
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* Full flow animation: reset → animate */
+  function startFlow() {
+    resetBars();
+    /* wait one paint for CSS height:0 to apply, then grow */
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        animateBars();
+        animateCounter(TARGET_COUNT);
+      });
+    });
+  }
+
+  window._bizFlowStart = startFlow;
+
+  /* Live counter drift (after animation completes) */
+  let base = TARGET_COUNT;
+  setInterval(() => {
+    const el = document.getElementById('biz-flow-num');
+    if (!el) return;
+    const delta = Math.floor(Math.random() * 5) - 2;
+    base = Math.max(12, Math.min(68, base + delta));
+    el.textContent = base;
+  }, 3200);
+})();
+
+/* ── Scroll reveal ── */
+(function(){
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  /* also catch any already in view */
+  document.querySelectorAll('.reveal.in').forEach(el => io.unobserve(el));
+})();
+</script>
+
+<!-- ══════════════════════════════════════════════════
+     PRICING INTERACTIONS
+     ══════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── 1. Monthly / Yearly toggle with count-up ── */
+  const toggle  = document.getElementById('pt-toggle');
+  const saveBadge = document.getElementById('pt-save-badge');
+  const moLabel = document.getElementById('pt-monthly-label');
+  const yrLabel = document.getElementById('pt-yearly-label');
+  let   isYearly = false;
+
+  function ease(t) { return 1 - Math.pow(1 - t, 3); } /* cubic ease-out */
+
+  function countUp(el, from, to, duration) {
+    if (from === to) return;
+    el.classList.add('counting');
+    const start = performance.now();
+    function frame(now) {
+      const p = Math.min((now - start) / duration, 1);
+      el.textContent = Math.round(from + (to - from) * ease(p));
+      if (p < 1) requestAnimationFrame(frame);
+      else { el.textContent = to; el.classList.remove('counting'); }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function updatePrices(yearly) {
+    document.querySelectorAll('.pp-num').forEach(el => {
+      const mo = parseInt(el.dataset.monthly, 10);
+      const yr = parseInt(el.dataset.yearly, 10);
+      const from = yearly ? mo : yr;
+      const to   = yearly ? yr : mo;
+      countUp(el, from, to, 580);
+    });
+  }
+
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      isYearly = !isYearly;
+      toggle.classList.toggle('on', isYearly);
+      toggle.setAttribute('aria-checked', isYearly);
+      moLabel.classList.toggle('pt-label-active', !isYearly);
+      yrLabel.classList.toggle('pt-label-active',  isYearly);
+      saveBadge.classList.toggle('visible', isYearly);
+      updatePrices(isYearly);
+    });
+    moLabel.addEventListener('click', () => { if(isYearly) toggle.click(); });
+    yrLabel.addEventListener('click', () => { if(!isYearly) toggle.click(); });
+  }
+
+  /* ── 2. Magnetic spring hover on pricing cards ── */
+  if (!window.matchMedia('(hover: none)').matches &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+
+    const K = 160, D = 18; /* spring constants */
+    function makeSpring() { return { pos: 0, vel: 0, target: 0 }; }
+    function stepSpring(s, dt) {
+      const F = -K * (s.pos - s.target) - D * s.vel;
+      s.vel += F * dt; s.pos += s.vel * dt;
+    }
+    function atRest(s) { return Math.abs(s.pos - s.target) < 0.01 && Math.abs(s.vel) < 0.01; }
+
+    const cards = [];
+    let lastT = 0;
+
+    document.querySelectorAll('.pricing-card').forEach(card => {
+      const sx = makeSpring(), sy = makeSpring(), ss = makeSpring();
+      ss.pos = 1; ss.target = 1;
+      cards.push({ el: card, sx, sy, ss, active: false });
+
+      card.addEventListener('mouseenter', () => {
+        cards.find(c => c.el === card).active = true;
+        cards.find(c => c.el === card).ss.target = 1.025;
+      });
+      card.addEventListener('mouseleave', () => {
+        const c = cards.find(x => x.el === card);
+        c.active = false;
+        c.sx.target = c.sy.target = 0;
+        c.ss.target = 1;
+      });
+      card.addEventListener('mousemove', e => {
+        const c = cards.find(x => x.el === card);
+        const r = card.getBoundingClientRect();
+        const dx = (e.clientX - (r.left + r.width  * 0.5)) / r.width  * 14;
+        const dy = (e.clientY - (r.top  + r.height * 0.5)) / r.height * 10;
+        c.sx.target = dx; c.sy.target = dy;
+      });
+    });
+
+    let rafRunning = false;
+    function loop(now) {
+      const dt = Math.min((now - (lastT || now)) / 1000, 0.05);
+      lastT = now;
+      let any = false;
+      cards.forEach(c => {
+        stepSpring(c.sx, dt); stepSpring(c.sy, dt); stepSpring(c.ss, dt);
+        const x = c.sx.pos, y = c.sy.pos, sc = c.ss.pos;
+        c.el.style.transform = `translate(${x.toFixed(2)}px,${y.toFixed(2)}px) scale(${sc.toFixed(4)})`;
+        /* glow */
+        const glow = c.active ? 0.22 : Math.max(0, (Math.abs(x) + Math.abs(y)) / 14 * 0.1);
+        if (glow > 0.005) {
+          const spread = 18 + glow * 40;
+          c.el.style.boxShadow = `0 ${(8 + glow * 28).toFixed(0)}px ${spread.toFixed(0)}px rgba(139,92,246,${glow.toFixed(3)}), 0 0 0 1px rgba(139,92,246,${(glow * 0.5).toFixed(3)})`;
+        } else if (!c.active && atRest(c.sx) && atRest(c.sy) && atRest(c.ss)) {
+          c.el.style.boxShadow = '';
+          c.el.style.transform = '';
+        }
+        if (c.active || !atRest(c.sx) || !atRest(c.sy) || !atRest(c.ss)) any = true;
+      });
+      if (any) requestAnimationFrame(loop);
+      else rafRunning = false;
+    }
+
+    cards.forEach(c => {
+      c.el.addEventListener('mouseenter', () => { if (!rafRunning) { rafRunning = true; requestAnimationFrame(loop); } });
+    });
+  }
+
+  /* ── 3. Checkmark draw-in via IntersectionObserver ── */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('checks-in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.25 });
+
+  document.querySelectorAll('.pricing-card').forEach(card => io.observe(card));
+
+})();
+</script>
+
+<!-- Language switcher + full translations -->
+<script>
+(function(){
+  const switcher = document.getElementById('lang-switch');
+  if(!switcher) return;
+
+  const T = {
+    ua: {
+      nav: { dine:'Dine', working:'Working', moments:'Moments', business:'Business' },
+      headerBtn: 'Стати партнером',
+      hero: {
+        eyebrow: 'PROSTIR for Business · B2B Platform',
+        h1: 'Керуй своїм закладом<br>у <span class="accent">ритмі</span> міста',
+        sub: 'Повна автоматизація бронювань, аналітика трафіку та безшовна оплата Safe Exit — все в одній платформі.',
+        cta1: 'Стати партнером PROSTIR →',
+        cta2: 'Переглянути демо',
+        stat1: 'Партнерів у місті',
+        stat2: 'Менше часу персоналу',
+        stat3: 'Середня оцінка закладів',
+      },
+      admin: {
+        eyebrow: '01 · Admin Panel',
+        h2: 'Повний контроль у режимі реального часу',
+        sub: 'Панель PROSTIR Admin дає власнику закладу моментальний огляд усього, що відбувається — від розташування гостей до пікових годин виручки.',
+        f1: 'Drag-and-drop столики, зони, бар та вхід — без перезавантаження сторінки.',
+        f2: 'Графік виручки з піковими годинами, порівняння тижнів та прогноз на завтра.',
+        f3: 'Лічильник верифікованих Дія-користувачів у закладі прямо зараз.',
+      },
+      safe: {
+        eyebrow: '02 · Safe Exit Value',
+        h2: 'Як Safe Exit заощаджує час вашого персоналу',
+        sub: 'Автоматизований checkout — це не просто зручно для гостя. Це 15% повернутого робочого часу офіціанта щодня.',
+        c1t: 'Менше часу на checkout',
+        c1d: 'Офіціант більше не чекає, поки гість вирішить рахунок. Safe Exit автоматично ініціює оплату перед закінченням бронювання.',
+        c2t: 'End-to-end транзакція',
+        c2d: 'Від натискання «Підтвердити» до отримання цифрового чеку — менше 14 секунд. Без PIN, без черги, без паперу.',
+        c3t: 'Верифіковані гості',
+        c3d: 'Кожен гість авторизується через Дія. Жодного анонімного бронювання — лише реальні, підтверджені особи.',
+        bl1: 'До PROSTIR', bt1: 'Ручний checkout',
+        bd1: 'Офіціант підходить до столика, подає рахунок, чекає рішення гостя, обробляє оплату вручну, закриває зміну в POS-системі — 4–6 хвилин на стіл.',
+        bl2: 'З PROSTIR Safe Exit', bt2: 'Автоматичний checkout',
+        bd2: 'Таймер відраховує час бронювання. За 2 хвилини до кінця — push-нотифікація гостю. Оплата підтверджується за 14 секунд. Офіціант навіть не підходить.',
+      },
+      pillars: {
+        eyebrow: '03 · Infrastructure',
+        h2: 'Побудовано для масштабу',
+        sub: 'Три принципи, що стоять за кожним рядком PROSTIR Business — від першого столика до мережі по всій Україні.',
+        p1: 'Автоматизація бронювань, черг та оплат скорочує операційне навантаження на команду на 15–20% щотижня. Менше рутини — більше гостинності.',
+        m1: 'Операційних витрат',
+        p2: 'Ідентифікація через Дія гарантує, що в закладі лише верифіковані гості. Ніяких chargebacks, ніяких фіктивних бронювань, нульова анонімність.',
+        m2: 'Анонімних транзакцій',
+        p3: 'Аналітика трафіку, геофенсинг та Moments-сповіщення перетворюють кожного гостя на потенційного постійного відвідувача. Персоналізований маркетинг без cookies.',
+        m3: 'Повторних відвідин',
+      },
+      cta: {
+        eyebrow: '04 · Partnership',
+        h2: 'Готові стати частиною Urban OS?',
+        sub: 'Долучайтесь до 150+ закладів, які вже автоматизували бронювання, аналітику та checkout через PROSTIR.',
+        btn1: 'Стати партнером PROSTIR →',
+        btn2: 'Завантажити презентацію',
+        fine: 'Інтеграція займає менше 48 годин · Підтримка 24/7 · Без прихованих комісій',
+      },
+      footer: { home:'Головна' },
+    },
+    en: {
+      nav: { dine:'Dine', working:'Working', moments:'Moments', business:'Business' },
+      headerBtn: 'Become a partner',
+      hero: {
+        eyebrow: 'PROSTIR for Business · B2B Platform',
+        h1: 'Run your venue<br>at the <span class="accent">rhythm</span> of the city',
+        sub: 'Full booking automation, traffic analytics, and seamless Safe Exit checkout — all in one platform.',
+        cta1: 'Become a PROSTIR partner →',
+        cta2: 'View demo',
+        stat1: 'Partner venues',
+        stat2: 'Less staff time',
+        stat3: 'Average venue rating',
+      },
+      admin: {
+        eyebrow: '01 · Admin Panel',
+        h2: 'Full control in real time',
+        sub: 'The PROSTIR Admin panel gives venue owners an instant overview of everything happening — from guest locations to peak revenue hours.',
+        f1: 'Drag-and-drop tables, zones, bar and entrance — no page reload required.',
+        f2: 'Revenue chart with peak hours, week-over-week comparison, and tomorrow\'s forecast.',
+        f3: 'Live counter of Diia-verified users currently inside the venue.',
+      },
+      safe: {
+        eyebrow: '02 · Safe Exit Value',
+        h2: 'How Safe Exit saves your staff time',
+        sub: 'Automated checkout isn\'t just convenient for guests. It\'s 15% of a server\'s working time returned every day.',
+        c1t: 'Less time on checkout',
+        c1d: 'Staff no longer wait for guests to settle the bill. Safe Exit automatically initiates payment before the booking ends.',
+        c2t: 'End-to-end transaction',
+        c2d: 'From tapping "Confirm" to receiving a digital receipt — under 14 seconds. No PIN, no queue, no paper.',
+        c3t: 'Verified guests',
+        c3d: 'Every guest authenticates via Diia. Zero anonymous bookings — only real, verified identities.',
+        bl1: 'Before PROSTIR', bt1: 'Manual checkout',
+        bd1: 'Staff walk to the table, bring the bill, wait for the guest\'s decision, process payment manually, close the shift in the POS — 4–6 minutes per table.',
+        bl2: 'With PROSTIR Safe Exit', bt2: 'Automated checkout',
+        bd2: 'A timer counts down the booking duration. 2 minutes before the end — a push notification to the guest. Payment confirmed in 14 seconds. Staff never need to approach.',
+      },
+      pillars: {
+        eyebrow: '03 · Infrastructure',
+        h2: 'Built for scale',
+        sub: 'Three principles behind every line of PROSTIR Business — from the first table to a network across Ukraine.',
+        p1: 'Automating bookings, queues and payments reduces operational load on the team by 15–20% each week. Less routine — more hospitality.',
+        m1: 'Operational costs',
+        p2: 'Diia identification ensures only verified guests are in the venue. No chargebacks, no ghost bookings, zero anonymity.',
+        m2: 'Anonymous transactions',
+        p3: 'Traffic analytics, geofencing and Moments notifications turn every guest into a potential regular. Personalised marketing without cookies.',
+        m3: 'Repeat visits',
+      },
+      cta: {
+        eyebrow: '04 · Partnership',
+        h2: 'Ready to join the Urban OS?',
+        sub: 'Join 150+ venues that have already automated bookings, analytics, and checkout via PROSTIR.',
+        btn1: 'Become a PROSTIR partner →',
+        btn2: 'Download presentation',
+        fine: 'Integration takes less than 48 hours · 24/7 support · No hidden fees',
+      },
+      footer: { home:'Home' },
+    }
+  };
+
+  function apply(lang){
+    const t = T[lang];
+
+    /* nav */
+    document.querySelectorAll('[data-i18n="nav.dine"]').forEach(el=>el.textContent=t.nav.dine);
+    document.querySelectorAll('[data-i18n="nav.working"]').forEach(el=>el.textContent=t.nav.working);
+    document.querySelectorAll('[data-i18n="nav.moments"]').forEach(el=>el.textContent=t.nav.moments);
+    const headerBtn = document.querySelector('#dock .btn-label'); if(headerBtn) headerBtn.textContent=t.headerBtn;
+
+    /* hero */
+    const heroEyebrow = document.querySelector('.biz-eyebrow');
+    if(heroEyebrow){ const dot=heroEyebrow.querySelector('.biz-eyebrow-dot'); heroEyebrow.innerHTML=''; if(dot) heroEyebrow.appendChild(dot); heroEyebrow.appendChild(document.createTextNode(' '+t.hero.eyebrow)); }
+    const bizH1 = document.getElementById('biz-h1'); if(bizH1) bizH1.innerHTML=t.hero.h1;
+    const heroSub = document.querySelector('.biz-hero-content > p'); if(heroSub) heroSub.textContent=t.hero.sub;
+    const heroCta1 = document.querySelector('.biz-hero-btns .biz-cta-primary'); if(heroCta1){ const inner=heroCta1.querySelector('.mag-inner'); if(inner) inner.textContent=t.hero.cta1; else heroCta1.textContent=t.hero.cta1; }
+    const heroCta2 = document.querySelector('.biz-hero-btns .biz-outline-btn'); if(heroCta2){ const inner=heroCta2.querySelector('.mag-inner'); if(inner) inner.textContent=t.hero.cta2; else heroCta2.textContent=t.hero.cta2; }
+    const statLabels = document.querySelectorAll('.biz-hero-stats .biz-stat-label');
+    if(statLabels[0]) statLabels[0].textContent=t.hero.stat1;
+    if(statLabels[1]) statLabels[1].textContent=t.hero.stat2;
+    if(statLabels[2]) statLabels[2].textContent=t.hero.stat3;
+
+    /* admin */
+    const adminEyebrow = document.querySelector('.admin-copy .biz-section-eyebrow'); if(adminEyebrow) adminEyebrow.textContent=t.admin.eyebrow;
+    const adminH2 = document.getElementById('admin-h2'); if(adminH2) adminH2.textContent=t.admin.h2;
+    const adminSub = document.querySelector('.admin-copy > p'); if(adminSub) adminSub.textContent=t.admin.sub;
+    const afiTexts = document.querySelectorAll('.afi-text p');
+    if(afiTexts[0]) afiTexts[0].textContent=t.admin.f1;
+    if(afiTexts[1]) afiTexts[1].textContent=t.admin.f2;
+    if(afiTexts[2]) afiTexts[2].textContent=t.admin.f3;
+
+    /* safe exit value */
+    const svEyebrow = document.querySelector('.sv-header .biz-section-eyebrow'); if(svEyebrow) svEyebrow.textContent=t.safe.eyebrow;
+    const svH2 = document.getElementById('sv-h2'); if(svH2) svH2.textContent=t.safe.h2;
+    const svSub = document.querySelector('.sv-header > p'); if(svSub) svSub.textContent=t.safe.sub;
+    const svCardTitles = document.querySelectorAll('.sv-card-title');
+    if(svCardTitles[0]) svCardTitles[0].textContent=t.safe.c1t;
+    if(svCardTitles[1]) svCardTitles[1].textContent=t.safe.c2t;
+    if(svCardTitles[2]) svCardTitles[2].textContent=t.safe.c3t;
+    const svCardDescs = document.querySelectorAll('.sv-card-desc');
+    if(svCardDescs[0]) svCardDescs[0].textContent=t.safe.c1d;
+    if(svCardDescs[1]) svCardDescs[1].textContent=t.safe.c2d;
+    if(svCardDescs[2]) svCardDescs[2].textContent=t.safe.c3d;
+    const svLabels = document.querySelectorAll('.sv-compare-label');
+    if(svLabels[0]) svLabels[0].textContent=t.safe.bl1;
+    if(svLabels[1]) svLabels[1].textContent=t.safe.bl2;
+    const svTitles = document.querySelectorAll('.sv-compare-title');
+    if(svTitles[0]) svTitles[0].textContent=t.safe.bt1;
+    if(svTitles[1]) svTitles[1].textContent=t.safe.bt2;
+    const svDescs = document.querySelectorAll('.sv-compare-desc');
+    if(svDescs[0]) svDescs[0].textContent=t.safe.bd1;
+    if(svDescs[1]) svDescs[1].textContent=t.safe.bd2;
+
+    /* pillars */
+    const pillarsEyebrow = document.querySelector('.pillars-header .biz-section-eyebrow'); if(pillarsEyebrow) pillarsEyebrow.textContent=t.pillars.eyebrow;
+    const pillarsH2 = document.getElementById('pillars-h2'); if(pillarsH2) pillarsH2.textContent=t.pillars.h2;
+    const pillarsSub = document.querySelector('.pillars-header > p'); if(pillarsSub) pillarsSub.textContent=t.pillars.sub;
+    const pillarPs = document.querySelectorAll('.pillar-card > p');
+    if(pillarPs[0]) pillarPs[0].textContent=t.pillars.p1;
+    if(pillarPs[1]) pillarPs[1].textContent=t.pillars.p2;
+    if(pillarPs[2]) pillarPs[2].textContent=t.pillars.p3;
+    const pillarMetrics = document.querySelectorAll('.pillar-metric-label');
+    if(pillarMetrics[0]) pillarMetrics[0].textContent=t.pillars.m1;
+    if(pillarMetrics[1]) pillarMetrics[1].textContent=t.pillars.m2;
+    if(pillarMetrics[2]) pillarMetrics[2].textContent=t.pillars.m3;
+
+    /* partner CTA */
+    const ctaEyebrow = document.querySelector('.partner-cta .biz-section-eyebrow'); if(ctaEyebrow) ctaEyebrow.textContent=t.cta.eyebrow;
+    const ctaH2 = document.getElementById('cta-h2'); if(ctaH2) ctaH2.textContent=t.cta.h2;
+    const ctaSub = document.querySelector('.partner-cta-content > p:not(.partner-fine)'); if(ctaSub) ctaSub.textContent=t.cta.sub;
+    const ctaBtn1 = document.querySelector('.partner-cta-btns .biz-cta-primary'); if(ctaBtn1){ const inner=ctaBtn1.querySelector('.mag-inner'); if(inner) inner.textContent=t.cta.btn1; else ctaBtn1.textContent=t.cta.btn1; }
+    const ctaBtn2 = document.querySelector('.partner-cta-btns .biz-cta-secondary'); if(ctaBtn2){ const inner=ctaBtn2.querySelector('.mag-inner'); if(inner) inner.textContent=t.cta.btn2; else ctaBtn2.textContent=t.cta.btn2; }
+    const fine = document.querySelector('.partner-fine'); if(fine) fine.textContent=t.cta.fine;
+
+    /* pricing toggle labels */
+    const ptMo = document.getElementById('pt-monthly-label'); if(ptMo) ptMo.textContent = lang==='en'?'Monthly':'Щомісяця';
+    const ptYr = document.getElementById('pt-yearly-label');  if(ptYr) ptYr.textContent = lang==='en'?'Yearly':'Щорічно';
+    const pcpb = document.getElementById('pcpb-text');         if(pcpb) pcpb.textContent = lang==='en'?'Most Popular':'Найпопулярніший';
+
+    /* pricing section copy */
+    const prEy = document.getElementById('pricing-eyebrow'); if(prEy) prEy.textContent = lang==='en'?'04 · Pricing':'04 · Тарифи';
+    const prH2 = document.getElementById('pricing-h2');       if(prH2) prH2.innerHTML = lang==='en'?'Transparent pricing.<br>Zero hidden fees.':'Прозорі тарифи.<br>Нуль прихованих комісій.';
+    const prSb = document.getElementById('pricing-sub');       if(prSb) prSb.textContent = lang==='en'?'Start free — scale with your venue.':'Починайте безкоштовно — масштабуйтесь разом із закладом.';
+    const prFn = document.getElementById('pricing-fine');      if(prFn) prFn.textContent = lang==='en'?'All plans include Diia verification · No hidden transaction fees':'Усі тарифи включають верифікацію через Дія · Без прихованих транзакційних зборів';
+
+    /* tier names, desc, buttons */
+    const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+    if(lang==='en'){
+      set('tier1-desc','For small venues just getting started');
+      set('tier2-desc','For active venues with a focus on growth');
+      set('tier3-desc','For networks and large operators');
+      set('tier1-btn','Start for free');
+      const t2b=document.getElementById('tier2-btn'); if(t2b){const i=t2b.querySelector('.mag-inner');(i||t2b).textContent='Try free for 14 days →';}
+      set('tier3-btn','Contact the team');
+      set('t1f1','1 venue');set('t1f2','Up to 20 tables/desks');set('t1f3','Basic analytics');set('t1f4','Diia verification');set('t1f5','Safe Exit auto-payment');set('t1f6','API access');
+      set('t2f1','Up to 3 venues');set('t2f2','Unlimited tables');set('t2f3','Full analytics + forecasts');set('t2f4','Safe Exit auto-payment');set('t2f5','Live Floorplan Editor');set('t2f6','White-label API');
+      set('t3f1','Unlimited venues');set('t3f2','White-label solution');set('t3f3','API + webhooks');set('t3f4','Dedicated manager');set('t3f5','24/7 support · SLA');set('t3f6','Custom POS integration');
+    } else {
+      set('tier1-desc','Для невеликих закладів, що тільки починають');
+      set('tier2-desc','Для активних закладів з прицілом на зростання');
+      set('tier3-desc','Для мереж та великих операторів');
+      set('tier1-btn','Почати безкоштовно');
+      const t2b=document.getElementById('tier2-btn'); if(t2b){const i=t2b.querySelector('.mag-inner');(i||t2b).textContent='Спробувати 14 днів безкоштовно →';}
+      set('tier3-btn','Зв\'язатися з командою');
+      set('t1f1','1 заклад');set('t1f2','До 20 столів/desk-ів');set('t1f3','Базова аналітика');set('t1f4','Diia верифікація');set('t1f5','Safe Exit автоплата');set('t1f6','API доступ');
+      set('t2f1','До 3 закладів');set('t2f2','Необмежено столів');set('t2f3','Повна аналітика + прогнози');set('t2f4','Safe Exit автоплата');set('t2f5','Live Floorplan Editor');set('t2f6','White-label API');
+      set('t3f1','Необмежено закладів');set('t3f2','White-label рішення');set('t3f3','API + вебхуки');set('t3f4','Виділений менеджер');set('t3f5','Підтримка 24/7 · SLA');set('t3f6','Кастомна інтеграція POS');
+    }
+
+    /* footer */
+    const footerHome = document.querySelector('.biz-footer-links a[href="/"]'); if(footerHome) footerHome.textContent=t.footer.home;
+
+    /* lang-switch active state */
+    switcher.querySelectorAll('.lang-btn').forEach(b=>{
+      b.setAttribute('aria-pressed', b.dataset.lang===lang ? 'true' : 'false');
+    });
+  }
+
+  const saved = localStorage.getItem('prostir_lang') || 'ua';
+  apply(saved === 'en' ? 'en' : 'ua');
+
+  switcher.querySelectorAll('.lang-btn').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const lang = b.dataset.lang === 'en' ? 'en' : 'ua';
+      localStorage.setItem('prostir_lang', lang);
+      apply(lang);
+    });
+  });
+})();
+</script>
+
+<!-- Magnetic Button Effect -->
+<script>
+(function(){if(window.matchMedia("(hover: none)").matches)return;if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;const K=150,D=15;function spring(){return{pos:0,vel:0,target:0};}function stepSpring(s,dt){const F=-K*(s.pos-s.target)-D*s.vel;s.vel+=F*dt;s.pos+=s.vel*dt;}function atRest(s){return Math.abs(s.pos-s.target)<0.015&&Math.abs(s.vel)<0.015;}let mx=-9999,my=-9999;document.addEventListener("mousemove",e=>{mx=e.clientX;my=e.clientY;},{passive:true});const buttons=[];let lastT=0;function loop(now){const dt=Math.min((now-(lastT||now))/1000,0.05);lastT=now;for(const b of buttons){const r=b.el.getBoundingClientRect();const cx=r.left+r.width*.5,cy=r.top+r.height*.5;const dx=mx-cx,dy=my-cy;const dist=Math.hypot(dx,dy);if(dist<b.radius){const pull=(1-dist/b.radius);b.sx.target=(dx/b.radius)*b.maxShift*pull;b.sy.target=(dy/b.radius)*b.maxShift*pull;b.near=true;}else{b.sx.target=b.sy.target=0;b.near=false;}stepSpring(b.sx,dt);stepSpring(b.sy,dt);const x=b.sx.pos,y=b.sy.pos;b.el.style.transform="translate("+x.toFixed(2)+"px,"+y.toFixed(2)+"px)";if(b.inner){b.inner.style.transform="translate("+(x*b.innerR).toFixed(2)+"px,"+(y*b.innerR).toFixed(2)+"px)";}const g=b.near?Math.max(0,(b.radius-dist)/b.radius):0;const gq=Math.round(g*32)/32;if(gq!==b._gq){b._gq=gq;if(gq>0.01){const s1=(18+gq*32).toFixed(0);const a1=(0.10+gq*0.40).toFixed(2);b.el.style.boxShadow="0 0 "+s1+"px rgba(139,92,246,"+a1+"),0 0 "+(gq*72).toFixed(0)+"px rgba(139,92,246,"+(gq*0.12).toFixed(2)+")";}else if(atRest(b.sx)&&atRest(b.sy)){b.el.style.boxShadow="";b.el.style.transform="";if(b.inner)b.inner.style.transform="";}}}requestAnimationFrame(loop);}function initButton(el){if(el._magInit)return;el._magInit=true;const radius=parseInt(el.dataset.magR,10)||70;const maxShift=parseInt(el.dataset.magS,10)||18;const innerR=parseFloat(el.dataset.magI)||0.45;let inner=el.querySelector(":scope > .mag-inner");if(!inner){inner=document.createElement("span");inner.className="mag-inner";while(el.firstChild)inner.appendChild(el.firstChild);el.appendChild(inner);}buttons.push({el,inner,radius,maxShift,innerR,sx:spring(),sy:spring(),near:false,_gq:-1});}function init(){document.querySelectorAll(".biz-cta-primary,.biz-outline-btn,.biz-primary-btn,.biz-cta-secondary,[data-magnetic]").forEach(initButton);if(buttons.length)requestAnimationFrame(loop);}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",init);}else{requestAnimationFrame(init);}})();
+</script>
+<script src="/delight.js" defer></script>
+<script src="/faq.js" defer></script>
+</body>
+</html>
