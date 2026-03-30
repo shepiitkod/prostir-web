@@ -716,8 +716,9 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 let sewSec=15*60, sewInterval=null;
 function showSEW(tableId, time, info){
   const sew=$('sew');
+  const _lang = localStorage.getItem('prostir_lang') === 'en' ? 'en' : 'ua';
   $('sew-venue').textContent='Cafe Aura';
-  $('sew-detail').textContent=currentLang==='en'?`Table #${tableId} · ${info?.view||''} · ${time||''}`:`Стіл #${tableId} · ${info?.view||''} · ${time||''}`;
+  $('sew-detail').textContent=_lang==='en'?`Table #${tableId} · ${info?.view||''} · ${time||''}`:`Стіл #${tableId} · ${info?.view||''} · ${time||''}`;
   sew.classList.add('active');
   if(sewInterval) clearInterval(sewInterval);
   sewSec=15*60;

@@ -9,6 +9,7 @@ const DB_PATH = path.join(__dirname, 'db.json');
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/media', express.static(__dirname));
 
 /* ─── DB helpers ─── */
 function readDb() {
@@ -134,10 +135,10 @@ app.delete('/api/bookings/:id', (req, res) => {
 });
 
 /* ──────────────────────────────────────────
-   Fallback: serve index.html for any non-API route
+   Fallback: serve 404 page for unknown routes
 ────────────────────────────────────────── */
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
 const PORT = process.env.PORT || 3000;

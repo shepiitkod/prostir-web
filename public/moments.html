@@ -262,6 +262,59 @@
     </div>
   </div>
 
+  <style>
+    @keyframes connectedIn {
+      from { opacity:0; transform: translateY(16px) scale(0.97); }
+      to   { opacity:1; transform: translateY(0)    scale(1);    }
+    }
+    #connected-card { transition: opacity 0.25s, transform 0.25s; }
+    body.theme-noir #connected-card { background: rgba(139,92,246,0.1) !important; border-color: rgba(139,92,246,0.25) !important; }
+    body.theme-noir #cc-name { color: #fff !important; }
+    body.theme-noir #cc-meta { color: rgba(255,255,255,0.3) !important; }
+    #cc-msg-btn:hover { background: #7c3aed !important; }
+    #cc-profile-btn:hover { border-color: rgba(139,92,246,0.45) !important; }
+    body.theme-noir #cc-close { background: rgba(255,255,255,0.08) !important; color: rgba(255,255,255,0.4) !important; }
+  </style>
+  <!-- Connected card (hidden until Accept) -->
+  <div id="connected-card" style="
+    display:none; max-width:480px; margin: 1.5rem auto 0;
+    background:rgba(139,92,246,0.06); border:1px solid rgba(139,92,246,0.22);
+    border-radius:24px; padding:1.5rem; animation: connectedIn 0.55s cubic-bezier(0.22,1,0.36,1) forwards;
+  ">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem">
+      <div style="font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#8B5CF6;display:flex;align-items:center;gap:0.4rem">
+        <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block;animation:blink 1.6s ease-in-out infinite"></span>
+        <span id="cc-status">Зʼєднано</span>
+      </div>
+      <button id="cc-close" style="width:26px;height:26px;border-radius:50%;border:none;background:rgba(0,0,0,0.06);color:#9CA3AF;display:flex;align-items:center;justify-content:center;cursor:pointer">
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l10 10M11 1L1 11"/></svg>
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.1rem">
+      <div style="width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#8B5CF6,#6D28D9);display:flex;align-items:center;justify-content:center;font-size:1.35rem;font-weight:800;color:#fff;flex-shrink:0;position:relative">
+        А
+        <span style="position:absolute;bottom:0;right:0;width:16px;height:16px;border-radius:50%;background:#22c55e;border:2px solid white;display:flex;align-items:center;justify-content:center;font-size:0.45rem;color:#fff;font-weight:800">✓</span>
+      </div>
+      <div>
+        <div id="cc-name" style="font-size:1rem;font-weight:700;letter-spacing:-0.03em;color:var(--jet)">Андрій · 26</div>
+        <div id="cc-meta" style="font-family:var(--font-mono);font-size:0.62rem;color:var(--grey-muted);margin-top:0.15rem">Стіл №7 · ~4 м · Diia Verified</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1.1rem" id="cc-tags">
+      <span style="font-size:0.72rem;padding:0.25rem 0.7rem;border-radius:999px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.18);color:#7c3aed">☕ Кава</span>
+      <span style="font-size:0.72rem;padding:0.25rem 0.7rem;border-radius:999px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.18);color:#7c3aed">💻 Tech</span>
+      <span style="font-size:0.72rem;padding:0.25rem 0.7rem;border-radius:999px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.18);color:#7c3aed">🎵 Jazz</span>
+    </div>
+    <div style="display:flex;gap:0.6rem">
+      <button id="cc-msg-btn" style="flex:1;padding:0.65rem;border-radius:13px;background:#8B5CF6;border:none;color:#fff;font-size:0.82rem;font-weight:600;cursor:pointer;transition:background 0.2s">
+        <span id="cc-msg-label">Написати</span> ✉
+      </button>
+      <button id="cc-profile-btn" style="flex:1;padding:0.65rem;border-radius:13px;background:transparent;border:1px solid rgba(139,92,246,0.22);color:#8B5CF6;font-size:0.82rem;font-weight:500;cursor:pointer;transition:border-color 0.2s">
+        <span id="cc-view-label">Профіль</span> →
+      </button>
+    </div>
+  </div>
+
   <!-- Feature cards -->
   <div class="moments-features">
     <div class="moments-feat-card reveal">
@@ -370,17 +423,44 @@ toggle && toggle.addEventListener('change',()=>{
 
 toastClose && toastClose.addEventListener('click', hideToast);
 toastAccept && toastAccept.addEventListener('click', () => {
-  // Confirm connection intent (UI only).
   hideToast();
+  showConnected();
 });
 toastDecline && toastDecline.addEventListener('click', () => {
-  // Back to Ghost Mode.
   hideToast();
   if(toggle){
     toggle.checked = false;
     toggle.dispatchEvent(new Event('change', { bubbles: true }));
   }
 });
+
+function showConnected(){
+  const card = document.getElementById('connected-card');
+  if(!card) return;
+  const lang = localStorage.getItem('prostir_lang') === 'en' ? 'en' : 'ua';
+  document.getElementById('cc-status').textContent  = lang === 'en' ? 'Connected' : 'Зʼєднано';
+  document.getElementById('cc-name').textContent    = lang === 'en' ? 'Andriy · 26' : 'Андрій · 26';
+  document.getElementById('cc-meta').textContent    = lang === 'en' ? 'Table №7 · ~4 m · Diia Verified' : 'Стіл №7 · ~4 м · Diia Verified';
+  document.getElementById('cc-msg-label').textContent   = lang === 'en' ? 'Message' : 'Написати';
+  document.getElementById('cc-view-label').textContent  = lang === 'en' ? 'Profile' : 'Профіль';
+  card.style.display = 'block';
+  card.style.animation = 'none';
+  card.offsetHeight; /* reflow */
+  card.style.animation = 'connectedIn 0.55s cubic-bezier(0.22,1,0.36,1) forwards';
+}
+
+document.getElementById('cc-close') && document.getElementById('cc-close').addEventListener('click', ()=>{
+  const c = document.getElementById('connected-card');
+  if(c){ c.style.opacity='0'; c.style.transform='scale(0.96)'; setTimeout(()=>{ c.style.display='none'; c.style.opacity=''; c.style.transform=''; }, 280); }
+});
+document.getElementById('cc-msg-btn') && document.getElementById('cc-msg-btn').addEventListener('click', ()=>{
+  const lang = localStorage.getItem('prostir_lang') === 'en' ? 'en' : 'ua';
+  const el = document.getElementById('cc-msg-btn');
+  el.textContent = lang === 'en' ? '✓ Request sent' : '✓ Запит надіслано';
+  el.style.background = '#22c55e';
+  el.disabled = true;
+});
+document.getElementById('cc-profile-btn') && document.getElementById('cc-profile-btn').addEventListener('click', ()=>{ window.location.href='/profile.html'; });
 
 // Language switcher (UA / EN)
 (function(){
