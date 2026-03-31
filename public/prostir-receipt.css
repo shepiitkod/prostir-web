@@ -14,6 +14,16 @@
 .biz-tips-connection {
   text-align: center;
   padding: 0 var(--space-2, 0.5rem);
+  /* If this were <header>, app.css would apply fixed nav — keep block flow */
+  position: relative;
+  display: block;
+  height: auto;
+  inset: auto;
+  z-index: auto;
+  background: transparent;
+  border: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 .biz-tips-connection-title {
   margin: 0 0 var(--space-3, 0.75rem);

@@ -32,6 +32,9 @@ app.use('/media', express.static(__root, { ...staticOpts, index: false }));
 
 /** `index: false` on static — root URL must be mapped explicitly */
 app.get('/', (_req, res) => {
+  if (!IS_PROD) {
+    res.setHeader('Cache-Control', 'no-store');
+  }
   res.sendFile(path.join(__root, 'public', 'index.html'));
 });
 

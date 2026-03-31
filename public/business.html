@@ -306,36 +306,19 @@
       min-width: 0;
     }
     .admin-kpi-row {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      min-width: 0;
     }
-    .admin-kpi {
-      position: relative; padding: 1rem 0.85rem 1rem;
-      border-radius: 16px;
-      background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.015) 100%);
-      border: 1px solid rgba(255,255,255,0.08);
-      overflow: hidden;
-      transition: border-color 0.35s var(--ease), transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
-    }
-    .admin-kpi::before {
-      content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0;
-      background: radial-gradient(ellipse 80% 120% at 50% 0%, rgba(139,92,246,0.2) 0%, transparent 65%);
-      transition: opacity 0.35s ease;
-    }
-    .admin-kpi:hover {
-      border-color: rgba(139,92,246,0.35);
-      transform: translateY(-3px);
-      box-shadow: 0 18px 48px rgba(0,0,0,0.45), 0 0 0 1px rgba(139,92,246,0.12);
-    }
-    .admin-kpi:hover::before { opacity: 1; }
-    .admin-kpi-val {
-      display: block; font-size: clamp(1.35rem, 2.8vw, 1.75rem); font-weight: 700;
-      letter-spacing: -0.04em; color: #fff; line-height: 1.1; font-variant-numeric: tabular-nums;
-    }
-    .admin-kpi-val em { font-style: normal; color: var(--violet); }
-    .admin-kpi-lbl {
-      display: block; margin-top: 0.35rem;
-      font-family: var(--font-mono); font-size: 0.52rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: rgba(255,255,255,0.32); line-height: 1.35;
+    .admin-feature-item.admin-kpi-feature .afi-text h4 {
+      font-size: clamp(1.12rem, 2.2vw, 1.42rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: #fff;
+      margin-bottom: 0.4rem;
+      line-height: 1.15;
+      font-variant-numeric: tabular-nums;
     }
     .admin-feat-grid {
       display: grid; gap: 0.75rem; flex: 1;
@@ -843,10 +826,8 @@
 
     @media (max-width: 960px) {
       .admin-copy-col { grid-template-columns: 1fr; }
-      .admin-kpi-row { grid-template-columns: 1fr 1fr 1fr; }
     }
     @media (max-width: 520px) {
-      .admin-kpi-row { grid-template-columns: 1fr; }
       .ap-titlebar .admin-live-pill { margin-left: 0; width: 100%; justify-content: center; }
     }
 
@@ -1816,17 +1797,35 @@
     <div class="admin-bento">
       <div class="admin-copy-col reveal" style="animation-delay:.06s">
         <div class="admin-kpi-row" aria-label="Ключові показники панелі">
-          <div class="admin-kpi">
-            <span class="admin-kpi-val" id="ad-k1v">&lt;2с</span>
-            <span class="admin-kpi-lbl" id="ad-k1l">синхронізація плану залу</span>
+          <div class="admin-feature-item admin-kpi-feature">
+            <div class="afi-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+            </div>
+            <div class="afi-text">
+              <p class="afi-tag" id="ad-k1tag">Синхронізація</p>
+              <h4 id="ad-k1v">&lt;2 с</h4>
+              <p id="ad-k1d">Кожне перетягування столика миттєво оновлює план залу — гість бачить актуальну схему в застосунку без перезавантаження.</p>
+            </div>
           </div>
-          <div class="admin-kpi">
-            <span class="admin-kpi-val" id="ad-k2v">100%</span>
-            <span class="admin-kpi-lbl" id="ad-k2l">верифіковані гості (Дія)</span>
+          <div class="admin-feature-item admin-kpi-feature">
+            <div class="afi-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <div class="afi-text">
+              <p class="afi-tag" id="ad-k2tag">Дія · Trust</p>
+              <h4 id="ad-k2v">100%</h4>
+              <p id="ad-k2d">Усі активні сесії привʼязані до верифікованої Дія-ідентичності — менше ноу-шоу та анонімних броней.</p>
+            </div>
           </div>
-          <div class="admin-kpi">
-            <span class="admin-kpi-val" id="ad-k3v">48 год</span>
-            <span class="admin-kpi-lbl" id="ad-k3l">до запуску інтеграції</span>
+          <div class="admin-feature-item admin-kpi-feature">
+            <div class="afi-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div class="afi-text">
+              <p class="afi-tag" id="ad-k3tag">Запуск</p>
+              <h4 id="ad-k3v">48 год</h4>
+              <p id="ad-k3d">Від заявки до першого робочого сценарію в адмінці — з онбордингом і супроводом команди PROSTIR.</p>
+            </div>
           </div>
         </div>
 
@@ -3164,9 +3163,15 @@
         eyebrow: '01 · Операційний центр',
         h2: 'Одна панель — <span class="admin-h2-accent">повний операційний контроль</span>',
         lead: 'PROSTIR Admin зводить зал, виручку та потік гостей в одному інтерфейсі з миттєвою синхронізацією — саме те, що очікують власник і інвестор: прозорість, швидкість і довіра через Дія.',
-        k1v: '<2 с', k1l: 'оновлення плану залу',
-        k2v: '100%', k2l: 'гості з верифікацією Дія',
-        k3v: '48 год', k3l: 'до старту інтеграції',
+        k1tag: 'Синхронізація',
+        k1v: '<2 с',
+        k1d: 'Кожне перетягування столика миттєво оновлює план залу — гість бачить актуальну схему в застосунку без перезавантаження.',
+        k2tag: 'Дія · Trust',
+        k2v: '100%',
+        k2d: 'Усі активні сесії привʼязані до верифікованої Дія-ідентичності — менше ноу-шоу та анонімних броней.',
+        k3tag: 'Запуск',
+        k3v: '48 год',
+        k3d: 'Від заявки до першого робочого сценарію в адмінці — з онбордингом і супроводом команди PROSTIR.',
         f1tag: 'План залу', f1t: 'Живий редактор розстановки',
         f1d: 'Столики, зони й проходи — перетягування без перезавантаження. Зміни одразу видно гостю в застосунку.',
         f2tag: 'Виручка', f2t: 'Прогнозована економіка залу',
@@ -3292,9 +3297,15 @@
         eyebrow: '01 · Command Center',
         h2: 'One console — <span class="admin-h2-accent">full operational control</span>',
         lead: 'PROSTIR Admin unifies the floor, revenue, and guest flow in one interface with instant sync — what owners and investors want to see: transparency, speed, and trust through Diia.',
-        k1v: '<2s', k1l: 'floor plan sync',
-        k2v: '100%', k2l: 'Diia-verified guests',
-        k3v: '48h', k3l: 'to integration go-live',
+        k1tag: 'Sync',
+        k1v: '<2s',
+        k1d: 'Every table drag updates the live floor map instantly — guests see the current layout in the app without a refresh.',
+        k2tag: 'Diia · Trust',
+        k2v: '100%',
+        k2d: 'Active covers map to verified Diia identities — fewer no-shows and zero anonymous bookings.',
+        k3tag: 'Go-live',
+        k3v: '48h',
+        k3d: 'From signup to your first production workflow in Admin — with PROSTIR onboarding alongside.',
         f1tag: 'Floor', f1t: 'Live layout editor',
         f1d: 'Tables, zones, and aisles — drag and drop with no reload. Changes surface to guests in the app immediately.',
         f2tag: 'Revenue', f2t: 'Forecast-ready P&L view',
@@ -3434,9 +3445,15 @@
     const admLead = document.querySelector('.admin-section .admin-lead');
     if (admLead) admLead.textContent = t.admin.lead;
     const admSet = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-    admSet('ad-k1v', t.admin.k1v); admSet('ad-k1l', t.admin.k1l);
-    admSet('ad-k2v', t.admin.k2v); admSet('ad-k2l', t.admin.k2l);
-    admSet('ad-k3v', t.admin.k3v); admSet('ad-k3l', t.admin.k3l);
+    admSet('ad-k1tag', t.admin.k1tag);
+    admSet('ad-k1v', t.admin.k1v);
+    admSet('ad-k1d', t.admin.k1d);
+    admSet('ad-k2tag', t.admin.k2tag);
+    admSet('ad-k2v', t.admin.k2v);
+    admSet('ad-k2d', t.admin.k2d);
+    admSet('ad-k3tag', t.admin.k3tag);
+    admSet('ad-k3v', t.admin.k3v);
+    admSet('ad-k3d', t.admin.k3d);
     admSet('admin-f1tag', t.admin.f1tag); admSet('admin-f1t', t.admin.f1t); admSet('admin-f1d', t.admin.f1d);
     admSet('admin-f2tag', t.admin.f2tag); admSet('admin-f2t', t.admin.f2t); admSet('admin-f2d', t.admin.f2d);
     admSet('admin-f3tag', t.admin.f3tag); admSet('admin-f3t', t.admin.f3t); admSet('admin-f3d', t.admin.f3d);

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useId, useMemo, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -17,6 +17,16 @@ const FALLBACK_UK = "Ваш заклад";
 const FALLBACK_EN = "Your venue";
 
 const TIP_OPTIONS = [10, 15, 20, 25] as const;
+
+const easeOut = [0.22, 1, 0.36, 1] as const;
+
+function layoutTransition(reduceMotion: boolean) {
+  return {
+    layout: reduceMotion
+      ? { duration: 0.05 }
+      : { duration: 0.4, ease: easeOut },
+  };
+}
 
 function copy(locale: "uk" | "en") {
   if (locale === "en") {
@@ -123,6 +133,7 @@ function ReceiptInner({
 export function TornReceipt({ venueName, locale = "uk" }: TornReceiptProps): React.ReactElement {
   const reduceMotion = useReducedMotion();
   const receiptZoneRef = useRef<HTMLDivElement>(null);
+  const tipsIntroId = useId();
   const t = copy(locale);
   const displayVenue =
     venueName.trim() || (locale === "en" ? FALLBACK_EN : FALLBACK_UK);
@@ -198,10 +209,17 @@ export function TornReceipt({ venueName, locale = "uk" }: TornReceiptProps): Rea
 
   return (
     <div className="biz-receipt-experience">
-      <header className="biz-tips-connection">
-        <h3 className="biz-tips-connection-title">{t.tipsConnectionTitle}</h3>
+      {/* Use <div>, not <header>: global app.css targets `header` as fixed nav */}
+      <div
+        className="biz-tips-connection"
+        role="group"
+        aria-labelledby={tipsIntroId}
+      >
+        <h3 className="biz-tips-connection-title" id={tipsIntroId}>
+          {t.tipsConnectionTitle}
+        </h3>
         <p className="biz-tips-connection-body">{t.tipsConnectionBody}</p>
-      </header>
+      </div>
 
       <motion.div
         className="vn-receipt-ambient"
@@ -251,7 +269,12 @@ export function TornReceipt({ venueName, locale = "uk" }: TornReceiptProps): Rea
           </div>
         </div>
 
-        <div className="biz-waiter-chat" aria-live="polite">
+        <motion.div
+          className="biz-waiter-chat"
+          aria-live="polite"
+          layout={!reduceMotion}
+          transition={layoutTransition(Boolean(reduceMotion))}
+        >
           <div className="biz-waiter-avatar" aria-hidden="true">
             <svg viewBox="0 0 32 32" width="32" height="32" fill="none">
               <circle cx="16" cy="11" r="5" stroke="currentColor" strokeWidth="1.4" />
@@ -263,9 +286,17 @@ export function TornReceipt({ venueName, locale = "uk" }: TornReceiptProps): Rea
               />
             </svg>
           </div>
-          <div className="biz-waiter-col">
+          <motion.div
+            className="biz-waiter-col"
+            layout={!reduceMotion}
+            transition={layoutTransition(Boolean(reduceMotion))}
+          >
             <div className="biz-waiter-name">{t.waiterLabel}</div>
-            <div className="biz-waiter-bubble">
+            <motion.div
+              className="biz-waiter-bubble"
+              layout={!reduceMotion}
+              transition={layoutTransition(Boolean(reduceMotion))}
+            >
               <AnimatePresence mode="wait">
                 {!tipPct ? (
                   <motion.p
@@ -274,7 +305,7 @@ export function TornReceipt({ venueName, locale = "uk" }: TornReceiptProps): Rea
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.25 }}
+                    transition={{ duration: 0.25, ease: easeOut }}
                   >
                     {t.chatPick}
                   </motion.p>
@@ -282,15 +313,38 @@ export function TornReceipt({ venueName, locale = "uk" }: TornReceiptProps): Rea
                   <motion.div
                     key="thread"
                     className="biz-waiter-thread"
+                    layout={!reduceMotion}
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.28 }}
+                    transition={{
+                      duration: 0.28,
+                      ease: easeOut,
+                      ...layoutTransition(Boolean(reduceMotion)),
+                    }}
                   >
-                    <p className="biz-waiter-text">{t.chatThanks(tipPct)}</p>
-                    <AnimatePresence>
+                    <AnimatePresence initial={false} mode="popLayout">
+                      <motion.p
+                        key={tipPct}
+                        className="biz-waiter-text"
+                        layout={!reduceMotion}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -6 }}
+                        transition={{
+                          duration: reduceMotion ? 0.08 : 0.28,
+                          ease: easeOut,
+                          ...layoutTransition(Boolean(reduceMotion)),
+                        }}
+                      >
+                        {t.chatThanks(tipPct)}
+                      </motion.p>
+                    </AnimatePresence>
+                    <AnimatePresence initial={false}>
                       {showKiss && tipPct === 25 ? (
                         <motion.div
+                          key="kiss"
                           className="biz-kiss-wrap"
+                          layout={!reduceMotion}
                           initial={
                             reduceMotion
                               ? { opacity: 1 }
@@ -305,10 +359,15 @@ export function TornReceipt({ venueName, locale = "uk" }: TornReceiptProps): Rea
                                   rotate: [0, 12, -8, 6, 0],
                                 }
                           }
-                          exit={{ opacity: 0, scale: 0.85 }}
+                          exit={
+                            reduceMotion
+                              ? { opacity: 0 }
+                              : { opacity: 0, scale: 0.75, y: -6 }
+                          }
                           transition={{
-                            opacity: { duration: 0.35 },
-                            scale: { type: "spring", stiffness: 260, damping: 18 },
+                            opacity: { duration: reduceMotion ? 0.1 : 0.32, ease: easeOut },
+                            scale: { duration: 0.32, ease: easeOut },
+                            y: { duration: 0.28, ease: easeOut },
                             rotate: { duration: 0.85, ease: "easeInOut" },
                           }}
                         >
@@ -321,19 +380,30 @@ export function TornReceipt({ venueName, locale = "uk" }: TornReceiptProps): Rea
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
-            {tipPct === 25 && showKiss ? (
-              <motion.p
-                className="biz-kiss-hint"
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15, duration: 0.35 }}
-              >
-                {t.kissHint}
-              </motion.p>
-            ) : null}
-          </div>
-        </div>
+            </motion.div>
+            <AnimatePresence initial={false}>
+              {tipPct === 25 && showKiss ? (
+                <motion.p
+                  key="kiss-hint"
+                  className="biz-kiss-hint"
+                  layout={!reduceMotion}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{
+                    opacity: { duration: reduceMotion ? 0.1 : 0.3, ease: easeOut },
+                    y: { duration: reduceMotion ? 0.1 : 0.3, ease: easeOut },
+                    layout: reduceMotion
+                      ? { duration: 0.05 }
+                      : { duration: 0.38, ease: easeOut },
+                  }}
+                >
+                  {t.kissHint}
+                </motion.p>
+              ) : null}
+            </AnimatePresence>
+          </motion.div>
+        </motion.div>
       </motion.div>
     </div>
   );

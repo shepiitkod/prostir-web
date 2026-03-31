@@ -48,109 +48,320 @@
   .asa-timer { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; color: #16a34a; letter-spacing: 0.04em; margin-left: auto; }
   body.theme-noir .asa-timer { color: #4ade80; }
 
-  /* ══════════════════════════════════════════════════════
-     VENUE HERO CARD
-  ══════════════════════════════════════════════════════ */
-  .venue-hero {
-    border-radius: 24px; overflow: hidden;
-    margin-bottom: 1.25rem; position: relative;
-    background: linear-gradient(145deg, #1a0533 0%, #2d1152 40%, #1e0a3e 70%, #0d0918 100%);
-    box-shadow: 0 4px 40px rgba(139,92,246,0.18), 0 1px 0 rgba(255,255,255,0.04);
-  }
-
-  /* Decorative ambient elements */
-  .vh-orb {
-    position: absolute; border-radius: 50%; pointer-events: none;
-  }
-  .vh-orb-1 { width: 300px; height: 300px; top: -80px; right: -60px; background: radial-gradient(circle, rgba(139,92,246,0.22) 0%, transparent 70%); }
-  .vh-orb-2 { width: 200px; height: 200px; bottom: -50px; left: 10%; background: radial-gradient(circle, rgba(80,30,180,0.18) 0%, transparent 70%); }
-  .vh-orb-3 { width: 120px; height: 120px; top: 20%; left: 40%; background: radial-gradient(circle, rgba(196,181,253,0.08) 0%, transparent 70%); }
-
-  /* Fine architectural lines */
-  .vh-lines {
-    position: absolute; inset: 0; pointer-events: none; overflow: hidden; opacity: 0.12;
-  }
-  .vh-lines::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
-    background-size: 44px 44px;
-    mask-image: radial-gradient(ellipse 80% 100% at 80% 50%, black, transparent);
-  }
-
-  .vh-body {
-    position: relative; z-index: 1;
-    display: flex; align-items: flex-start; justify-content: space-between;
-    padding: 2rem 2.25rem; gap: 1.5rem;
-    flex-wrap: wrap;
-  }
-
-  .vh-identity {}
-  .vh-eyebrow {
-    font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.14em;
-    text-transform: uppercase; color: rgba(196,181,253,0.65);
-    margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem;
-  }
-  .vh-eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: rgba(196,181,253,0.35); }
-  .vh-name {
-    font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 900;
-    letter-spacing: -0.05em; color: #fff; line-height: 1.05; margin-bottom: 0.5rem;
-  }
-  .vh-name span { color: #c4b5fd; }
-
-  .vh-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
-  .vh-pill {
-    display: inline-flex; align-items: center; gap: 0.35rem;
-    font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.07em;
-    border-radius: 8px; padding: 0.22rem 0.65rem;
-  }
-  .vh-pill svg { width: 11px; height: 11px; flex-shrink: 0; }
-  .vh-pill-open  { background: rgba(34,197,94,0.15);  border: 1px solid rgba(34,197,94,0.3);  color: #4ade80; }
-  .vh-pill-addr  { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.55); }
-  .vh-pill-cusine{ background: rgba(196,181,253,0.1);  border: 1px solid rgba(196,181,253,0.2); color: #c4b5fd; }
-
-  /* Rating */
-  .vh-rating-row { display: flex; align-items: center; gap: 1rem; }
-  .vh-stars { display: flex; gap: 2px; }
-  .vh-star { font-size: 0.9rem; }
-  .vh-score { font-size: 1.05rem; font-weight: 800; color: #fff; letter-spacing: -0.03em; }
-  .vh-reviews { font-family: var(--font-mono); font-size: 0.6rem; color: rgba(255,255,255,0.35); letter-spacing: 0.05em; }
-
-  /* Right side: live status */
-  .vh-status {
-    display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem;
-    min-width: 160px;
-  }
-  .vh-live-badge {
-    display: flex; align-items: center; gap: 0.45rem;
-    font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em;
-    background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.28);
-    border-radius: 10px; padding: 0.35rem 0.8rem; color: #4ade80;
-  }
   .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; animation: blink 1.8s ease-in-out infinite; box-shadow: 0 0 0 3px rgba(34,197,94,0.2); flex-shrink: 0; }
-  .vh-avail-count {
-    font-size: 2rem; font-weight: 900; letter-spacing: -0.05em;
-    color: #fff; line-height: 1; text-align: right;
-  }
-  .vh-avail-count span { font-size: 0.75rem; font-weight: 400; color: rgba(255,255,255,0.35); margin-left: 0.3rem; font-family: var(--font-mono); letter-spacing: 0.06em; }
-  .vh-avail-sub { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.25); text-align: right; }
 
-  /* Bottom bar */
-  .vh-bottom {
-    position: relative; z-index: 1;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    padding: 0.75rem 2.25rem;
-    display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+  /* ══════════════════════════════════════════════════════
+     MOSAIC — центровані міні-плитки одним блоком (без телефонів)
+  ══════════════════════════════════════════════════════ */
+  .dine-mosaic {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
   }
-  .vh-info-item {
-    display: flex; align-items: center; gap: 0.45rem;
-    font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.06em;
-    color: rgba(255,255,255,0.35);
+  .dine-mosaic-shell {
+    position: relative;
+    overflow: hidden;
+    width: min(100%, 720px);
+    border-radius: 30px;
+    padding: 14px;
+    background:
+      radial-gradient(circle at 18% 18%, rgba(139, 92, 246, 0.14), transparent 34%),
+      linear-gradient(155deg, rgba(255, 255, 255, 0.92), rgba(240, 236, 255, 0.92));
+    border: 1px solid rgba(139, 92, 246, 0.18);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.05),
+      0 24px 64px rgba(56, 31, 107, 0.14);
   }
-  .vh-info-item svg { width: 12px; height: 12px; stroke: rgba(196,181,253,0.5); flex-shrink: 0; }
-  .vh-info-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.07); }
+  .dine-mosaic-shell::before {
+    content: "";
+    position: absolute;
+    inset: -12% auto auto -5%;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.18), rgba(167, 139, 250, 0));
+    pointer-events: none;
+  }
+  body.theme-noir .dine-mosaic-shell {
+    background:
+      radial-gradient(circle at 18% 18%, rgba(139, 92, 246, 0.18), transparent 34%),
+      linear-gradient(155deg, rgba(23, 18, 33, 0.96), rgba(10, 10, 14, 0.96));
+    border-color: rgba(139, 92, 246, 0.28);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 28px 72px rgba(0, 0, 0, 0.58);
+  }
+  .dine-mosaic-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-auto-rows: 74px;
+    gap: 10px;
+  }
+  .dine-mosaic-cell {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    padding: 0.82rem 0.78rem;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0.24rem;
+    border: 1px solid rgba(126, 93, 197, 0.12);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(246, 243, 255, 0.82));
+    backdrop-filter: blur(12px);
+    transition: transform 0.28s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  }
+  .dine-mosaic-cell::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 48%);
+    pointer-events: none;
+  }
+  body.theme-noir .dine-mosaic-cell {
+    background: linear-gradient(180deg, rgba(24, 24, 31, 0.96), rgba(16, 16, 22, 0.92));
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  @media (hover: hover) {
+    .dine-mosaic-cell:hover {
+      transform: translateY(-2px);
+      border-color: rgba(139, 92, 246, 0.32);
+      box-shadow: 0 12px 28px rgba(139, 92, 246, 0.12);
+    }
+  }
+  .dine-mosaic-cell--hero { grid-column: span 5; grid-row: span 2; transform: translateY(8px) rotate(-1.2deg); }
+  .dine-mosaic-cell--tall { grid-column: span 3; grid-row: span 2; transform: translateY(-6px) rotate(1deg); }
+  .dine-mosaic-cell--wide { grid-column: span 4; }
+  .dine-mosaic-cell--wide-lg { grid-column: span 5; transform: translateY(-4px) rotate(-0.6deg); }
+  .dine-mosaic-cell--compact { grid-column: span 3; transform: translateY(5px); }
+  .dine-mosaic-cell--long { grid-column: span 7; transform: translateY(-5px) rotate(0.6deg); }
+  .dine-mosaic-cell--end { grid-column: span 5; transform: translateY(3px) rotate(-0.8deg); }
+  .dine-mosaic-cell--glow {
+    border-color: rgba(139, 92, 246, 0.3);
+    box-shadow: inset 0 0 34px rgba(139, 92, 246, 0.08);
+  }
+  .dine-mosaic-cell--mint {
+    border-color: rgba(34, 197, 94, 0.2);
+    background: linear-gradient(180deg, rgba(239, 253, 244, 0.96), rgba(236, 253, 245, 0.82));
+  }
+  body.theme-noir .dine-mosaic-cell--mint {
+    background: linear-gradient(180deg, rgba(18, 33, 24, 0.96), rgba(14, 26, 19, 0.92));
+    border-color: rgba(34, 197, 94, 0.26);
+  }
+  .dmc-ico {
+    font-size: 1.02rem;
+    line-height: 1;
+    margin-bottom: 0.12rem;
+    opacity: 0.9;
+  }
+  .dmc-k {
+    position: relative;
+    z-index: 1;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--jet);
+    line-height: 1.25;
+  }
+  body.theme-noir .dmc-k { color: rgba(255, 255, 255, 0.92); }
+  .dmc-d {
+    position: relative;
+    z-index: 1;
+    font-size: 0.62rem;
+    color: var(--grey-muted);
+    line-height: 1.35;
+    max-width: 20ch;
+    flex: 1;
+  }
+  body.theme-noir .dmc-d { color: rgba(255, 255, 255, 0.42); }
+  .dmc-mono {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--violet);
+    margin-top: auto;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.35);
+  }
+  body.theme-noir .dmc-mono { color: #c4b5fd; }
+  .dmc-mono--green {
+    color: #16a34a;
+    text-shadow: 0 0 18px rgba(34, 197, 94, 0.35);
+  }
+  body.theme-noir .dmc-mono--green { color: #4ade80; }
+  .dmc-fx {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .dmc-fx span,
+  .dmc-fx i,
+  .dmc-fx b {
+    display: block;
+  }
+  .dmc-fx--meter span {
+    width: 5px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(74, 222, 128, 0.92), rgba(34, 197, 94, 0.18));
+    animation: dmcBars 1.8s ease-in-out infinite;
+  }
+  .dmc-fx--meter span:nth-child(1) { height: 12px; animation-delay: 0s; }
+  .dmc-fx--meter span:nth-child(2) { height: 22px; animation-delay: 0.14s; }
+  .dmc-fx--meter span:nth-child(3) { height: 16px; animation-delay: 0.28s; }
+  .dmc-fx--meter span:nth-child(4) { height: 26px; animation-delay: 0.42s; }
+  .dmc-fx--pulse {
+    align-items: center;
+    gap: 6px;
+  }
+  .dmc-fx--pulse span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(167, 139, 250, 0.9);
+    box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.34);
+    animation: dmcPulse 2.2s ease-out infinite;
+  }
+  .dmc-fx--pulse span:nth-child(2) { animation-delay: 0.34s; }
+  .dmc-fx--pulse span:nth-child(3) { animation-delay: 0.68s; }
+  .dmc-fx--toast {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 7px;
+  }
+  .dmc-fx--toast span {
+    width: 44px;
+    height: 12px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(139, 92, 246, 0.16), rgba(139, 92, 246, 0.42));
+    animation: dmcToast 3.1s ease-in-out infinite;
+  }
+  .dmc-fx--toast span:nth-child(2) {
+    width: 32px;
+    animation-delay: 0.6s;
+  }
+  .dmc-fx--tiles {
+    display: grid;
+    grid-template-columns: repeat(3, 7px);
+    gap: 4px;
+  }
+  .dmc-fx--tiles span {
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(167, 139, 250, 0.24);
+    animation: dmcTiles 2.8s ease-in-out infinite;
+  }
+  .dmc-fx--tiles span:nth-child(2),
+  .dmc-fx--tiles span:nth-child(5) { animation-delay: 0.35s; }
+  .dmc-fx--tiles span:nth-child(3),
+  .dmc-fx--tiles span:nth-child(6) { animation-delay: 0.7s; }
+  .dmc-fx--route {
+    align-items: center;
+    gap: 4px;
+  }
+  .dmc-fx--route span {
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(125, 211, 252, 0.85);
+    animation: dmcRoute 2.2s ease-in-out infinite;
+  }
+  .dmc-fx--route span:nth-child(1) { width: 16px; }
+  .dmc-fx--route span:nth-child(2) { width: 8px; animation-delay: 0.25s; }
+  .dmc-fx--route span:nth-child(3) { width: 22px; animation-delay: 0.5s; }
+  .dmc-fx--receipt {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+  }
+  .dmc-fx--receipt span {
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
+    animation: dmcReceipt 2.6s ease-in-out infinite;
+  }
+  .dmc-fx--receipt span:nth-child(1) { width: 28px; }
+  .dmc-fx--receipt span:nth-child(2) { width: 38px; animation-delay: 0.2s; }
+  .dmc-fx--receipt span:nth-child(3) { width: 22px; animation-delay: 0.4s; }
+  .dmc-fx--network {
+    align-items: center;
+    gap: 6px;
+  }
+  .dmc-fx--network span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(251, 191, 36, 0.86);
+    animation: dmcPulse 2.6s ease-out infinite;
+  }
+  .dmc-fx--network i {
+    width: 16px;
+    height: 1px;
+    background: rgba(251, 191, 36, 0.42);
+  }
+  @keyframes dmcBars {
+    0%,100% { transform: scaleY(0.74); opacity: 0.5; }
+    50% { transform: scaleY(1.1); opacity: 1; }
+  }
+  @keyframes dmcPulse {
+    0% { transform: scale(0.72); box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.36); opacity: 0.7; }
+    55% { transform: scale(1); box-shadow: 0 0 0 10px rgba(167, 139, 250, 0); opacity: 1; }
+    100% { transform: scale(0.72); box-shadow: 0 0 0 0 rgba(167, 139, 250, 0); opacity: 0.7; }
+  }
+  @keyframes dmcToast {
+    0%,100% { transform: translateX(0); opacity: 0.48; }
+    40% { transform: translateX(-4px); opacity: 0.95; }
+    70% { transform: translateX(1px); opacity: 0.72; }
+  }
+  @keyframes dmcTiles {
+    0%,100% { transform: scale(0.86); opacity: 0.38; }
+    50% { transform: scale(1); opacity: 1; background: rgba(167, 139, 250, 0.44); }
+  }
+  @keyframes dmcRoute {
+    0%,100% { transform: scaleX(0.72); opacity: 0.42; }
+    50% { transform: scaleX(1); opacity: 1; }
+  }
+  @keyframes dmcReceipt {
+    0%,100% { transform: translateX(0); opacity: 0.42; }
+    50% { transform: translateX(-3px); opacity: 0.96; }
+  }
+  @media (max-width: 720px) {
+    .dine-mosaic-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: minmax(92px, auto);
+    }
+    .dine-mosaic-cell,
+    .dine-mosaic-cell--hero,
+    .dine-mosaic-cell--tall,
+    .dine-mosaic-cell--wide,
+    .dine-mosaic-cell--wide-lg,
+    .dine-mosaic-cell--compact,
+    .dine-mosaic-cell--long,
+    .dine-mosaic-cell--end {
+      grid-column: span 1;
+      grid-row: span 1;
+      transform: none;
+      min-height: 96px;
+    }
+    .dine-mosaic-cell--hero { grid-column: span 2; min-height: 138px; }
+    .dmc-d { max-width: 100%; }
+  }
+  @media (max-width: 520px) {
+    .dine-mosaic-shell { padding: 10px; border-radius: 24px; }
+    .dine-mosaic-grid { gap: 8px; }
+    .dine-mosaic-cell { border-radius: 15px; }
+  }
 
   /* ══════════════════════════════════════════════════════
      BOOKING LAYOUT
@@ -615,9 +826,1231 @@
     border: 1px solid rgba(34,197,94,0.2); border-radius: 8px;
     padding: 0.22rem 0.65rem;
   }
+  /* ── DINE 2030 BENTO OVERRIDES ── */
+  .dine-page {
+    background: #000000;
+    color: rgba(245, 247, 250, 0.94);
+  }
+  .dine-page .grain { opacity: 0.2; }
+  .dine-page header,
+  .dine-page #mobile-nav {
+    background: rgba(0, 0, 0, 0.42);
+    backdrop-filter: blur(24px);
+    border-color: rgba(255, 255, 255, 0.04);
+  }
+  .dine-page .page-hero-eyebrow {
+    color: rgba(255, 255, 255, 0.52);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+  .dine-page .page-hero-h1 { color: rgba(245, 247, 250, 0.96); }
+  .dine-page .page-hero-p { color: rgba(255, 255, 255, 0.42); }
+  .dine-page .page-hero-divider {
+    background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.12), rgba(255,255,255,0));
+  }
+  .dine-page-wrap--future {
+    max-width: 1280px;
+    padding-top: 2rem;
+  }
+  .df-bento {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 18px;
+    align-items: stretch;
+  }
+  /* ── DINE CINEMATIC REDESIGN ── */
+  .df-bento--prime {
+    grid-template-columns: minmax(0, 1.35fr) minmax(340px, 0.8fr);
+    gap: 22px;
+  }
+  .df-bento--prime .df-card--safe,
+  .df-bento--prime .df-card--pulse {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .df-bento--prime .df-card--safe {
+    min-height: 620px;
+  }
+  .df-card--pulse {
+    min-height: 620px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .df-pulse-core {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    min-height: 360px;
+    display: grid;
+    place-items: center;
+  }
+  .df-pulse-ring,
+  .df-pulse-orb {
+    position: absolute;
+    border-radius: 50%;
+  }
+  .df-pulse-ring {
+    border: 1px solid rgba(255,255,255,0.08);
+    animation: dfPulseExpand 5.8s ease-out infinite;
+  }
+  .df-pulse-ring--1 { width: 74px; height: 74px; }
+  .df-pulse-ring--2 { width: 128px; height: 128px; animation-delay: 0.9s; }
+  .df-pulse-ring--3 { width: 188px; height: 188px; animation-delay: 1.8s; }
+  .df-pulse-ring--4 { width: 248px; height: 248px; animation-delay: 2.7s; }
+  .df-pulse-orb {
+    width: 20px;
+    height: 20px;
+    background: rgba(245,247,250,0.96);
+    box-shadow:
+      0 0 26px rgba(139,92,246,0.55),
+      0 0 48px rgba(74,222,128,0.28);
+    animation: dfPulseOrb 4.8s ease-in-out infinite;
+  }
+  .df-pulse-value {
+    position: relative;
+    z-index: 1;
+    font-family: "Space Grotesk", var(--font-mono), monospace;
+    font-size: clamp(4rem, 10vw, 7rem);
+    font-weight: 700;
+    letter-spacing: -0.08em;
+    color: rgba(255,255,255,0.16);
+    -webkit-text-stroke: 1px rgba(255,255,255,0.08);
+    text-shadow: 0 0 40px rgba(139,92,246,0.18);
+  }
+  .df-card {
+    --tx: 0px;
+    --ty: 0px;
+    --py: 0px;
+    --fill: 0.18;
+    --wrap-progress: 0;
+    --receipt-rise: 0.16;
+    position: relative;
+    overflow: hidden;
+    min-height: 290px;
+    padding: 1.65rem;
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.025);
+    backdrop-filter: blur(40px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.025),
+      0 28px 80px rgba(0, 0, 0, 0.42);
+    transform: translate3d(var(--tx), calc(var(--ty) + var(--py)), 0) scale(1);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease, box-shadow 0.35s ease, opacity 0.6s ease;
+    will-change: transform, opacity;
+  }
+  .df-card::before,
+  .df-card::after {
+    content: "";
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(60px);
+    opacity: 0.16;
+    pointer-events: none;
+  }
+  .df-card::before {
+    width: 280px;
+    height: 280px;
+    top: -100px;
+    right: -60px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.55), rgba(139, 92, 246, 0));
+    animation: dfBreathViolet 9s ease-in-out infinite;
+  }
+  .df-card::after {
+    width: 220px;
+    height: 220px;
+    left: -70px;
+    bottom: -80px;
+    background: radial-gradient(circle, rgba(74, 222, 128, 0.38), rgba(74, 222, 128, 0));
+    animation: dfBreathGreen 11s ease-in-out infinite;
+  }
+  .df-card.reveal {
+    opacity: 0;
+    transform: translate3d(var(--tx), calc(var(--ty) + var(--py) + 24px), 0) scale(0.95);
+  }
+  .df-card.reveal.in {
+    opacity: 1;
+    transform: translate3d(var(--tx), calc(var(--ty) + var(--py)), 0) scale(1);
+  }
+  .df-card:hover {
+    border-color: rgba(255, 255, 255, 0.065);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.03),
+      0 34px 90px rgba(0, 0, 0, 0.5);
+  }
+  .df-card--safe {
+    grid-column: span 8;
+    grid-row: span 2;
+    min-height: 598px;
+    padding: 1.9rem 1.9rem 1.7rem;
+  }
+  .df-card--arrival,
+  .df-card--plan {
+    grid-column: span 4;
+  }
+  .df-card-label,
+  .df-card-foot {
+    position: relative;
+    z-index: 1;
+    font-family: "Space Grotesk", var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-transform: uppercase;
+  }
+  .df-card-label {
+    font-size: 0.64rem;
+    letter-spacing: 0.36em;
+    color: rgba(255, 255, 255, 0.68);
+  }
+  .df-card-foot {
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
+    color: rgba(255, 255, 255, 0.28);
+  }
+  .df-card-headline {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+    font-size: clamp(1.4rem, 2vw, 2.4rem);
+    line-height: 1.04;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(246, 248, 251, 0.96);
+    animation: dfTextGlow 6s ease-in-out infinite;
+  }
+  .df-safe-core {
+    position: relative;
+    z-index: 1;
+    height: calc(100% - 3.6rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: dfCoreFloat 10s ease-in-out infinite;
+  }
+  .df-safe-core::before {
+    content: "";
+    position: absolute;
+    inset: 15% 10%;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-shadow:
+      inset 0 0 80px rgba(255, 255, 255, 0.02),
+      0 0 120px rgba(139, 92, 246, 0.08);
+  }
+  .df-safe-core::after {
+    content: "";
+    position: absolute;
+    width: min(42vw, 430px);
+    height: min(42vw, 430px);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    opacity: calc(0.12 + (var(--fill) * 0.45));
+    transform: scale(calc(0.92 + (var(--fill) * 0.08)));
+    box-shadow:
+      0 0 80px rgba(139, 92, 246, calc(0.08 + var(--fill) * 0.18)),
+      inset 0 0 48px rgba(74, 222, 128, calc(0.02 + var(--fill) * 0.08));
+    transition: transform 0.25s linear, opacity 0.25s linear, box-shadow 0.25s linear;
+  }
+  .df-safe-timer-wrap {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    font-family: "Space Grotesk", var(--font-mono), ui-monospace, monospace;
+    font-size: clamp(4.9rem, 12vw, 9.8rem);
+    font-weight: 700;
+    letter-spacing: -0.08em;
+    line-height: 0.92;
+    animation: dfTimerBreath 7.5s ease-in-out infinite;
+  }
+  .df-safe-timer {
+    grid-area: 1 / 1;
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+  }
+  .df-safe-timer--ghost {
+    color: rgba(255, 255, 255, 0.13);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.06);
+  }
+  .df-safe-timer--fill {
+    color: rgba(245, 247, 250, 0.98);
+    clip-path: inset(calc((1 - var(--fill)) * 100%) 0 0 0);
+    text-shadow:
+      0 0 30px rgba(139, 92, 246, calc(0.08 + var(--fill) * 0.24)),
+      0 0 60px rgba(74, 222, 128, calc(0.04 + var(--fill) * 0.18));
+    transition: clip-path 0.18s linear, text-shadow 0.18s linear;
+  }
+  .df-safe-track {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    width: 100%;
+    height: 4px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .df-safe-track span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform-origin: left center;
+    transform: scaleX(var(--fill));
+    background: rgba(245, 247, 250, 0.95);
+    box-shadow:
+      0 0 22px rgba(139, 92, 246, 0.38),
+      0 0 44px rgba(74, 222, 128, 0.24);
+    transition: transform 0.18s linear;
+  }
+  .df-card--arrival {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .df-arrival-visual {
+    position: relative;
+    margin: auto 0;
+    min-height: 138px;
+    display: grid;
+    place-items: center;
+  }
+  .df-arrival-dot,
+  .df-arrival-ring {
+    position: absolute;
+    border-radius: 50%;
+  }
+  .df-arrival-dot {
+    width: 18px;
+    height: 18px;
+    background: rgba(245, 247, 250, 0.96);
+    box-shadow:
+      0 0 28px rgba(139, 92, 246, 0.5),
+      0 0 42px rgba(74, 222, 128, 0.22);
+  }
+  .df-arrival-ring {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    animation: dfRipple 3.8s ease-out infinite;
+  }
+  .df-arrival-ring--1 { width: 56px; height: 56px; }
+  .df-arrival-ring--2 { width: 94px; height: 94px; animation-delay: 0.65s; }
+  .df-arrival-ring--3 { width: 132px; height: 132px; animation-delay: 1.3s; }
+  .df-card--plan {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .df-plan-stage {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    min-height: 186px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1200px;
+  }
+  .df-plan-stage svg {
+    width: min(100%, 340px);
+    overflow: visible;
+    transform: rotateX(62deg) rotateZ(-20deg);
+    filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.44));
+    animation: dfPlanDrift 9s ease-in-out infinite;
+  }
+  .df-grid-base {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 1.1;
+  }
+  .df-seat {
+    fill: rgba(255, 255, 255, 0.055);
+    stroke: rgba(255, 255, 255, 0.16);
+    stroke-width: 1.2;
+  }
+  .df-seat--soft { opacity: 0.62; }
+  .df-seat--selected {
+    fill: rgba(139, 92, 246, 0.24);
+    stroke: rgba(245, 247, 250, 0.9);
+    filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.95)) drop-shadow(0 0 28px rgba(74, 222, 128, 0.34));
+    animation: dfSelectedPulse 3.8s ease-in-out infinite;
+  }
+  .df-seat-ring {
+    fill: none;
+    stroke: rgba(245, 247, 250, 0.16);
+    stroke-width: 1;
+  }
+  .df-seat-ring--selected {
+    stroke: rgba(245, 247, 250, 0.58);
+    animation: dfTargetPulse 4.2s ease-out infinite;
+  }
+  .df-seat-label {
+    fill: rgba(255, 255, 255, 0.82);
+    font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-anchor: middle;
+  }
+  .df-lower-shell {
+    --spot-x: 50%;
+    --spot-y: 50%;
+    --spot-o: 0;
+    position: relative;
+    margin-top: 22px;
+    padding: 8px 0 0;
+  }
+  .df-lower-shell::before {
+    content: "";
+    position: absolute;
+    inset: -6% -4%;
+    pointer-events: none;
+    background:
+      radial-gradient(420px circle at var(--spot-x) var(--spot-y), rgba(139, 92, 246, calc(0.14 * var(--spot-o))), rgba(139, 92, 246, 0) 56%),
+      radial-gradient(360px circle at calc(var(--spot-x) + 3%) calc(var(--spot-y) + 8%), rgba(74, 222, 128, calc(0.07 * var(--spot-o))), rgba(74, 222, 128, 0) 60%);
+    opacity: 1;
+    transition: background-position 0.08s linear, opacity 0.25s ease;
+  }
+  .df-lower-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .df-card--atmo,
+  .df-card--city {
+    grid-column: span 12;
+  }
+  .df-card--auto,
+  .df-card--receipt {
+    grid-column: span 6;
+    min-height: 360px;
+  }
+  .df-card--atmo {
+    min-height: 340px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 1fr);
+    gap: 1.2rem;
+    align-items: stretch;
+  }
+  .df-metric-copy {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+  }
+  .df-metric-title {
+    font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+    font-size: clamp(2rem, 4vw, 4.2rem);
+    line-height: 0.98;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(246, 248, 251, 0.96);
+    animation: dfTextGlow 7.5s ease-in-out infinite;
+  }
+  .df-metric-title span {
+    display: block;
+    color: rgba(255, 255, 255, 0.38);
+  }
+  .df-metric-readout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.25rem;
+  }
+  .df-readout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .df-readout-k,
+  .df-readout-v {
+    font-family: "Space Grotesk", var(--font-mono), ui-monospace, monospace;
+    text-transform: uppercase;
+  }
+  .df-readout-k {
+    font-size: 0.56rem;
+    letter-spacing: 0.28em;
+    color: rgba(255, 255, 255, 0.28);
+  }
+  .df-readout-v {
+    font-size: 0.95rem;
+    letter-spacing: 0.18em;
+    color: rgba(245, 247, 250, 0.84);
+  }
+  .df-atmo-viz {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 240px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.012);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    overflow: hidden;
+  }
+  .df-atmo-viz::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(139,92,246,0), rgba(139,92,246,0.09), rgba(139,92,246,0));
+    transform: translateX(-100%);
+    animation: dfAtmoSweep 9s linear infinite;
+    pointer-events: none;
+  }
+  .df-atmo-viz svg {
+    width: 100%;
+    height: 100%;
+  }
+  .df-atmo-grid {
+    stroke: rgba(255, 255, 255, 0.04);
+    stroke-width: 1;
+  }
+  .df-atmo-wave {
+    fill: none;
+    stroke: rgba(167, 139, 250, 0.86);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.34));
+    animation: dfWaveFlow 7s linear infinite;
+  }
+  .df-atmo-wave--soft {
+    stroke: rgba(167, 139, 250, 0.34);
+    stroke-width: 1.3;
+    animation-duration: 10s;
+  }
+  .df-atmo-wave--wifi {
+    stroke: rgba(196, 181, 253, 0.72);
+    animation-duration: 6.2s;
+  }
+  .df-card--auto,
+  .df-card--receipt,
+  .df-card--city {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .df-auto-lock {
+    position: relative;
+    z-index: 1;
+    margin: auto 0;
+    min-height: 180px;
+    display: grid;
+    place-items: center;
+  }
+  .df-lock-svg {
+    width: min(100%, 240px);
+    overflow: visible;
+    animation: dfLockFloat 8.2s ease-in-out infinite;
+  }
+  .df-lock-ring {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 1.2;
+    animation: dfRingGlow 6.8s ease-in-out infinite;
+  }
+  .df-lock-arc {
+    fill: none;
+    stroke: rgba(245, 247, 250, 0.92);
+    stroke-width: 5;
+    stroke-linecap: round;
+    transform-box: fill-box;
+    transform-origin: center;
+    filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.38));
+    transition: transform 0.16s linear;
+  }
+  .df-lock-arc--left { transform: rotate(calc(-60deg + (var(--wrap-progress) * 60deg))); }
+  .df-lock-arc--right { transform: rotate(calc(60deg - (var(--wrap-progress) * 60deg))); }
+  .df-lock-core {
+    fill: rgba(255, 255, 255, 0.035);
+    stroke: rgba(255, 255, 255, 0.14);
+    stroke-width: 1.2;
+  }
+  .df-lock-text {
+    fill: rgba(255, 255, 255, 0.64);
+    font-family: "Space Grotesk", var(--font-mono), monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-anchor: middle;
+  }
+  .df-card-copy {
+    position: relative;
+    z-index: 1;
+    font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+    font-size: clamp(1.05rem, 2vw, 1.55rem);
+    line-height: 1.26;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(245, 247, 250, 0.84);
+    max-width: 22ch;
+  }
+  .df-receipt-stage {
+    position: relative;
+    z-index: 1;
+    margin: auto 0;
+    min-height: 220px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .df-receipt-mini {
+    width: min(100%, 270px);
+    padding: 1rem 1rem 0.85rem;
+    border-radius: 24px 24px 18px 18px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.03),
+      0 18px 54px rgba(0, 0, 0, 0.34);
+    transform: translateY(calc(26px - (var(--receipt-rise) * 26px)));
+    opacity: calc(0.32 + (var(--receipt-rise) * 0.68));
+    transition: transform 0.18s linear, opacity 0.18s linear;
+    animation: dfReceiptFloat 8.5s ease-in-out infinite;
+  }
+  .df-receipt-mini::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.08), rgba(255,255,255,0));
+    transform: translateX(-120%);
+    animation: dfReceiptSweep 8s linear infinite;
+    pointer-events: none;
+  }
+  .df-receipt-mini::after {
+    content: "";
+    display: block;
+    height: 12px;
+    margin: 0 -1rem -0.85rem;
+    background:
+      linear-gradient(-45deg, transparent 8px, rgba(255, 255, 255, 0.045) 0) left bottom/18px 12px repeat-x,
+      linear-gradient(45deg, transparent 8px, rgba(255, 255, 255, 0.045) 0) left bottom/18px 12px repeat-x;
+    filter: drop-shadow(0 2px 0 rgba(255,255,255,0.03));
+  }
+  .df-receipt-topline,
+  .df-receipt-row,
+  .df-receipt-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    text-transform: uppercase;
+    font-family: "Space Grotesk", var(--font-mono), monospace;
+  }
+  .df-receipt-topline {
+    margin-bottom: 0.9rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.26em;
+    color: rgba(255, 255, 255, 0.34);
+  }
+  .df-receipt-row {
+    padding: 0.46rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: rgba(245, 247, 250, 0.74);
+    animation: dfRowPulse 6.6s ease-in-out infinite;
+  }
+  .df-receipt-row:nth-child(2) { animation-delay: 0.35s; }
+  .df-receipt-row:nth-child(3) { animation-delay: 0.7s; }
+  .df-receipt-total {
+    padding-top: 0.78rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+    color: rgba(246, 248, 251, 0.96);
+  }
+  .df-city-line {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+  }
+  .df-city-track {
+    position: relative;
+    width: 100%;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(167,139,250,0.28), rgba(255,255,255,0.05));
+  }
+  .df-city-track::before {
+    content: "";
+    position: absolute;
+    inset: -16px 0;
+    background: linear-gradient(90deg, rgba(139,92,246,0), rgba(139,92,246,0.12), rgba(139,92,246,0));
+    filter: blur(18px);
+    opacity: 0.8;
+    animation: dfCitySweep 10s linear infinite;
+  }
+  .df-city-dot {
+    position: absolute;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.28);
+    box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.02);
+    animation: dfDotPulse 7s ease-in-out infinite;
+  }
+  .df-city-dot--active {
+    width: 16px;
+    height: 16px;
+    background: rgba(245, 247, 250, 0.96);
+    box-shadow:
+      0 0 0 10px rgba(139, 92, 246, 0.16),
+      0 0 28px rgba(139, 92, 246, 0.48),
+      0 0 44px rgba(74, 222, 128, 0.22);
+    animation: dfCityPulse 4.8s ease-in-out infinite;
+  }
+  .df-city-name {
+    position: absolute;
+    top: calc(50% + 20px);
+    transform: translateX(-50%);
+    font-family: "Space Grotesk", var(--font-mono), monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.34);
+    white-space: nowrap;
+  }
+  .df-city-name--active { color: rgba(245, 247, 250, 0.92); }
+  .dine-page .footer-copy,
+  .dine-page .footer-links a {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.58rem;
+  }
+  .dine-page footer {
+    margin-top: 0;
+    background: transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .dine-page .footer-copy,
+  .dine-page .footer-links a {
+    color: rgba(255, 255, 255, 0.46);
+  }
+  @keyframes dfBreathViolet {
+    0%, 100% { transform: scale(0.94); opacity: 0.12; }
+    50% { transform: scale(1.08); opacity: 0.2; }
+  }
+  @keyframes dfBreathGreen {
+    0%, 100% { transform: scale(0.92); opacity: 0.08; }
+    50% { transform: scale(1.04); opacity: 0.16; }
+  }
+  @keyframes dfRipple {
+    0% { transform: scale(0.48); opacity: 0.7; }
+    85% { transform: scale(1.06); opacity: 0; }
+    100% { transform: scale(1.08); opacity: 0; }
+  }
+  @keyframes dfSelectedPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+  }
+  @keyframes dfTargetPulse {
+    0% { transform: scale(0.74); opacity: 0.52; }
+    80% { transform: scale(1.18); opacity: 0; }
+    100% { transform: scale(1.18); opacity: 0; }
+  }
+  @keyframes dfCoreFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes dfTimerBreath {
+    0%,100% { filter: brightness(1); }
+    50% { filter: brightness(1.08); }
+  }
+  @keyframes dfTextGlow {
+    0%,100% { opacity: 0.88; text-shadow: 0 0 0 rgba(139,92,246,0); }
+    50% { opacity: 1; text-shadow: 0 0 18px rgba(139,92,246,0.18); }
+  }
+  @keyframes dfPlanDrift {
+    0%,100% { transform: rotateX(62deg) rotateZ(-20deg) translateY(0); }
+    50% { transform: rotateX(62deg) rotateZ(-20deg) translateY(-8px); }
+  }
+  @keyframes dfWaveFlow {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-42px); }
+  }
+  @keyframes dfAtmoSweep {
+    0% { transform: translateX(-120%); opacity: 0; }
+    18% { opacity: 1; }
+    60% { opacity: 0.75; }
+    100% { transform: translateX(120%); opacity: 0; }
+  }
+  @keyframes dfPulseExpand {
+    0% { transform: scale(0.56); opacity: 0.78; }
+    85% { transform: scale(1.12); opacity: 0; }
+    100% { transform: scale(1.14); opacity: 0; }
+  }
+  @keyframes dfPulseOrb {
+    0%,100% { transform: scale(0.92); }
+    50% { transform: scale(1.08); }
+  }
+  @keyframes dfLockFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  @keyframes dfRingGlow {
+    0%,100% { stroke: rgba(255,255,255,0.08); }
+    50% { stroke: rgba(167,139,250,0.22); }
+  }
+  @keyframes dfReceiptFloat {
+    0%,100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 18px 54px rgba(0,0,0,0.34); }
+    50% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 26px 66px rgba(0,0,0,0.42); }
+  }
+  @keyframes dfReceiptSweep {
+    0% { transform: translateX(-120%); opacity: 0; }
+    18% { opacity: 1; }
+    100% { transform: translateX(140%); opacity: 0; }
+  }
+  @keyframes dfRowPulse {
+    0%,100% { opacity: 0.66; }
+    50% { opacity: 1; }
+  }
+  @keyframes dfCityPulse {
+    0%,100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.08); }
+  }
+  @keyframes dfCitySweep {
+    0% { transform: translateX(-24%); opacity: 0; }
+    20% { opacity: 0.8; }
+    100% { transform: translateX(24%); opacity: 0; }
+  }
+  @keyframes dfDotPulse {
+    0%,100% { opacity: 0.45; }
+    50% { opacity: 0.9; }
+  }
+  @media (max-width: 980px) {
+    .df-card--safe,
+    .df-card--arrival,
+    .df-card--plan,
+    .df-card--atmo,
+    .df-card--auto,
+    .df-card--receipt,
+    .df-card--city { grid-column: span 12; }
+    .df-card--safe { min-height: 500px; }
+    .df-card--arrival,
+    .df-card--plan { min-height: 260px; }
+    .df-card--atmo {
+      grid-template-columns: 1fr;
+      min-height: 420px;
+    }
+  }
+  @media (max-width: 720px) {
+    .dine-page-wrap--future { padding-left: 1rem; padding-right: 1rem; }
+    .df-bento { gap: 14px; }
+    .df-lower-grid { gap: 14px; }
+    .df-card { padding: 1.2rem; }
+    .df-card-label,
+    .df-card-foot { letter-spacing: 0.24em; }
+    .df-safe-timer-wrap { font-size: clamp(3.9rem, 20vw, 6rem); }
+    .df-plan-stage svg { transform: rotateX(58deg) rotateZ(-18deg); }
+    .df-metric-title { font-size: clamp(1.5rem, 9vw, 2.6rem); }
+    .df-card-copy { font-size: 0.98rem; letter-spacing: 0.14em; }
+    .df-city-name { font-size: 0.48rem; letter-spacing: 0.18em; }
+  }
+  /* ── DINE CINEMATIC REDESIGN ── */
+  .df-showcase {
+    --showcase-glitch: 0;
+    --py: 0px;
+    position: relative;
+    margin-top: 26px;
+    padding: 1.1rem 1.1rem 1.2rem;
+    border-radius: 32px;
+    border: 1px solid rgba(255,255,255,0.03);
+    background: rgba(255,255,255,0.02);
+    backdrop-filter: blur(40px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.02),
+      0 34px 96px rgba(0,0,0,0.48);
+    transform: translate3d(0, var(--py), 0);
+    transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .df-showcase::before,
+  .df-showcase::after {
+    content: "";
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+  .df-showcase::before {
+    width: 360px;
+    height: 360px;
+    top: -140px;
+    right: -100px;
+    background: radial-gradient(circle, rgba(139,92,246,0.24), rgba(139,92,246,0));
+    animation: dfBreathViolet 10s ease-in-out infinite;
+  }
+  .df-showcase::after {
+    width: 280px;
+    height: 280px;
+    left: -90px;
+    bottom: -140px;
+    background: radial-gradient(circle, rgba(74,222,128,0.16), rgba(74,222,128,0));
+    animation: dfBreathGreen 12s ease-in-out infinite;
+  }
+  .df-showcase-head {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+  .df-showcase-title {
+    max-width: 18ch;
+    text-align: right;
+    font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+    font-size: clamp(1.2rem, 2vw, 2rem);
+    line-height: 1.04;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(246,248,251,0.92);
+  }
+  .df-showcase-stage {
+    position: relative;
+    min-height: 560px;
+    overflow: hidden;
+    border-radius: 28px;
+    background: rgba(255,255,255,0.015);
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+  .df-showcase-noise {
+    position: absolute;
+    inset: 0;
+    opacity: calc(var(--showcase-glitch) * 0.85);
+    pointer-events: none;
+    mix-blend-mode: screen;
+    background:
+      repeating-linear-gradient(180deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 4px),
+      linear-gradient(90deg, rgba(139,92,246,0.12), rgba(74,222,128,0.08), rgba(139,92,246,0.12));
+    filter: blur(0.2px);
+    animation: dfNoise 0.22s steps(6) infinite;
+    z-index: 4;
+  }
+  .df-scene {
+    position: absolute;
+    inset: 0;
+    padding: 1.35rem;
+    opacity: 0;
+    transform: scale(0.96) translateY(18px);
+    filter: blur(24px);
+    pointer-events: none;
+    transition:
+      opacity 0.78s cubic-bezier(0.22,1,0.36,1),
+      transform 0.92s cubic-bezier(0.22,1.1,0.36,1),
+      filter 0.82s ease;
+  }
+  .df-scene.is-active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+    pointer-events: auto;
+    z-index: 2;
+  }
+  .df-admin-shell,
+  .df-floor-shell,
+  .df-moment-shell {
+    width: 100%;
+    height: 100%;
+  }
+  .df-admin-shell {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 1rem;
+  }
+  .df-admin-topline {
+    display: flex;
+    gap: 0.6rem;
+  }
+  .df-admin-pill {
+    padding: 0.34rem 0.68rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.03);
+    font-family: "Space Grotesk", var(--font-mono), monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .df-admin-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0,1fr));
+    gap: 14px;
+    height: 100%;
+  }
+  .df-admin-card,
+  .df-admin-table {
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.02);
+    padding: 1rem;
+  }
+  .df-admin-card {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 180px;
+  }
+  .df-admin-card strong {
+    font-family: "Space Grotesk", var(--font-mono), monospace;
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    letter-spacing: -0.06em;
+    color: rgba(245,247,250,0.96);
+  }
+  .df-admin-k {
+    font-family: "Space Grotesk", var(--font-mono), monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.38);
+  }
+  .df-admin-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 80px;
+  }
+  .df-admin-bars span {
+    flex: 1;
+    border-radius: 999px 999px 6px 6px;
+    background: linear-gradient(180deg, rgba(167,139,250,0.82), rgba(167,139,250,0.12));
+    animation: dfBarsDance 3.8s ease-in-out infinite;
+  }
+  .df-admin-bars span:nth-child(1){height:34%}
+  .df-admin-bars span:nth-child(2){height:68%;animation-delay:.12s}
+  .df-admin-bars span:nth-child(3){height:42%;animation-delay:.24s}
+  .df-admin-bars span:nth-child(4){height:88%;animation-delay:.36s}
+  .df-admin-bars span:nth-child(5){height:58%;animation-delay:.48s}
+  .df-admin-bars span:nth-child(6){height:76%;animation-delay:.6s}
+  .df-admin-line {
+    height: 120px;
+    border-radius: 18px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005)),
+      radial-gradient(circle at 20% 76%, rgba(139,92,246,0.22), rgba(139,92,246,0) 28%),
+      radial-gradient(circle at 72% 32%, rgba(74,222,128,0.18), rgba(74,222,128,0) 30%);
+    position: relative;
+    overflow: hidden;
+  }
+  .df-admin-line::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+    transform: translateX(-100%);
+    animation: dfAtmoSweep 7.5s linear infinite;
+  }
+  .df-admin-table {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.7rem;
+  }
+  .df-admin-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.72rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-family: "Space Grotesk", var(--font-mono), monospace;
+    font-size: 0.64rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,247,250,0.72);
+  }
+  .df-admin-row:last-child { border-bottom: 0; }
+  .df-floor-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  .df-floor-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    border-radius: 26px;
+    background: rgba(255,255,255,0.018);
+    border: 1px solid rgba(255,255,255,0.03);
+    overflow: hidden;
+  }
+  .df-floor-stage svg {
+    width: min(100%, 520px);
+    overflow: visible;
+    transform: rotateX(58deg) rotateZ(-16deg);
+    animation: dfPlanDrift 9s ease-in-out infinite;
+  }
+  .df-floor-frame { fill: rgba(255,255,255,0.02); stroke: rgba(255,255,255,0.08); }
+  .df-floor-axis { fill: none; stroke: rgba(255,255,255,0.06); }
+  .df-floor-seat { fill: rgba(255,255,255,0.06); stroke: rgba(255,255,255,0.18); stroke-width: 1.3; }
+  .df-floor-seat.is-active {
+    fill: rgba(139,92,246,0.22);
+    stroke: rgba(245,247,250,0.94);
+    filter: drop-shadow(0 0 12px rgba(139,92,246,0.72));
+  }
+  .df-floor-seat-glow {
+    fill: none;
+    stroke: rgba(245,247,250,0.24);
+    stroke-width: 1.2;
+    animation: dfTargetPulse 4.2s ease-out infinite;
+  }
+  .df-floor-label {
+    fill: rgba(245,247,250,0.92);
+    font-family: "Space Grotesk", var(--font-mono), monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-anchor: middle;
+  }
+  .df-floor-copy {
+    display: flex;
+    align-items: flex-end;
+    font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+    font-size: clamp(1.15rem, 2vw, 1.85rem);
+    line-height: 1.08;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(245,247,250,0.9);
+  }
+  .df-moment-shell {
+    display: grid;
+    grid-template-columns: minmax(320px, 0.95fr) 1fr;
+    gap: 1rem;
+    align-items: center;
+    height: 100%;
+  }
+  .df-kiss-cloud {
+    position: relative;
+    min-height: 360px;
+    border-radius: 26px;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.015), rgba(255,255,255,0));
+    overflow: hidden;
+  }
+  .df-kiss-orb,
+  .df-kiss-spark {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(0.5px);
+  }
+  .df-kiss-orb--left,
+  .df-kiss-orb--right {
+    width: 150px;
+    height: 220px;
+    top: 72px;
+    background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.14), rgba(139,92,246,0.06) 44%, rgba(139,92,246,0));
+    animation: dfKissLean 6.2s ease-in-out infinite;
+  }
+  .df-kiss-orb--left {
+    left: 64px;
+    border-radius: 50% 46% 40% 56%;
+    transform-origin: right center;
+  }
+  .df-kiss-orb--right {
+    right: 64px;
+    border-radius: 46% 50% 56% 40%;
+    transform-origin: left center;
+    animation-delay: 0.22s;
+  }
+  .df-kiss-spark {
+    width: 18px;
+    height: 18px;
+    left: calc(50% - 9px);
+    top: 148px;
+    background: rgba(245,247,250,0.95);
+    box-shadow:
+      0 0 18px rgba(139,92,246,0.62),
+      0 0 34px rgba(74,222,128,0.22);
+    animation: dfSparkPulse 3.8s ease-in-out infinite;
+  }
+  .df-moment-receipt {
+    padding: 1rem 1rem 0.9rem;
+    border-radius: 24px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.03),
+      0 18px 54px rgba(0,0,0,0.34);
+    animation: dfReceiptFloat 8s ease-in-out infinite;
+  }
+  .df-moment-top,
+  .df-moment-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    text-transform: uppercase;
+    font-family: "Space Grotesk", var(--font-mono), monospace;
+  }
+  .df-moment-top {
+    margin-bottom: 0.8rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.26em;
+    color: rgba(255,255,255,0.38);
+  }
+  .df-moment-row {
+    padding: 0.52rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    color: rgba(245,247,250,0.78);
+  }
+  .df-moment-row:last-child { border-bottom: 0; }
+  .df-moment-copy {
+    font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+    font-size: clamp(1.3rem, 2vw, 1.9rem);
+    line-height: 1.08;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(245,247,250,0.92);
+    animation: dfTextGlow 7s ease-in-out infinite;
+  }
+  @keyframes dfBarsDance {
+    0%,100% { transform: scaleY(0.82); opacity: 0.64; }
+    50% { transform: scaleY(1.08); opacity: 1; }
+  }
+  @keyframes dfNoise {
+    0% { transform: translateX(-1%); }
+    100% { transform: translateX(1%); }
+  }
+  @keyframes dfKissLean {
+    0%,100% { transform: translateX(0) scale(1); }
+    50% { transform: translateX(8px) scale(1.04); }
+  }
+  @keyframes dfSparkPulse {
+    0%,100% { transform: scale(0.9); opacity: 0.78; }
+    50% { transform: scale(1.14); opacity: 1; }
+  }
+  @media (max-width: 1100px) {
+    .df-bento--prime { grid-template-columns: 1fr; }
+    .df-card--pulse,
+    .df-bento--prime .df-card--safe { min-height: 420px; }
+    .df-showcase-stage { min-height: 680px; }
+    .df-floor-shell,
+    .df-moment-shell { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .dine-page-wrap--future { padding-left: 1rem; padding-right: 1rem; }
+    .df-bento { gap: 14px; }
+    .df-lower-grid { gap: 14px; }
+    .df-card { padding: 1.2rem; }
+    .df-card-label,
+    .df-card-foot { letter-spacing: 0.24em; }
+    .df-safe-timer-wrap { font-size: clamp(3.9rem, 20vw, 6rem); }
+    .df-plan-stage svg { transform: rotateX(58deg) rotateZ(-18deg); }
+    .df-metric-title { font-size: clamp(1.5rem, 9vw, 2.6rem); }
+    .df-card-copy { font-size: 0.98rem; letter-spacing: 0.14em; }
+    .df-city-name { font-size: 0.48rem; letter-spacing: 0.18em; }
+  }
   </style>
 </head>
-<body class="dine-page">
+<body class="dine-page theme-noir">
 <div class="grain" aria-hidden="true"></div>
 
 <!-- ══ DIIA MODAL ══ -->
@@ -628,18 +2061,18 @@
     </button>
     <div class="modal-step active" id="modal-step-1">
       <div class="diia-modal-logo">
-        <div class="diia-modal-icon">Дія</div>
-        <span class="diia-modal-name">Підпис Дія</span>
+        <div class="diia-modal-icon">ID</div>
+        <span class="diia-modal-name">Secure sign</span>
       </div>
-      <div class="qr-placeholder" id="qr-grid" aria-label="QR-код для Дія"></div>
-      <p class="modal-title" id="modal-title">Відкрийте застосунок Дія</p>
-      <p class="modal-sub">Відскануйте QR-код для верифікації особистості та підписання бронювання.</p>
-      <button class="modal-btn" id="modal-step1-btn">Симулювати підпис Дія →</button>
+      <div class="qr-placeholder" id="qr-grid" aria-label="QR-код для підтвердження"></div>
+      <p class="modal-title" id="modal-title">Відкрийте застосунок для підпису</p>
+      <p class="modal-sub">Відскануйте QR-код, щоб підтвердити особистість і завершити бронювання.</p>
+      <button class="modal-btn" id="modal-step1-btn">Симулювати підпис →</button>
     </div>
     <div class="modal-step" id="modal-step-2">
-      <div class="diia-modal-logo"><div class="diia-modal-icon">Дія</div><span class="diia-modal-name">Перевірка</span></div>
+      <div class="diia-modal-logo"><div class="diia-modal-icon">ID</div><span class="diia-modal-name">Verification</span></div>
       <div class="modal-spinner-wrap"><div class="modal-spinner"></div></div>
-      <p class="modal-title">Підпис Дія у процесі...</p>
+      <p class="modal-title">Підпис у процесі...</p>
       <p class="modal-sub">Перевіряємо вашу особистість та застосовуємо цифровий підпис.</p>
     </div>
     <div class="modal-step" id="modal-step-3">
@@ -681,7 +2114,7 @@
     <a href="/business.html" data-magnetic data-mag-r="44" data-mag-s="7">Business</a>
   </nav>
   <div class="header-right">
-    <a href="#" class="diia-btn" aria-label="Вхід через Дію"><span class="diia-logo" aria-hidden="true">Дія</span><span class="btn-label">Вхід через Дію</span></a>
+    <a href="#" class="diia-btn" aria-label="Швидкий вхід"><span class="diia-logo" aria-hidden="true">ID</span><span class="btn-label">Швидкий вхід</span></a>
     <div class="lang-switch" id="lang-switch" role="group" aria-label="Language">
       <button type="button" class="lang-btn" data-lang="ua" aria-pressed="true" aria-label="Українська"><span class="lang-flag" aria-hidden="true">🇺🇦</span><span class="lang-code">UA</span></button>
       <button type="button" class="lang-btn" data-lang="en" aria-pressed="false" aria-label="English"><span class="lang-flag" aria-hidden="true">🇬🇧</span><span class="lang-code">EN</span></button>
@@ -700,411 +2133,147 @@
   <a href="/business.html">Business</a>
 </div>
 
+<div class="page-hero reveal">
+  <p class="page-hero-eyebrow" id="hero-eyebrow">01 &nbsp;·&nbsp; Dine</p>
+  <h1 class="page-hero-h1" id="hero-title">План залу живий.<br><span class="accent" id="hero-accent">Усе видно одразу.</span></h1>
+  <p class="page-hero-p" id="hero-desc">Обери стіл на мапі, подивись контекст зони та підтвердь бронювання в один крок. Safe Exit і цифровий чек працюють у тому ж ритмі, без зайвих перемикань.</p>
+  <div class="page-hero-divider"></div>
+</div>
+
 <!-- ══ PAGE CONTENT ══ -->
-<div class="dine-page-wrap">
+<div class="dine-page-wrap dine-page-wrap--future">
+  <section class="df-bento" aria-label="Dine premium grid">
+    <article class="df-card df-card--safe reveal" id="safe-exit-card" data-magnetic-card data-parallax="0.06">
+      <span class="df-card-label" id="df-safe-label">SAFE EXIT</span>
+      <div class="df-safe-core" aria-hidden="true">
+        <div class="df-safe-timer-wrap">
+          <span class="df-safe-timer df-safe-timer--ghost" id="safe-timer-base">14:32</span>
+          <span class="df-safe-timer df-safe-timer--fill" id="safe-timer-fill">14:32</span>
+        </div>
+      </div>
+      <div class="df-card-foot" id="df-safe-foot">AUTO CLOSE WITHIN ZONE</div>
+      <div class="df-safe-track" aria-hidden="true"><span></span></div>
+    </article>
 
-  <!-- Active session strip -->
-  <div class="active-session-alert reveal">
-    <div class="asa-dot" aria-hidden="true"></div>
-    <div>
-      <span class="asa-title" id="asa-title">Активна сесія</span>
-      <span class="asa-venue" id="asa-venue">· Cafe Aura · Стіл #5</span>
-    </div>
-    <div class="asa-timer" id="asa-timer" aria-live="off">14:32</div>
-  </div>
+    <article class="df-card df-card--arrival reveal" data-magnetic-card>
+      <span class="df-card-label" id="df-arrival-label">ARRIVAL PULSE</span>
+      <div class="df-arrival-visual" aria-hidden="true">
+        <span class="df-arrival-ring df-arrival-ring--1"></span>
+        <span class="df-arrival-ring df-arrival-ring--2"></span>
+        <span class="df-arrival-ring df-arrival-ring--3"></span>
+        <span class="df-arrival-dot"></span>
+      </div>
+      <div class="df-card-headline" id="df-arrival-title">TABLE 05 READY</div>
+      <div class="df-card-foot" id="df-arrival-foot">ONE STEP TO LAND</div>
+    </article>
 
-  <!-- ══ VENUE HERO ══ -->
-  <div class="venue-hero reveal">
-    <div class="vh-orb vh-orb-1" aria-hidden="true"></div>
-    <div class="vh-orb vh-orb-2" aria-hidden="true"></div>
-    <div class="vh-orb vh-orb-3" aria-hidden="true"></div>
-    <div class="vh-lines"        aria-hidden="true"></div>
-
-    <div class="vh-body">
-      <div class="vh-identity">
-        <div class="vh-eyebrow" id="hero-eyebrow">01 · Dine</div>
-        <div class="vh-name">Cafe <span>Aura</span></div>
-        <div class="vh-meta-row">
-          <span class="vh-pill vh-pill-open" id="live-badge">
-            <span class="live-dot"></span>Відкрито · до 22:30
-          </span>
-          <span class="vh-pill vh-pill-addr">
-            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M7 1C4.8 1 3 2.8 3 4.9c0 3.3 4 8.1 4 8.1s4-4.8 4-8.1C11 2.8 9.2 1 7 1z"/><circle cx="7" cy="5" r="1.5"/></svg>
-            Саксаганського, 8
-          </span>
-          <span class="vh-pill vh-pill-cusine">
-            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 1v5a4 4 0 0 0 8 0V1M7 1v5M1 13h12"/></svg>
-            Specialty Coffee · All Day
-          </span>
-        </div>
-        <div class="vh-rating-row">
-          <div class="vh-stars">
-            <span class="vh-star">⭐</span><span class="vh-star">⭐</span><span class="vh-star">⭐</span><span class="vh-star">⭐</span><span class="vh-star" style="opacity:.5">⭐</span>
-          </div>
-          <span class="vh-score">4.8</span>
-          <span class="vh-reviews">· 312 відгуків</span>
-        </div>
+    <article class="df-card df-card--plan reveal" data-magnetic-card>
+      <span class="df-card-label" id="df-plan-label">SMART FLOORPLAN</span>
+      <div class="df-plan-stage" aria-hidden="true">
+        <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+          <ellipse class="df-grid-base" cx="160" cy="110" rx="116" ry="72"/>
+          <ellipse class="df-grid-base" cx="160" cy="110" rx="84" ry="50"/>
+          <path class="df-grid-base" d="M44 110H276"/>
+          <path class="df-grid-base" d="M160 38V182"/>
+          <circle class="df-seat df-seat--soft" cx="90" cy="74" r="13"/>
+          <circle class="df-seat-ring" cx="90" cy="74" r="20"/>
+          <circle class="df-seat" cx="160" cy="62" r="13"/>
+          <circle class="df-seat-ring" cx="160" cy="62" r="20"/>
+          <circle class="df-seat df-seat--soft" cx="228" cy="80" r="13"/>
+          <circle class="df-seat-ring" cx="228" cy="80" r="20"/>
+          <circle class="df-seat df-seat--selected" cx="124" cy="128" r="14"/>
+          <circle class="df-seat-ring df-seat-ring--selected" cx="124" cy="128" r="27"/>
+          <text class="df-seat-label" x="124" y="131">05</text>
+          <circle class="df-seat" cx="196" cy="136" r="13"/>
+          <circle class="df-seat-ring" cx="196" cy="136" r="20"/>
+          <circle class="df-seat df-seat--soft" cx="94" cy="164" r="13"/>
+          <circle class="df-seat-ring" cx="94" cy="164" r="20"/>
+          <circle class="df-seat" cx="228" cy="160" r="13"/>
+          <circle class="df-seat-ring" cx="228" cy="160" r="20"/>
+        </svg>
       </div>
-
-      <div class="vh-status">
-        <div class="vh-live-badge">
-          <span class="live-dot"></span>
-          <span id="vh-live-label">Live · Зал оновлено</span>
-        </div>
-        <div>
-          <div class="vh-avail-count">
-            <span id="avail-count">6</span><span id="avail-total">/ 10 вільних</span>
-          </div>
-          <div class="vh-avail-sub" id="vh-avail-sub">столів зараз</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="vh-bottom">
-      <div class="vh-info-item">
-        <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="5.5"/><path d="M7 4.5v3l2 1.2"/></svg>
-        08:00 – 22:30
-      </div>
-      <div class="vh-info-sep"></div>
-      <div class="vh-info-item">
-        <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M2 10.5c0-2.5 2.2-4.5 5-4.5s5 2 5 4.5"/><circle cx="7" cy="4" r="2.5"/></svg>
-        Diia Verified · PROSTIR Partner
-      </div>
-      <div class="vh-info-sep"></div>
-      <div class="vh-info-item">
-        <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M5.5 12.5a5 5 0 0 1 0-11h1a5 5 0 0 1 0 11h-1z"/><path d="M7 3.5v7M3.5 7h7"/></svg>
-        Safe Exit · Авто-оплата
-      </div>
-      <div class="vh-info-sep"></div>
-      <div class="vh-info-item">
-        <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M7 1l1.5 3 3.5.5-2.5 2.5.5 3.5L7 9l-3 1.5.5-3.5L2 4.5l3.5-.5z"/></svg>
-        Parking · Wi-Fi · Terrace
-      </div>
-    </div>
-  </div>
-
-  <section class="module-explain module-explain--zigzag reveal">
-    <div class="me-title" id="dine-exp-title">Як працює Dine у PROSTIR</div>
-    <div class="me-desc" id="dine-exp-desc">Dine — це не просто бронювання столу. Це сценарій end-to-end: вибір конкретного місця на мапі залу, перевірка якості зони (шум, світло, Wi-Fi), підтвердження через Дію та Safe Exit таймер.</div>
-    <div class="mom-zig-stack">
-      <div class="mom-zig-row">
-        <div class="mom-zig-copy">
-          <div class="mom-zig-eyebrow"><span>01</span><span id="dine-exp-s1t">Smart floorplan</span></div>
-          <p class="mom-zig-body" id="dine-exp-s1d">Кожен столик має живий стан: вільний, зайнятий або обраний, щоб ти бачив реальну картину до бронювання.</p>
-        </div>
-        <div class="mom-zig-art" aria-hidden="true">
-          <svg width="200" height="168" viewBox="0 0 200 168" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect x="26" y="30" width="148" height="108" rx="10" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.5"/>
-            <circle cx="72" cy="62" r="13" stroke="currentColor" stroke-opacity="0.35" fill="currentColor" fill-opacity="0.1"/>
-            <circle cx="128" cy="62" r="13" stroke="currentColor" stroke-opacity="0.35" fill="currentColor" fill-opacity="0.1"/>
-            <circle cx="100" cy="98" r="17" stroke="#a78bfa" stroke-width="2.2" fill="currentColor" fill-opacity="0.14"/>
-            <text x="100" y="103" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700" font-family="system-ui,sans-serif">5</text>
-            <circle cx="72" cy="98" r="11" fill="#22c55e" fill-opacity="0.35" stroke="#4ade80" stroke-opacity="0.7" stroke-width="1.2"/>
-            <circle cx="128" cy="98" r="11" stroke="currentColor" stroke-opacity="0.28" fill="currentColor" fill-opacity="0.08"/>
-          </svg>
-        </div>
-      </div>
-      <div class="mom-zig-row mom-zig-row--reverse">
-        <div class="mom-zig-copy">
-          <div class="mom-zig-eyebrow"><span>02</span><span id="dine-exp-s2t">Context before booking</span></div>
-          <p class="mom-zig-body" id="dine-exp-s2d">Система показує вид, місткість, Wi‑Fi, шум і доступ до розеток — щоб обрати правильне місце під свій сценарій.</p>
-        </div>
-        <div class="mom-zig-art" aria-hidden="true">
-          <svg width="200" height="168" viewBox="0 0 200 168" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect x="44" y="34" width="112" height="100" rx="12" stroke="currentColor" stroke-width="1.6"/>
-            <path d="M60 54h80M60 70h56M60 86h72" stroke="currentColor" stroke-opacity="0.28" stroke-width="1.2" stroke-linecap="round"/>
-            <rect x="54" y="104" width="32" height="18" rx="4" stroke="currentColor" stroke-opacity="0.4" stroke-width="1.2"/>
-            <path d="M62 112h16M62 118h10" stroke="currentColor" stroke-opacity="0.35" stroke-width="1" stroke-linecap="round"/>
-            <path d="M108 108h28v20h-28z" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.2" rx="3"/>
-            <path d="M116 114v10M111 119h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-            <circle cx="152" cy="118" r="8" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.2"/>
-            <path d="M148 118c2-4 8-4 8 0v2c0 2-1.5 3.5-4 4" stroke="currentColor" stroke-opacity="0.4" stroke-width="1" stroke-linecap="round"/>
-          </svg>
-        </div>
-      </div>
-      <div class="mom-zig-row">
-        <div class="mom-zig-copy">
-          <div class="mom-zig-eyebrow"><span>03</span><span id="dine-exp-s3t">Secure flow</span></div>
-          <p class="mom-zig-body" id="dine-exp-s3d">Після підтвердження через Дію запускається безпечний цикл: підтвердження, цифровий чек і Safe Exit контроль.</p>
-        </div>
-        <div class="mom-zig-art" aria-hidden="true">
-          <svg width="200" height="168" viewBox="0 0 200 168" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M100 40l44 20v28c0 26-18 48-44 56-26-8-44-30-44-56V60l44-20z" stroke="currentColor" stroke-opacity="0.4" stroke-width="1.6" stroke-linejoin="round" fill="currentColor" fill-opacity="0.06"/>
-            <path d="M88 92l8 8 20-22" stroke="#34d399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-            <rect x="52" y="118" width="36" height="28" rx="5" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.2"/>
-            <path d="M62 128h16M62 134h12" stroke="currentColor" stroke-opacity="0.25" stroke-width="1" stroke-linecap="round"/>
-            <path d="M112 124h36" stroke="currentColor" stroke-opacity="0.2" stroke-width="1" stroke-dasharray="3 3" stroke-linecap="round"/>
-            <circle cx="156" cy="124" r="5" fill="#34d399" fill-opacity="0.85"/>
-          </svg>
-        </div>
-      </div>
-    </div>
+      <div class="df-card-foot" id="df-plan-foot">TABLE 05 LOCKED</div>
+    </article>
   </section>
 
-  <div class="demo-sep reveal">
-    <div class="demo-sep-line"></div>
-    <div class="demo-sep-pill" id="dine-demo-label">Demo mode · Test now</div>
-    <div class="demo-sep-line"></div>
-  </div>
-
-  <!-- ══ DINE BOOKING CARD ══ -->
-  <div class="dine-booking-card reveal">
-
-    <!-- Card top bar -->
-    <div class="dine-card-top">
-      <div>
-        <div class="venue-name">Cafe Aura · <span style="color:var(--grey-muted);font-weight:400;font-size:.9rem">Інтерактивний план залу</span></div>
-        <div class="venue-sub" id="venue-sub-text">Вул. Саксаганського, 8 &nbsp;·&nbsp; 1-й поверх &nbsp;·&nbsp; Зал A</div>
-      </div>
-      <div class="dine-meta">
-        <span class="dine-count" id="avail-count-small">6 / 10 вільних</span>
-      </div>
-    </div>
-
-    <!-- Skeleton loader -->
-    <div class="dine-skeleton" id="dine-skeleton" aria-hidden="true" style="display:none"></div>
-
-    <!-- Empty state -->
-    <div class="dine-empty" id="dine-empty" style="display:none" aria-live="polite">
-      <div class="empty-state">
-        <div class="empty-icon">🍽</div>
-        <div class="empty-title" id="dine-empty-title">Немає вільних столиків</div>
-        <div class="empty-desc" id="dine-empty-desc">Усі столи зайняті на обраний час.</div>
-      </div>
-    </div>
-
-    <!-- Map + sidebar body -->
-    <div class="dine-body">
-
-      <!-- ── Floor plan column ── -->
-      <div class="dine-map-col">
-        <!-- Legend -->
-        <div class="dine-legend">
-          <div class="legend-item"><span class="legend-dot ld-avail"></span>Вільний</div>
-          <div class="legend-item"><span class="legend-dot ld-booked"></span>Зайнятий</div>
-          <div class="legend-item"><span class="legend-dot ld-sel"></span>Обраний</div>
+  <section class="df-lower-shell reveal" id="df-lower-shell" aria-label="Dine cinematic depth">
+    <div class="df-lower-grid">
+      <article class="df-card df-card--atmo reveal" data-magnetic-card data-parallax="0.08">
+        <div class="df-metric-copy">
+          <span class="df-card-label" id="df-atmo-label">ATMOSPHERE SCAN</span>
+          <div class="df-metric-title" id="df-atmo-title">ATMOSPHERE:<span>CALM</span></div>
+          <div class="df-metric-readout">
+            <div class="df-readout"><span class="df-readout-k">TEMP</span><span class="df-readout-v" id="df-atmo-r1">22°C</span></div>
+            <div class="df-readout"><span class="df-readout-k">NOISE</span><span class="df-readout-v" id="df-atmo-r2">45DB</span></div>
+            <div class="df-readout"><span class="df-readout-k">WI-FI</span><span class="df-readout-v" id="df-atmo-r3">5GHZ</span></div>
+          </div>
         </div>
-        <!-- SVG map -->
-        <div class="dine-map">
-          <svg id="cafe-svg" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" aria-label="Інтерактивний план залу Cafe Aura">
-            <rect class="fp-shell"        x="0.75"  y="0.75"  width="498.5" height="398.5" rx="8"/>
-            <rect class="fp-zone fp-zone-window"  x="0"    y="0"    width="500"   height="56"/>
-            <rect class="fp-zone fp-zone-bar"     x="0"    y="350"  width="500"   height="50"/>
-            <rect class="fp-zone fp-zone-host"    x="14"   y="68"   width="94"    height="34" rx="8"/>
-            <rect class="fp-zone fp-zone-wc"      x="392"  y="68"   width="94"    height="34" rx="8"/>
-            <rect class="fp-zone fp-zone-kitchen" x="14"   y="288"  width="120"   height="50" rx="8"/>
-            <rect class="fp-zone fp-zone-pass"    x="188"  y="288"  width="124"   height="50" rx="8"/>
-            <rect class="fp-zone fp-zone-lounge"  x="366"  y="288"  width="120"   height="50" rx="8"/>
-            <rect class="fp-zone fp-zone-exit"    x="8"    y="356"  width="48"    height="34" rx="8"/>
-            <rect class="fp-zone fp-zone-exit"    x="444"  y="356"  width="48"    height="34" rx="8"/>
-            <rect class="fp-aisle"  x="228" y="56"  width="44"  height="294" rx="14"/>
-            <line class="fp-divider" x1="0" y1="56"  x2="500" y2="56"/>
-            <line class="fp-divider" x1="0" y1="350" x2="500" y2="350"/>
-            <rect class="fp-booth" x="20"  y="62" width="94" height="30" rx="8"/>
-            <rect class="fp-booth" x="124" y="62" width="94" height="30" rx="8"/>
-            <rect class="fp-booth" x="282" y="62" width="94" height="30" rx="8"/>
-            <rect class="fp-booth" x="386" y="62" width="94" height="30" rx="8"/>
-            <g class="fp-labels">
-              <text class="fp-emoji" x="250" y="36"  text-anchor="middle">🪟</text>
-              <text class="fp-emoji" x="250" y="381" text-anchor="middle">🍸🚪</text>
-              <text class="fp-emoji" x="61"  y="90"  text-anchor="middle">🧑‍💼</text>
-              <text class="fp-emoji" x="439" y="90"  text-anchor="middle">🚻</text>
-              <text class="fp-emoji" x="74"  y="318" text-anchor="middle">👨‍🍳</text>
-              <text class="fp-emoji" x="250" y="318" text-anchor="middle">🍽️</text>
-              <text class="fp-emoji" x="426" y="318" text-anchor="middle">🛋️</text>
-              <text class="fp-emoji" x="250" y="205" text-anchor="middle">↕️</text>
-              <text class="fp-emoji" x="32"  y="377" text-anchor="middle">🚪</text>
-              <text class="fp-emoji" x="468" y="377" text-anchor="middle">🚪</text>
-            </g>
-            <!-- T1 booked -->
-            <g class="svg-table booked" data-id="1" aria-label="Стіл 1, зайнятий" role="img">
-              <circle class="t-ring" cx="74" cy="126" r="30"/><circle class="chair" cx="74" cy="90" r="6" stroke-width="1.2"/><circle class="chair" cx="44" cy="119" r="6" stroke-width="1.2"/><circle class="chair" cx="104" cy="119" r="6" stroke-width="1.2"/><circle class="t-circle" cx="74" cy="126" r="24"/><text class="t-label" x="74" y="130" text-anchor="middle">1</text>
-            </g>
-            <!-- T2 booked -->
-            <g class="svg-table booked" data-id="2" aria-label="Стіл 2, зайнятий" role="img">
-              <circle class="t-ring" cx="158" cy="126" r="30"/><circle class="chair" cx="158" cy="90" r="6" stroke-width="1.2"/><circle class="chair" cx="128" cy="119" r="6" stroke-width="1.2"/><circle class="chair" cx="188" cy="119" r="6" stroke-width="1.2"/><circle class="t-circle" cx="158" cy="126" r="24"/><text class="t-label" x="158" y="130" text-anchor="middle">2</text>
-            </g>
-            <!-- T3 booked -->
-            <g class="svg-table booked" data-id="3" aria-label="Стіл 3, зайнятий" role="img">
-              <circle class="t-ring" cx="342" cy="126" r="30"/><circle class="chair" cx="342" cy="90" r="6" stroke-width="1.2"/><circle class="chair" cx="310" cy="114" r="6" stroke-width="1.2"/><circle class="chair" cx="374" cy="114" r="6" stroke-width="1.2"/><circle class="chair" cx="342" cy="154" r="6" stroke-width="1.2"/><circle class="t-circle" cx="342" cy="126" r="24"/><text class="t-label" x="342" y="130" text-anchor="middle">3</text>
-            </g>
-            <!-- T4 booked -->
-            <g class="svg-table booked" data-id="4" aria-label="Стіл 4, зайнятий" role="img">
-              <circle class="t-ring" cx="426" cy="126" r="30"/><circle class="chair" cx="426" cy="90" r="6" stroke-width="1.2"/><circle class="chair" cx="394" cy="114" r="6" stroke-width="1.2"/><circle class="chair" cx="458" cy="114" r="6" stroke-width="1.2"/><circle class="chair" cx="426" cy="154" r="6" stroke-width="1.2"/><circle class="t-circle" cx="426" cy="126" r="24"/><text class="t-label" x="426" y="130" text-anchor="middle">4</text>
-            </g>
-            <!-- T5 available pre-selected -->
-            <g class="svg-table available is-selected" data-id="5" tabindex="0" role="button" aria-label="Стіл 5, обраний">
-              <circle class="t-ring" cx="74" cy="224" r="30"/><circle class="chair" cx="44" cy="214" r="6" stroke-width="1.2"/><circle class="chair" cx="104" cy="214" r="6" stroke-width="1.2"/><circle class="t-circle" cx="74" cy="224" r="24"/><text class="t-label" x="74" y="228" text-anchor="middle">5</text>
-            </g>
-            <!-- T6 -->
-            <g class="svg-table available" data-id="6" tabindex="0" role="button" aria-label="Стіл 6, вільний">
-              <circle class="t-ring" cx="170" cy="224" r="30"/><circle class="chair" cx="170" cy="188" r="6" stroke-width="1.2"/><circle class="chair" cx="138" cy="212" r="6" stroke-width="1.2"/><circle class="chair" cx="202" cy="212" r="6" stroke-width="1.2"/><circle class="chair" cx="170" cy="250" r="6" stroke-width="1.2"/><circle class="t-circle" cx="170" cy="224" r="24"/><text class="t-label" x="170" y="228" text-anchor="middle">6</text>
-            </g>
-            <!-- T7 -->
-            <g class="svg-table available" data-id="7" tabindex="0" role="button" aria-label="Стіл 7, вільний">
-              <circle class="t-ring" cx="330" cy="224" r="30"/><circle class="chair" cx="330" cy="188" r="6" stroke-width="1.2"/><circle class="chair" cx="298" cy="212" r="6" stroke-width="1.2"/><circle class="chair" cx="362" cy="212" r="6" stroke-width="1.2"/><circle class="chair" cx="330" cy="250" r="6" stroke-width="1.2"/><circle class="t-circle" cx="330" cy="224" r="24"/><text class="t-label" x="330" y="228" text-anchor="middle">7</text>
-            </g>
-            <!-- T8 -->
-            <g class="svg-table available" data-id="8" tabindex="0" role="button" aria-label="Стіл 8, вільний">
-              <circle class="t-ring" cx="426" cy="224" r="30"/><circle class="chair" cx="396" cy="214" r="6" stroke-width="1.2"/><circle class="chair" cx="456" cy="214" r="6" stroke-width="1.2"/><circle class="t-circle" cx="426" cy="224" r="24"/><text class="t-label" x="426" y="228" text-anchor="middle">8</text>
-            </g>
-            <!-- T9 -->
-            <g class="svg-table available" data-id="9" tabindex="0" role="button" aria-label="Стіл 9, вільний">
-              <circle class="t-ring" cx="170" cy="300" r="30"/><circle class="chair" cx="140" cy="280" r="6" stroke-width="1.2"/><circle class="chair" cx="200" cy="280" r="6" stroke-width="1.2"/><circle class="chair" cx="140" cy="320" r="6" stroke-width="1.2"/><circle class="chair" cx="200" cy="320" r="6" stroke-width="1.2"/><circle class="chair" cx="170" cy="266" r="6" stroke-width="1.2"/><circle class="chair" cx="170" cy="334" r="6" stroke-width="1.2"/><circle class="t-circle" cx="170" cy="300" r="24"/><text class="t-label" x="170" y="304" text-anchor="middle">9</text>
-            </g>
-            <!-- T10 -->
-            <g class="svg-table available" data-id="10" tabindex="0" role="button" aria-label="Стіл 10, вільний">
-              <circle class="t-ring" cx="330" cy="300" r="30"/><circle class="chair" cx="300" cy="280" r="6" stroke-width="1.2"/><circle class="chair" cx="360" cy="280" r="6" stroke-width="1.2"/><circle class="chair" cx="300" cy="320" r="6" stroke-width="1.2"/><circle class="chair" cx="360" cy="320" r="6" stroke-width="1.2"/><circle class="chair" cx="330" cy="266" r="6" stroke-width="1.2"/><circle class="chair" cx="330" cy="334" r="6" stroke-width="1.2"/><circle class="t-circle" cx="330" cy="300" r="24"/><text class="t-label" x="330" y="304" text-anchor="middle">10</text>
+        <div class="df-atmo-viz" aria-hidden="true">
+          <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg">
+            <g>
+              <path class="df-atmo-grid" d="M0 40H600M0 90H600M0 140H600M0 190H600M0 240H600"/>
+              <path class="df-atmo-wave df-atmo-wave--soft" d="M-60 72 C 10 48, 60 98, 126 72 S 240 50, 312 76 S 430 102, 504 72 S 594 52, 666 78"/>
+              <path class="df-atmo-wave" d="M-60 132 C 4 160, 46 104, 114 132 S 242 162, 318 124 S 430 98, 504 134 S 592 166, 666 128"/>
+              <path class="df-atmo-wave df-atmo-wave--wifi" d="M-60 198 C 6 188, 52 224, 120 198 S 240 172, 314 200 S 428 228, 500 196 S 592 176, 666 202"/>
             </g>
           </svg>
         </div>
-      </div>
+      </article>
 
-      <!-- ── Sidebar column ── -->
-      <div class="dine-sidebar-col" id="dine-sidebar-wrap">
-
-        <!-- Placeholder (no table selected) -->
-        <div class="sb-placeholder" id="sb-placeholder" style="display:none">
-          <div class="sbp-icon">👆</div>
-          <div class="sbp-text" id="sbp-text">Виберіть стіл на плані</div>
+      <article class="df-card df-card--auto reveal" id="df-auto-card" data-magnetic-card data-parallax="0.14">
+        <span class="df-card-label" id="df-auto-label">AUTO WRAP</span>
+        <div class="df-auto-lock" aria-hidden="true">
+          <svg class="df-lock-svg" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
+            <circle class="df-lock-ring" cx="120" cy="102" r="70"/>
+            <path class="df-lock-arc df-lock-arc--left" d="M120 34 A68 68 0 0 0 63 64"/>
+            <path class="df-lock-arc df-lock-arc--right" d="M120 34 A68 68 0 0 1 177 64"/>
+            <circle class="df-lock-core" cx="120" cy="112" r="28"/>
+            <text class="df-lock-text" x="120" y="116">AUTO</text>
+          </svg>
         </div>
+        <div class="df-card-copy" id="df-auto-copy">THE SESSION CLOSES ON ITS OWN WHEN YOU STEP AWAY</div>
+      </article>
 
-        <!-- Booking form -->
-        <div class="sb-booking-form" id="sb-booking-form">
-          <div class="sb-head">
-            <div class="sb-badge-row">
-              <div class="sb-badge" id="sb-badge">5</div>
-              <div>
-                <div class="sb-title"  id="sb-title">Стіл №5</div>
-                <div class="sb-sub"   id="sb-sub">Зал A · Cafe Aura</div>
-              </div>
-            </div>
-            <button class="sb-close-btn" id="sb-close" aria-label="Закрити"><svg width="10" height="10" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg></button>
+      <article class="df-card df-card--receipt reveal" id="df-receipt-card" data-magnetic-card data-parallax="0.1">
+        <span class="df-card-label" id="df-receipt-label">RECEIPT TRAIL</span>
+        <div class="df-receipt-stage" aria-hidden="true">
+          <div class="df-receipt-mini">
+            <div class="df-receipt-topline"><span id="df-receipt-top">AURA / TABLE 05</span><span>21:04</span></div>
+            <div class="df-receipt-row"><span>FILTER COFFEE</span><span>85₴</span></div>
+            <div class="df-receipt-row"><span>OAT LATTE</span><span>75₴</span></div>
+            <div class="df-receipt-total"><span id="df-receipt-total-label">TOTAL</span><span>160₴</span></div>
           </div>
-
-          <div class="sb-divider"></div>
-
-          <div class="sb-details">
-            <div class="sb-section-label" id="sb-section-label">Деталі столу</div>
-            <div class="sb-row">
-              <span class="sb-row-k">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/></svg>Вид
-              </span>
-              <span class="sb-row-v" id="sb-view">Вікно</span>
-            </div>
-            <div class="sb-row">
-              <span class="sb-row-k">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>Місць
-              </span>
-              <span class="sb-row-v" id="sb-seats">2 особи</span>
-            </div>
-            <div class="sb-row">
-              <span class="sb-row-k">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Зарядка
-              </span>
-              <span class="sb-row-v" id="sb-power">є розетка</span>
-            </div>
-            <div class="sb-row">
-              <span class="sb-row-k">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg>Wi-Fi
-              </span>
-              <span class="sb-row-v" id="sb-wifi">Сильний</span>
-            </div>
-            <div class="sb-row">
-              <span class="sb-row-k">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5"/><polyline points="17 3 21 3 21 7"/><line x1="21" y1="3" x2="9" y2="15"/></svg>Шум
-              </span>
-              <span class="sb-row-v" id="sb-noise">Тихо</span>
-            </div>
-            <div class="sb-row">
-              <span class="sb-row-k">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>Зона
-              </span>
-              <span class="sb-row-v" id="sb-zone">A · Вікно</span>
-            </div>
-            <div class="sb-row" style="border-bottom:none">
-              <span class="sb-row-k" id="sb-status-label">Статус</span>
-              <span class="sb-row-v free" id="sb-status">Вільний</span>
-            </div>
-          </div>
-
-          <div class="sb-divider"></div>
-
-          <div class="booked-notice" id="booked-notice">
-            <strong>Зайнято</strong> · Цей столик зараз зайнятий.<br>Звільниться орієнтовно о 18:30.
-          </div>
-
-          <div class="sb-time-label" id="sb-time-label">Час бронювання</div>
-          <div class="sb-slots" id="sb-slots">
-            <span class="sb-slot" data-time="18:00">18:00</span>
-            <span class="sb-slot" data-time="19:00">19:00</span>
-            <span class="sb-slot" data-time="20:00">20:00</span>
-            <span class="sb-slot" data-time="21:00">21:00</span>
-          </div>
-
-          <div class="oops-banner" id="oops-banner" role="alert">⚠ Оберіть час для бронювання</div>
-
-          <button class="sb-book btn-inactive" id="sb-book-btn">
-            <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l6 3v5c0 3.8-2.6 7.3-6 8.5C4.6 17.3 2 13.8 2 10V5l8-3z"/></svg>
-            Забронювати
-          </button>
         </div>
+        <div class="df-card-foot" id="df-receipt-foot">LAST TRANSACTION / UNDER CONTROL</div>
+      </article>
 
-        <!-- Success state -->
-        <div class="sb-success" id="sb-success" aria-live="polite">
-          <div class="sb-success-check">
-            <div class="sb-check-circle"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 12 10 16 18 8"/></svg></div>
+      <article class="df-card df-card--city reveal" data-magnetic-card data-parallax="0.06">
+        <span class="df-card-label" id="df-city-label">CITY FLOW</span>
+        <div class="df-card-copy" id="df-city-copy">YOUR DIGITAL IMPRINT IN THE CITY CORE</div>
+        <div class="df-city-line" aria-hidden="true">
+          <div class="df-city-track">
+            <span class="df-city-dot" style="left:8%"></span>
+            <span class="df-city-name" style="left:8%">PODIL</span>
+            <span class="df-city-dot" style="left:28%"></span>
+            <span class="df-city-name" style="left:28%">RIVER</span>
+            <span class="df-city-dot df-city-dot--active" style="left:50%"></span>
+            <span class="df-city-name df-city-name--active" style="left:50%" id="df-city-active">CAFE AURA</span>
+            <span class="df-city-dot" style="left:72%"></span>
+            <span class="df-city-name" style="left:72%">ARENA</span>
+            <span class="df-city-dot" style="left:92%"></span>
+            <span class="df-city-name" style="left:92%">SMAKOTELLA</span>
           </div>
-          <div class="sb-success-title" id="sb-success-title">Стіл зарезервовано.</div>
-          <div class="sb-success-sub"   id="sb-success-sub">Чекаємо на вас!</div>
-          <div class="sb-success-detail" id="sb-success-detail">Стіл №5 · 19:00</div>
-          <button class="sb-success-new" id="sb-success-new">← Нове бронювання</button>
         </div>
-
-      </div>
+      </article>
     </div>
-  </div>
-
-  <!-- ══ DIGITAL RECEIPT ══ -->
-  <div class="receipt-card is-locked" id="receipt-card">
-    <div class="receipt-top">
-      <div>
-        <div class="receipt-venue-name">Cafe Aura</div>
-        <div class="receipt-meta-line" id="receipt-meta-line">Стіл #5 · Window View · 29.03.2026 · 09:41</div>
-      </div>
-      <div class="receipt-paid-stamp" id="receipt-paid-stamp" aria-label="Оплачено">PAID</div>
-    </div>
-    <div class="receipt-items">
-      <div class="receipt-row"><span class="receipt-row-name">Filter Coffee ×1</span><span class="receipt-row-price">85₴</span></div>
-      <div class="receipt-row"><span class="receipt-row-name">Breakfast Set ×1</span><span class="receipt-row-price">145₴</span></div>
-      <div class="receipt-row"><span class="receipt-row-name">Oat Latte ×1</span><span class="receipt-row-price">75₴</span></div>
-      <div class="receipt-divider"></div>
-      <div class="receipt-row receipt-total"><span class="receipt-row-name" id="receipt-total-label">Разом</span><span class="receipt-row-price">305₴</span></div>
-    </div>
-    <div class="receipt-footer">
-      <div class="receipt-qr-box" aria-label="QR-код чеку">
-        <span class="q1"></span><span class="q1"></span><span></span><span></span><span></span><span></span><span class="q1"></span>
-        <span class="q1"></span><span></span><span></span><span></span><span></span><span></span><span class="q1"></span>
-        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-        <span class="q1"></span><span></span><span></span><span></span><span></span><span></span><span class="q1"></span>
-        <span class="q1"></span><span class="q1"></span><span class="q1"></span><span></span><span></span><span></span><span></span>
-        <span class="q1"></span><span></span><span class="q1"></span><span></span><span class="q1"></span><span></span><span class="q1"></span>
-        <span></span><span></span><span class="q1"></span><span class="q1"></span><span class="q1"></span><span></span><span></span>
-      </div>
-      <div class="receipt-sign">
-        <div class="receipt-diia-badge" id="receipt-diia-badge">✓ &nbsp;Підписано через Дія</div><br>
-        <span id="receipt-sign-lines" style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.04em;color:rgba(255,255,255,.22);line-height:1.7">Транзакція: #PRX-2026-03291<br>Статус: Підтверджено · Безпечна оплата</span>
-      </div>
-    </div>
-  </div>
-
+  </section>
 </div><!-- /.dine-page-wrap -->
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <a class="footer-logo" href="/"><span class="lp">PR</span><span class="lo">O</span><span class="lrest">STIR</span></a>
-    <span class="footer-copy">© 2026 PROSTIR · Urban OS · Kyiv &nbsp;·&nbsp; <span style="color:rgba(139,92,246,0.7);font-size:0.6rem;">✓ verified by Дія</span></span>
+    <span class="footer-copy">© 2026 PROSTIR · Urban OS · Kyiv</span>
     <nav class="footer-links"><a href="#">Умови</a><a href="#">Конфіденційність</a><a href="#">Контакти</a><a href="#" class="faq-link">FAQ</a><a href="/profile.html">Профіль</a></nav>
   </div>
 </footer>
@@ -1118,6 +2287,7 @@
 
 <script>
 function $(id){ return document.getElementById(id); }
+if(false){
 
 /* ── Theme ── */
 (function(){
@@ -1193,10 +2363,7 @@ document.querySelectorAll('.reveal').forEach(el=>_io.observe(el));
   function updateAvailCount(){
     const avail=Object.values(tableData).filter(t=>t.status==='available').length;
     const total=Object.keys(tableData).length;
-    const el=$('avail-count'); if(el) el.textContent=avail;
-    const et=$('avail-total'); if(et) et.textContent=currentLang==='en'?`/ ${total} free`:`/ ${total} вільних`;
     const es=$('avail-count-small'); if(es) es.textContent=currentLang==='en'?`${avail} / ${total} free`:`${avail} / ${total} вільних`;
-    const sub=$('vh-avail-sub'); if(sub) sub.textContent=currentLang==='en'?'tables now':'столів зараз';
   }
 
   let selectedId=5,selectedTime=null,activeBookingId=null;
@@ -1406,7 +2573,7 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
 /* ── Master timer ── */
 (function(){
   let sec=14*60+32;
-  const els=['asa-timer'].map(id=>document.getElementById(id));
+  const els=['asa-timer','dmc-mosaic-timer'].map(id=>document.getElementById(id));
   setInterval(()=>{sec=sec<=0?15*60:sec-1;const t=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');els.forEach(el=>{if(el)el.textContent=t;});},1000);
 })();
 
@@ -1416,44 +2583,76 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
   const T={
     ua:{
       nav:{dine:'Dine',working:'Working',moments:'Moments'},
-      common:{quickLogin:'Вхід через Дію'},
-      hero:{eyebrow:'01 · Dine'},
+      common:{quickLogin:'Швидкий вхід'},
+      hero:{
+        eyebrow:'01 &nbsp;·&nbsp; Dine',
+        line1:'План залу живий.',
+        accent:'Усе видно одразу.',
+        desc:'Обери стіл на мапі, подивись контекст зони та підтвердь бронювання в один крок. Safe Exit і цифровий чек працюють у тому ж ритмі, без зайвих перемикань.',
+      },
       labels:{
         activeSession:'Активна сесія',liveOpen:'Відкрито · до 22:30',details:'Деталі столу',status:'Статус',
         bookingTime:'Час бронювання',successTitle:'Стіл зарезервовано.',successSub:'Чекаємо на вас!',
-        total:'Разом',signed:'✓ Підписано через Дія',
-        modalTitle1:'Відкрийте застосунок Дія',modalSub1:'Відскануйте QR-код для верифікації особистості та підписання бронювання.',
-        modalBtn1:'Симулювати підпис Дія →',modalTitle2:'Підпис Дія у процесі...',modalSub2:'Перевіряємо вашу особистість та застосовуємо цифровий підпис.',
+        total:'Разом',signed:'✓ Цифровий підпис',
+        modalTitle1:'Відкрийте застосунок для підпису',modalSub1:'Відскануйте QR-код, щоб підтвердити особистість і завершити бронювання.',
+        modalBtn1:'Симулювати підпис →',modalTitle2:'Підпис у процесі...',modalSub2:'Перевіряємо особистість та застосовуємо цифровий підпис.',
         modalTitle3:'Бронювання підтверджено',modalDone:'Закрити',newBooking:'← Нове бронювання',
         vhLive:'Live · Зал оновлено',tablesNow:'столів зараз',available:'вільних',
         sbPlaceholder:'Виберіть стіл на плані',
         expTitle:'Як працює Dine у PROSTIR',
-        expDesc:'Dine — це не просто бронювання столу. Це сценарій end-to-end: вибір конкретного місця на мапі залу, перевірка якості зони (шум, світло, Wi-Fi), підтвердження через Дію та Safe Exit таймер.',
+        expDesc:'Dine — це не просто бронювання столу. Це сценарій end-to-end: вибір конкретного місця на мапі залу, контекст зони, швидке підтвердження і Safe Exit таймер.',
         expS1t:'Smart floorplan', expS1d:'Кожен столик має живий стан: вільний, зайнятий або обраний, щоб ти бачив реальну картину до бронювання.',
         expS2t:'Context before booking', expS2d:'Система показує вид, місткість, Wi‑Fi, шум і доступ до розеток — щоб обрати правильне місце під свій сценарій.',
-        expS3t:'Secure flow', expS3d:'Після підтвердження через Дію запускається безпечний цикл: підтвердження, цифровий чек і Safe Exit контроль.',
+        expS3t:'Secure flow', expS3d:'Після підтвердження запускається безпечний цикл: бронювання, цифровий чек і Safe Exit контроль.',
         demo:'Demo mode · Тестуй зараз',
+        mosaic:[
+          {k:'Safe Exit',d:'Таймер до авто-оплати в зоні'},
+          {k:'Quick check-in',d:'Один короткий крок до підтвердження'},
+          {k:'Moments',d:'Чайові, подяки та короткий чат після візиту'},
+          {k:'Живий план',d:'Столи в реальному часі перед бронюванням'},
+          {k:'Контекст зони',d:'Шум, світло, Wi‑Fi — під твій сценарій'},
+          {k:'Нотифікації',d:'Миттєві сигнали без зайвих екранів'},
+          {k:'Zero-click',d:'Вихід із геозони закриває сесію'},
+          {k:'Цифровий чек',d:'Прозора історія замовлення'},
+          {k:'Мережа PROSTIR',d:'Заклади міста в одному акаунті'},
+        ],
       }
     },
     en:{
       nav:{dine:'Dine',working:'Working',moments:'Moments'},
-      common:{quickLogin:'Sign in with Diia'},
-      hero:{eyebrow:'01 · Dine'},
+      common:{quickLogin:'Quick sign-in'},
+      hero:{
+        eyebrow:'01 &nbsp;·&nbsp; Dine',
+        line1:'The floor plan is live.',
+        accent:'Everything is visible.',
+        desc:'Pick a table on the map, review the zone context, and confirm the booking in one step. Safe Exit and a digital receipt stay in the same flow with no extra switching.',
+      },
       labels:{
         activeSession:'Active session',liveOpen:'Open · until 22:30',details:'Table details',status:'Status',
         bookingTime:'Booking time',successTitle:'Table reserved.',successSub:'See you soon!',
-        total:'Total',signed:'✓ Signed via Diia',
-        modalTitle1:'Open the Diia app',modalSub1:'Scan the QR code to verify identity and sign the booking.',
-        modalBtn1:'Simulate Diia signature →',modalTitle2:'Diia signature in progress...',modalSub2:'Verifying your identity and applying digital signature.',
+        total:'Total',signed:'✓ Digitally signed',
+        modalTitle1:'Open the signing app',modalSub1:'Scan the QR code to verify your identity and finish the booking.',
+        modalBtn1:'Simulate signature →',modalTitle2:'Signature in progress...',modalSub2:'Verifying your identity and applying a digital signature.',
         modalTitle3:'Booking confirmed',modalDone:'Close',newBooking:'← New booking',
         vhLive:'Live · Hall updated',tablesNow:'tables now',available:'free',
         sbPlaceholder:'Select a table on the map',
         expTitle:'How Dine works in PROSTIR',
-        expDesc:'Dine is more than table booking. It is an end-to-end flow: pick an exact table on the floorplan, review zone quality (noise, light, Wi-Fi), confirm via Diia, and run with Safe Exit.',
+        expDesc:'Dine is more than table booking. It is an end-to-end flow: pick an exact table on the floorplan, review zone quality, confirm quickly, and run with Safe Exit.',
         expS1t:'Smart floorplan', expS1d:'Each table has a live state: free, occupied, or selected, so you see real availability before booking.',
         expS2t:'Context before booking', expS2d:'The system shows view, capacity, Wi-Fi, noise, and power access to match the seat to your scenario.',
-        expS3t:'Secure flow', expS3d:'After Diia confirmation, the secure cycle starts: booking confirmation, digital receipt, and Safe Exit control.',
+        expS3t:'Secure flow', expS3d:'After confirmation, the secure cycle starts: booking confirmation, digital receipt, and Safe Exit control.',
         demo:'Demo mode · Test now',
+        mosaic:[
+          {k:'Safe Exit',d:'Countdown to auto-payment in the zone'},
+          {k:'Quick check-in',d:'One short step before confirmation'},
+          {k:'Moments',d:'Tips, thanks, and a short chat after your visit'},
+          {k:'Live floor plan',d:'Tables in real time before you book'},
+          {k:'Zone context',d:'Noise, light, Wi‑Fi—matched to your plan'},
+          {k:'Notifications',d:'Instant signals without extra screens'},
+          {k:'Zero-click',d:'Leaving the geofence closes the session'},
+          {k:'Digital receipt',d:'A clear order history'},
+          {k:'PROSTIR network',d:'City venues in one account'},
+        ],
       }
     }
   };
@@ -1461,12 +2660,13 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
   function apply(lang){
     const t=T[lang].labels;
     document.querySelectorAll('[data-nav]').forEach(a=>{const k=a.dataset.nav;if(T[lang].nav[k])a.textContent=T[lang].nav[k];});
-    const ey=$('hero-eyebrow'); if(ey) ey.textContent=T[lang].hero.eyebrow;
+    const ey=$('hero-eyebrow'); if(ey) ey.innerHTML=T[lang].hero.eyebrow;
+    const ht=$('hero-title'); const H=T[lang].hero;
+    if(ht) ht.innerHTML=H.line1+'<br><span class="accent">'+H.accent+'</span>';
+    const hp=$('hero-desc'); if(hp) hp.textContent=H.desc;
+    const quickBtn=document.querySelector('.diia-btn'); if(quickBtn) quickBtn.setAttribute('aria-label',T[lang].common.quickLogin);
+    const quickLogo=document.querySelector('.diia-btn .diia-logo'); if(quickLogo) quickLogo.textContent='ID';
     const btnLbl=document.querySelector('.diia-btn .btn-label'); if(btnLbl) btnLbl.textContent=T[lang].common.quickLogin;
-    const lv=$('live-badge'); if(lv) lv.innerHTML=`<span class="live-dot"></span>${t.liveOpen}`;
-    const vhl=$('vh-live-label'); if(vhl) vhl.textContent=t.vhLive;
-    const sub=$('vh-avail-sub'); if(sub) sub.textContent=t.tablesNow;
-    const at=$('avail-total'); if(at) at.textContent=`/ 10 ${t.available}`;
     const secL=$('sb-section-label'); if(secL) secL.textContent=t.details;
     const stL=$('sb-status-label'); if(stL) stL.textContent=t.status;
     const timL=$('sb-time-label'); if(timL) timL.textContent=t.bookingTime;
@@ -1492,6 +2692,7 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
     const e3t=$('dine-exp-s3t'); if(e3t) e3t.textContent=t.expS3t;
     const e3d=$('dine-exp-s3d'); if(e3d) e3d.textContent=t.expS3d;
     const dl=$('dine-demo-label'); if(dl) dl.textContent=t.demo;
+    if(Array.isArray(t.mosaic)){ t.mosaic.forEach((cell,i)=>{ const n=i+1; const kk=$(`dmc-${n}-k`); const dd=$(`dmc-${n}-d`); if(kk) kk.textContent=cell.k; if(dd) dd.textContent=cell.d; }); }
     const asaT=$('asa-title'); if(asaT) asaT.textContent=t.activeSession;
     const footerLinks=document.querySelectorAll('.footer-links a');
     if(footerLinks[0]) footerLinks[0].textContent=lang==='en'?'Terms':'Умови';
@@ -1506,6 +2707,230 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
   switcher.querySelectorAll('.lang-btn').forEach(b=>{
     b.addEventListener('click',()=>{const l=b.dataset.lang==='en'?'en':'ua';localStorage.setItem('prostir_lang',l);apply(l);});
   });
+})();
+}
+</script>
+
+<script>
+(function(){
+  document.body.classList.add('theme-noir');
+
+  const dock=$('dock');
+  window.addEventListener('scroll',()=>{ if(dock) dock.classList.toggle('scrolled',window.scrollY>8); },{passive:true});
+
+  const drawerBtn=$('hamburger'), drawer=$('mobile-nav');
+  drawerBtn&&drawerBtn.addEventListener('click',()=>{
+    const open=drawer.classList.toggle('open');
+    drawerBtn.setAttribute('aria-expanded',open);
+    const bars=drawerBtn.querySelectorAll('span');
+    if(open){bars[0].style.transform='translateY(6.5px) rotate(45deg)';bars[1].style.opacity='0';bars[2].style.transform='translateY(-6.5px) rotate(-45deg)';}
+    else{bars.forEach(x=>{x.style.transform='';x.style.opacity='';});}
+  });
+
+  const revealObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+  const T={
+    ua:{
+      nav:{dine:'Dine',working:'Working',moments:'Moments'},
+      common:{quickLogin:'Швидкий вхід'},
+      hero:{
+        eyebrow:'01 &nbsp;·&nbsp; Dine',
+        line1:'План залу живий.',
+        accent:'Усе видно одразу.',
+        desc:'Обери стіл на мапі, подивись контекст зони та підтвердь бронювання в один крок. Safe Exit і цифровий чек працюють у тому ж ритмі, без зайвих перемикань.',
+      },
+      bento:{
+        safeLabel:'SAFE EXIT',
+        safeFoot:'АВТО ЗАКРИТТЯ В ЗОНІ',
+        arrivalLabel:'ARRIVAL PULSE',
+        arrivalTitle:'СТІЛ 05 ГОТОВИЙ',
+        arrivalFoot:'ОДИН КРОК ДО ПОСАДКИ',
+        planLabel:'SMART FLOORPLAN',
+        planFoot:'СТІЛ 05 ОБРАНО',
+        atmoLabel:'ATMOSPHERE SCAN',
+        atmoTitle:'ATMOSPHERE:',
+        atmoState:'CALM',
+        autoLabel:'AUTO WRAP',
+        autoCopy:'THE SESSION CLOSES ON ITS OWN WHEN YOU STEP AWAY',
+        receiptLabel:'RECEIPT TRAIL',
+        receiptTop:'AURA / TABLE 05',
+        receiptFoot:'LAST TRANSACTION / UNDER CONTROL',
+        receiptTotal:'TOTAL',
+        cityLabel:'CITY FLOW',
+        cityCopy:'YOUR DIGITAL IMPRINT IN THE CITY CORE',
+        cityActive:'CAFE AURA',
+      }
+    },
+    en:{
+      nav:{dine:'Dine',working:'Working',moments:'Moments'},
+      common:{quickLogin:'Quick sign-in'},
+      hero:{
+        eyebrow:'01 &nbsp;·&nbsp; Dine',
+        line1:'The floor plan is live.',
+        accent:'Everything is visible.',
+        desc:'Pick a table on the map, review the zone context, and confirm the booking in one step. Safe Exit and a digital receipt stay in the same flow with no extra switching.',
+      },
+      bento:{
+        safeLabel:'SAFE EXIT',
+        safeFoot:'AUTO CLOSE WITHIN ZONE',
+        arrivalLabel:'ARRIVAL PULSE',
+        arrivalTitle:'TABLE 05 READY',
+        arrivalFoot:'ONE STEP TO LAND',
+        planLabel:'SMART FLOORPLAN',
+        planFoot:'TABLE 05 LOCKED',
+        atmoLabel:'ATMOSPHERE SCAN',
+        atmoTitle:'ATMOSPHERE:',
+        atmoState:'CALM',
+        autoLabel:'AUTO WRAP',
+        autoCopy:'THE SESSION CLOSES ON ITS OWN WHEN YOU STEP AWAY',
+        receiptLabel:'RECEIPT TRAIL',
+        receiptTop:'AURA / TABLE 05',
+        receiptFoot:'LAST TRANSACTION / UNDER CONTROL',
+        receiptTotal:'TOTAL',
+        cityLabel:'CITY FLOW',
+        cityCopy:'YOUR DIGITAL IMPRINT IN THE CITY CORE',
+        cityActive:'CAFE AURA',
+      }
+    }
+  };
+
+  function apply(lang){
+    const t=T[lang];
+    document.querySelectorAll('[data-nav]').forEach(a=>{const k=a.dataset.nav;if(t.nav[k])a.textContent=t.nav[k];});
+    const ey=$('hero-eyebrow'); if(ey) ey.innerHTML=t.hero.eyebrow;
+    const ht=$('hero-title'); if(ht) ht.innerHTML=t.hero.line1+'<br><span class="accent">'+t.hero.accent+'</span>';
+    const hp=$('hero-desc'); if(hp) hp.textContent=t.hero.desc;
+    const quickBtn=document.querySelector('.diia-btn'); if(quickBtn) quickBtn.setAttribute('aria-label',t.common.quickLogin);
+    const quickLogo=document.querySelector('.diia-btn .diia-logo'); if(quickLogo) quickLogo.textContent='ID';
+    const btnLbl=document.querySelector('.diia-btn .btn-label'); if(btnLbl) btnLbl.textContent=t.common.quickLogin;
+    const safeLabel=$('df-safe-label'); if(safeLabel) safeLabel.textContent=t.bento.safeLabel;
+    const safeFoot=$('df-safe-foot'); if(safeFoot) safeFoot.textContent=t.bento.safeFoot;
+    const arrivalLabel=$('df-arrival-label'); if(arrivalLabel) arrivalLabel.textContent=t.bento.arrivalLabel;
+    const arrivalTitle=$('df-arrival-title'); if(arrivalTitle) arrivalTitle.textContent=t.bento.arrivalTitle;
+    const arrivalFoot=$('df-arrival-foot'); if(arrivalFoot) arrivalFoot.textContent=t.bento.arrivalFoot;
+    const planLabel=$('df-plan-label'); if(planLabel) planLabel.textContent=t.bento.planLabel;
+    const planFoot=$('df-plan-foot'); if(planFoot) planFoot.textContent=t.bento.planFoot;
+    const atmoLabel=$('df-atmo-label'); if(atmoLabel) atmoLabel.textContent=t.bento.atmoLabel;
+    const atmoTitle=$('df-atmo-title'); if(atmoTitle) atmoTitle.innerHTML=t.bento.atmoTitle+'<span>'+t.bento.atmoState+'</span>';
+    const autoLabel=$('df-auto-label'); if(autoLabel) autoLabel.textContent=t.bento.autoLabel;
+    const autoCopy=$('df-auto-copy'); if(autoCopy) autoCopy.textContent=t.bento.autoCopy;
+    const receiptLabel=$('df-receipt-label'); if(receiptLabel) receiptLabel.textContent=t.bento.receiptLabel;
+    const receiptTop=$('df-receipt-top'); if(receiptTop) receiptTop.textContent=t.bento.receiptTop;
+    const receiptFoot=$('df-receipt-foot'); if(receiptFoot) receiptFoot.textContent=t.bento.receiptFoot;
+    const receiptTotal=$('df-receipt-total-label'); if(receiptTotal) receiptTotal.textContent=t.bento.receiptTotal;
+    const cityLabel=$('df-city-label'); if(cityLabel) cityLabel.textContent=t.bento.cityLabel;
+    const cityCopy=$('df-city-copy'); if(cityCopy) cityCopy.textContent=t.bento.cityCopy;
+    const cityActive=$('df-city-active'); if(cityActive) cityActive.textContent=t.bento.cityActive;
+    const footerLinks=document.querySelectorAll('.footer-links a');
+    if(footerLinks[0]) footerLinks[0].textContent=lang==='en'?'Terms':'Умови';
+    if(footerLinks[1]) footerLinks[1].textContent=lang==='en'?'Privacy':'Конфіденційність';
+    if(footerLinks[2]) footerLinks[2].textContent=lang==='en'?'Contacts':'Контакти';
+    if(footerLinks[4]) footerLinks[4].textContent=lang==='en'?'Profile':'Профіль';
+    const switcher=$('lang-switch');
+    switcher&&switcher.querySelectorAll('.lang-btn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===lang?'true':'false'));
+  }
+
+  const saved=localStorage.getItem('prostir_lang')==='en'?'en':'ua';
+  apply(saved);
+  const switcher=$('lang-switch');
+  switcher&&switcher.querySelectorAll('.lang-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const lang=btn.dataset.lang==='en'?'en':'ua';
+      localStorage.setItem('prostir_lang',lang);
+      apply(lang);
+    });
+  });
+
+  let sec=14*60+33;
+  function updateTimer(){
+    sec=sec<=0?15*60:sec-1;
+    const value=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
+    const base=$('safe-timer-base');
+    const fill=$('safe-timer-fill');
+    if(base) base.textContent=value;
+    if(fill) fill.textContent=value;
+  }
+  updateTimer();
+  setInterval(updateTimer,1000);
+
+  const safeCard=$('safe-exit-card');
+  function updateSafeFill(){
+    if(!safeCard) return;
+    const rect=safeCard.getBoundingClientRect();
+    const vh=window.innerHeight||1;
+    const visible=Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
+    const ratio=Math.max(0.16, Math.min(1, visible / Math.min(rect.height, vh * 0.95)));
+    safeCard.style.setProperty('--fill', ratio.toFixed(3));
+  }
+  updateSafeFill();
+  window.addEventListener('scroll',updateSafeFill,{passive:true});
+  window.addEventListener('resize',updateSafeFill);
+
+  const lowerShell=$('df-lower-shell');
+  if(lowerShell){
+    lowerShell.addEventListener('mousemove',e=>{
+      const rect=lowerShell.getBoundingClientRect();
+      lowerShell.style.setProperty('--spot-x',(((e.clientX-rect.left)/rect.width)*100).toFixed(2)+'%');
+      lowerShell.style.setProperty('--spot-y',(((e.clientY-rect.top)/rect.height)*100).toFixed(2)+'%');
+      lowerShell.style.setProperty('--spot-o','1');
+    });
+    lowerShell.addEventListener('mouseleave',()=>lowerShell.style.setProperty('--spot-o','0'));
+  }
+
+  const autoCard=$('df-auto-card');
+  const receiptCard=$('df-receipt-card');
+
+  function updateScrollDepth(){
+    document.querySelectorAll('[data-parallax]').forEach(el=>{
+      const speed=parseFloat(el.dataset.parallax||'0');
+      const rect=el.getBoundingClientRect();
+      const vh=window.innerHeight||1;
+      const center=rect.top + rect.height/2;
+      const dist=(center - vh/2) / vh;
+      el.style.setProperty('--py',(-dist * speed * 160).toFixed(2)+'px');
+    });
+    if(autoCard){
+      const rect=autoCard.getBoundingClientRect();
+      const vh=window.innerHeight||1;
+      const visible=Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
+      const ratio=Math.max(0, Math.min(1, visible / Math.min(rect.height, vh * 0.92)));
+      autoCard.style.setProperty('--wrap-progress', ratio.toFixed(3));
+    }
+    if(receiptCard){
+      const rect=receiptCard.getBoundingClientRect();
+      const vh=window.innerHeight||1;
+      const visible=Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
+      const ratio=Math.max(0.14, Math.min(1, visible / Math.min(rect.height, vh * 0.92)));
+      receiptCard.style.setProperty('--receipt-rise', ratio.toFixed(3));
+    }
+  }
+  updateScrollDepth();
+  window.addEventListener('scroll',updateScrollDepth,{passive:true});
+  window.addEventListener('resize',updateScrollDepth);
+
+  if(!window.matchMedia('(hover: none)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('[data-magnetic-card]').forEach(card=>{
+      card.addEventListener('mousemove',e=>{
+        const rect=card.getBoundingClientRect();
+        const px=(e.clientX-rect.left)/rect.width-0.5;
+        const py=(e.clientY-rect.top)/rect.height-0.5;
+        card.style.setProperty('--tx',(px*14).toFixed(2)+'px');
+        card.style.setProperty('--ty',(py*14).toFixed(2)+'px');
+      });
+      card.addEventListener('mouseleave',()=>{
+        card.style.setProperty('--tx','0px');
+        card.style.setProperty('--ty','0px');
+      });
+    });
+  }
 })();
 </script>
 

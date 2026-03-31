@@ -7,9 +7,9 @@
   <link rel="stylesheet" href="/app.css"/>
   <link rel="stylesheet" href="/prostir-zigzag.css"/>
   <style>
-    .page-content { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem 6rem; }
+    .page-content { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem 6rem; width: 100%; box-sizing: border-box; }
     @media (max-width: 720px) { .page-content { padding: 0 1.5rem 4rem; } }
-    .module-explain { margin: 0 0 1.4rem; border: 1px solid var(--grey-line); border-radius: 18px; background: var(--bg); box-shadow: var(--card-shadow); padding: 1.25rem; }
+    .module-explain { margin: 0 0 1.4rem; border: 1px solid var(--grey-line); border-radius: 18px; background: var(--bg); box-shadow: var(--card-shadow); padding: 1.25rem; max-width: 100%; box-sizing: border-box; overflow-x: clip; }
     .me-top { margin-bottom: 0.9rem; }
     .me-title { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.03em; color: var(--jet); margin-bottom: 0.35rem; }
     .me-desc { font-size: 0.84rem; color: var(--grey-soft); line-height: 1.65; max-width: 72ch; }
@@ -23,11 +23,11 @@
     .demo-sep-line { height: 1px; flex: 1; background: linear-gradient(90deg,rgba(139,92,246,0),rgba(139,92,246,0.35),rgba(139,92,246,0)); }
     .demo-sep-pill { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid rgba(139,92,246,0.25); color: var(--violet); border-radius: 999px; padding: 0.26rem 0.7rem; background: rgba(139,92,246,0.06); white-space: nowrap; }
     @media (max-width: 780px){ .me-grid { grid-template-columns: 1fr; } }
-    .spaces-list { margin: 2rem 0 1rem; display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 0.7rem; }
-    .space-card { border: 1px solid var(--grey-line); border-radius: 14px; overflow: hidden; background: var(--bg); box-shadow: var(--card-shadow); transition: all .28s var(--ease); cursor: pointer; }
+    .spaces-list { margin: 2rem 0 1rem; display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 0.7rem; min-width: 0; }
+    .space-card { border: 1px solid var(--grey-line); border-radius: 14px; overflow: hidden; background: var(--bg); box-shadow: var(--card-shadow); transition: all .28s var(--ease); cursor: pointer; min-width: 0; max-width: 100%; }
     .space-card.open { border-color: rgba(139,92,246,0.45); box-shadow: 0 0 0 1px rgba(139,92,246,0.2), 0 16px 30px rgba(139,92,246,0.14); }
-    .space-top { display: block; padding: 0.45rem; }
-    .space-thumb { width: 100%; height: 92px; object-fit: cover; border-radius: 10px; filter: grayscale(100%) contrast(108%); }
+    .space-top { display: block; padding: 0.45rem; overflow: hidden; max-width: 100%; }
+    .space-thumb { width: 100%; max-width: 100%; height: 92px; object-fit: cover; object-position: center; border-radius: 10px; filter: grayscale(100%) contrast(108%); display: block; }
     .space-card.open .space-thumb { filter: grayscale(20%) contrast(112%); }
     .space-name { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 .3rem; }
     .space-meta { font-size: .75rem; color: var(--grey-muted); font-family: var(--font-mono); }
@@ -35,9 +35,9 @@
     .space-mini .space-name { font-size: .76rem; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .space-mini .space-meta { font-size: .62rem; margin-top: .15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .space-hero { margin: 0 0 2.4rem; border:1px solid var(--grey-line); border-radius: 20px; background: var(--bg); box-shadow: var(--card-shadow); overflow: hidden; }
-    .space-hero-grid { display:grid; grid-template-columns: 1.15fr 1fr; gap: 0; }
-    .space-hero-img { width:100%; height: 300px; object-fit: cover; filter: grayscale(55%) contrast(112%); }
+    .space-hero { margin: 0 0 2.4rem; border:1px solid var(--grey-line); border-radius: 20px; background: var(--bg); box-shadow: var(--card-shadow); overflow: hidden; max-width: 100%; box-sizing: border-box; }
+    .space-hero-grid { display:grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 0; min-width: 0; }
+    .space-hero-img { width:100%; max-width:100%; min-width:0; height: 300px; object-fit: cover; object-position: center; filter: grayscale(55%) contrast(112%); display: block; }
     .space-hero-body { padding: 1.1rem 1.1rem 1.2rem; display:flex; flex-direction:column; gap:.75rem; }
     .space-hero-title { font-size: 1.35rem; font-weight: 700; letter-spacing:-0.02em; margin:0; }
     .space-hero-meta { font-family:var(--font-mono); font-size:.68rem; color:var(--grey-muted); }

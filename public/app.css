@@ -433,9 +433,30 @@ body.theme-noir .w-social-sub{ color: rgba(255,255,255,0.62) !important; }
 body.theme-noir .w-timer-digits,
 body.theme-noir .w-distance-big,
 body.theme-noir .w-social-text{ color: #fff !important; }
-body.theme-noir .w-map-canvas{ background: #0E0E12 !important; }
-body.theme-noir .w-map-canvas svg rect{ fill: #15151A !important; }
-body.theme-noir .w-map-canvas svg rect[fill="#D8D4F0"]{ fill: rgba(139,92,246,0.28) !important; }
+/* Mini-map: dark frame; SVG layers styled via .w-map-* in index.html (#prostir-widget-route) */
+body.theme-noir .w-map-canvas{
+  background: #0a0a0f !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07);
+}
+/* Route widget: step bar + labels (inline HTML uses .w-route-*; noir needs visible greys) */
+body.theme-noir .ios-widget .w-route-progress-line:not(.w-route-progress-line--done){
+  background: rgba(255, 255, 255, 0.32) !important;
+}
+body.theme-noir .ios-widget .w-route-progress-dot--active{
+  background: #1e1e24 !important;
+  border-color: #5AC8FA !important;
+  box-shadow: 0 0 0 3px rgba(90, 200, 250, 0.35) !important;
+}
+body.theme-noir .ios-widget .w-route-progress-dot--pending{
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+body.theme-noir .ios-widget .w-route-steps-labels{
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+body.theme-noir .ios-widget .w-route-lbl--done{ color: #EDE9FE !important; }
+body.theme-noir .ios-widget .w-route-lbl--active{ color: #93C5FD !important; }
+body.theme-noir .ios-widget .w-route-lbl--pending{ color: rgba(255, 255, 255, 0.72) !important; }
 body.theme-noir .w-social-notif{
   background: rgba(139,92,246,0.10) !important;
   border-color: rgba(139,92,246,0.24) !important;
@@ -857,7 +878,7 @@ body.theme-noir #cafe-svg .fp-labels text { fill: rgba(255,255,255,0.42); }
 /* ═══════════════════════════════════════
    WORKING
 ════════════════════════════════════════ */
-.working-venue-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.working-venue-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.5rem; max-width: 100%; box-sizing: border-box; }
 .desk-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 3rem; }
 .desk-card { border: 1px solid var(--grey-line); border-radius: 16px; padding: 1.4rem 1.5rem; background: var(--bg); position: relative; overflow: hidden; box-shadow: var(--card-shadow); transition: border-color 0.25s var(--ease), box-shadow 0.3s var(--ease), transform 0.3s var(--ease-out); }
 .desk-card:hover { transform: translateY(-5px) scale(1.013); box-shadow: 0 14px 44px rgba(0,0,0,0.09), 0 4px 20px rgba(139,92,246,0.12); }
@@ -897,8 +918,8 @@ body.theme-noir #cafe-svg .fp-labels text { fill: rgba(255,255,255,0.42); }
 /* ═══════════════════════════════════════
    MOMENTS
 ════════════════════════════════════════ */
-.moments-wrap { max-width: 560px; margin: 3rem auto 0; }
-.moments-card { background: var(--dark-bg); border: 1px solid rgba(255,255,255,0.07); border-radius: 24px; padding: 3rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
+.moments-wrap { width: 100%; max-width: min(560px, 100%); margin: 3rem auto 0; padding: 0; box-sizing: border-box; }
+.moments-card { background: var(--dark-bg); border: 1px solid rgba(255,255,255,0.07); border-radius: 24px; padding: 3rem 2.5rem; text-align: center; position: relative; overflow: hidden; max-width: 100%; box-sizing: border-box; }
 .moments-card::before { content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 68%); pointer-events: none; }
 .ghost-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.6; }
 .moments-title { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; color: #fff; margin-bottom: 0.5rem; }
@@ -1023,8 +1044,7 @@ footer { padding: 2.5rem; border-top: 1px solid var(--grey-line); background: va
   .footer-links { display: none; }
 }
 @media (max-width: 560px) {
-  .dine-map { overflow-x: auto; }
-  .dine-map svg { min-width: 420px; min-height: 340px; }
+  .dine-map svg { width: 100%; max-width: 100%; height: auto; }
 }
 @media (max-width: 480px) {
   .diia-btn .btn-label { display: none; }
