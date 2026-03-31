@@ -55,7 +55,7 @@
       "seats": 2,
       "view": "Вікно",
       "zone": "A",
-      "status": "available"
+      "status": "booked"
     },
     {
       "id": 6,
@@ -71,7 +71,7 @@
       "seats": 4,
       "view": "Центр",
       "zone": "A",
-      "status": "available"
+      "status": "booked"
     },
     {
       "id": 8,
@@ -79,7 +79,7 @@
       "seats": 2,
       "view": "Бічний",
       "zone": "A",
-      "status": "available"
+      "status": "booked"
     },
     {
       "id": 9,
@@ -87,7 +87,7 @@
       "seats": 6,
       "view": "Центр",
       "zone": "A",
-      "status": "available"
+      "status": "booked"
     },
     {
       "id": 10,
@@ -95,7 +95,7 @@
       "seats": 6,
       "view": "Центр",
       "zone": "A",
-      "status": "available"
+      "status": "booked"
     }
   ],
   "bookings": [
@@ -110,6 +110,66 @@
       "view": "Центр",
       "status": "confirmed",
       "createdAt": "2026-03-29T21:32:15.043Z"
+    },
+    {
+      "id": 1774857042329,
+      "tableId": 8,
+      "userId": "user-001",
+      "time": "18:00",
+      "date": "2026-03-30",
+      "venue": "cafe-aura",
+      "seats": 2,
+      "view": "Бічний",
+      "status": "confirmed",
+      "createdAt": "2026-03-30T07:50:42.329Z"
+    },
+    {
+      "id": 1774857161875,
+      "tableId": 7,
+      "userId": "user-001",
+      "time": "18:00",
+      "date": "2026-03-30",
+      "venue": "cafe-aura",
+      "seats": 4,
+      "view": "Центр",
+      "status": "confirmed",
+      "createdAt": "2026-03-30T07:52:41.875Z"
+    },
+    {
+      "id": 1774858769426,
+      "tableId": 10,
+      "userId": "user-001",
+      "time": "18:00",
+      "date": "2026-03-30",
+      "venue": "cafe-aura",
+      "seats": 6,
+      "view": "Центр",
+      "status": "confirmed",
+      "createdAt": "2026-03-30T08:19:29.426Z"
+    },
+    {
+      "id": 1774858971859,
+      "tableId": 9,
+      "userId": "user-001",
+      "time": "19:00",
+      "date": "2026-03-30",
+      "venue": "cafe-aura",
+      "seats": 6,
+      "view": "Центр",
+      "status": "confirmed",
+      "createdAt": "2026-03-30T08:22:51.859Z"
+    },
+    {
+      "id": 1774863096530,
+      "tableId": 5,
+      "userId": "user-001",
+      "time": "20:00",
+      "date": "2026-03-30",
+      "venue": "cafe-aura",
+      "seats": 2,
+      "view": "Вікно",
+      "status": "confirmed",
+      "createdAt": "2026-03-30T09:31:36.530Z"
     }
   ],
   "desks": [

@@ -5,9 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Working — PROSTIR Hub</title>
   <link rel="stylesheet" href="/app.css"/>
+  <link rel="stylesheet" href="/prostir-zigzag.css"/>
   <style>
     .page-content { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem 6rem; }
     @media (max-width: 720px) { .page-content { padding: 0 1.5rem 4rem; } }
+    .module-explain { margin: 0 0 1.4rem; border: 1px solid var(--grey-line); border-radius: 18px; background: var(--bg); box-shadow: var(--card-shadow); padding: 1.25rem; }
+    .me-top { margin-bottom: 0.9rem; }
+    .me-title { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.03em; color: var(--jet); margin-bottom: 0.35rem; }
+    .me-desc { font-size: 0.84rem; color: var(--grey-soft); line-height: 1.65; max-width: 72ch; }
+    body.theme-noir .me-title { color: #fff; }
+    body.theme-noir .me-desc { color: rgba(255,255,255,0.55); }
+    .me-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0.65rem; }
+    .me-item { border: 1px solid var(--grey-line); border-radius: 13px; padding: 0.8rem 0.85rem; background: var(--grey-fill); }
+    .me-k { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-muted); margin-bottom: 0.32rem; display: flex; align-items: center; gap: 0.35rem; }
+    .me-v { font-size: 0.78rem; color: var(--grey-soft); line-height: 1.55; }
+    .demo-sep { margin: 0.3rem 0 1rem; display: flex; align-items: center; gap: 0.7rem; }
+    .demo-sep-line { height: 1px; flex: 1; background: linear-gradient(90deg,rgba(139,92,246,0),rgba(139,92,246,0.35),rgba(139,92,246,0)); }
+    .demo-sep-pill { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid rgba(139,92,246,0.25); color: var(--violet); border-radius: 999px; padding: 0.26rem 0.7rem; background: rgba(139,92,246,0.06); white-space: nowrap; }
+    @media (max-width: 780px){ .me-grid { grid-template-columns: 1fr; } }
     .spaces-list { margin: 2rem 0 1rem; display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 0.7rem; }
     .space-card { border: 1px solid var(--grey-line); border-radius: 14px; overflow: hidden; background: var(--bg); box-shadow: var(--card-shadow); transition: all .28s var(--ease); cursor: pointer; }
     .space-card.open { border-color: rgba(139,92,246,0.45); box-shadow: 0 0 0 1px rgba(139,92,246,0.2), 0 16px 30px rgba(139,92,246,0.14); }
@@ -47,7 +62,7 @@
     <a href="/business.html" data-magnetic data-mag-r="44" data-mag-s="7">Business</a>
   </nav>
   <div class="header-right">
-    <a href="#" class="diia-btn"><span class="diia-logo" aria-hidden="true">Дія</span><span class="btn-label">Швидкий вхід з Дія</span></a>
+    <a href="#" class="diia-btn" aria-label="Вхід через Дію"><span class="diia-logo" aria-hidden="true">Дія</span><span class="btn-label">Вхід через Дію</span></a>
     <div class="lang-switch" id="lang-switch" role="group" aria-label="Language">
       <button type="button" class="lang-btn" data-lang="ua" aria-pressed="true" aria-label="Українська">
         <span class="lang-flag" aria-hidden="true">🇺🇦</span><span class="lang-code">UA</span>
@@ -77,6 +92,73 @@
 </div>
 
 <div class="page-content">
+  <section class="module-explain module-explain--zigzag reveal">
+    <div class="me-top">
+      <div class="me-title" id="work-exp-title">Як працює Working у PROSTIR</div>
+      <div class="me-desc" id="work-exp-desc">Working показує не просто вільний стіл, а повний сценарій: реальний статус місця, атмосферу зони, швидке бронювання через Дію та автосесію для Safe Exit.</div>
+    </div>
+    <div class="mom-zig-stack">
+      <div class="mom-zig-row">
+        <div class="mom-zig-copy">
+          <div class="mom-zig-eyebrow"><span>01</span><span id="work-exp-s1t">Live Status</span></div>
+          <p class="mom-zig-body" id="work-exp-s1d">Кожен desk оновлюється в режимі реального часу: вільний, у сесії або заброньований.</p>
+        </div>
+        <div class="mom-zig-art" aria-hidden="true">
+          <svg width="200" height="168" viewBox="0 0 200 168" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="38" y="44" width="42" height="34" rx="6" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.3"/>
+            <circle cx="50" cy="88" r="4" fill="#22c55e"/>
+            <text x="59" y="91" fill="currentColor" fill-opacity="0.5" font-size="9" font-family="ui-monospace,Courier,monospace">FREE</text>
+            <rect x="96" y="44" width="42" height="34" rx="6" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.3"/>
+            <circle cx="108" cy="88" r="4" fill="#f59e0b"/>
+            <text x="117" y="91" fill="currentColor" fill-opacity="0.5" font-size="9" font-family="ui-monospace,Courier,monospace">BUSY</text>
+            <rect x="154" y="44" width="42" height="34" rx="6" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.3"/>
+            <circle cx="166" cy="88" r="4" fill="#ef4444"/>
+            <text x="175" y="91" fill="currentColor" fill-opacity="0.5" font-size="9" font-family="ui-monospace,Courier,monospace">BOOK</text>
+            <path d="M52 56h14M52 64h18" stroke="currentColor" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round"/>
+            <path d="M110 56h14M110 64h18" stroke="currentColor" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round"/>
+            <path d="M168 56h14M168 64h18" stroke="currentColor" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round"/>
+            <path d="M70 118h60" stroke="currentColor" stroke-opacity="0.15" stroke-width="1" stroke-linecap="round" stroke-dasharray="4 4"/>
+          </svg>
+        </div>
+      </div>
+      <div class="mom-zig-row mom-zig-row--reverse">
+        <div class="mom-zig-copy">
+          <div class="mom-zig-eyebrow"><span>02</span><span id="work-exp-s2t">Zone Context</span></div>
+          <p class="mom-zig-body" id="work-exp-s2d">Обирай не лише номер столу, а й тип простору: quiet, collab, window або meeting.</p>
+        </div>
+        <div class="mom-zig-art" aria-hidden="true">
+          <svg width="200" height="168" viewBox="0 0 200 168" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="36" y="40" width="128" height="88" rx="10" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.4"/>
+            <rect x="44" y="48" width="52" height="36" rx="5" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.2" fill="currentColor" fill-opacity="0.05"/>
+            <text x="70" y="70" text-anchor="middle" fill="currentColor" fill-opacity="0.45" font-size="8" font-family="ui-monospace,Courier,monospace">QUIET</text>
+            <rect x="104" y="48" width="52" height="36" rx="5" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.2" fill="currentColor" fill-opacity="0.04"/>
+            <text x="130" y="70" text-anchor="middle" fill="currentColor" fill-opacity="0.4" font-size="8" font-family="ui-monospace,Courier,monospace">COLLAB</text>
+            <rect x="44" y="92" width="52" height="28" rx="5" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.2"/>
+            <text x="70" y="109" text-anchor="middle" fill="currentColor" fill-opacity="0.4" font-size="8" font-family="ui-monospace,Courier,monospace">WINDOW</text>
+            <rect x="104" y="92" width="52" height="28" rx="5" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.2"/>
+            <text x="130" y="109" text-anchor="middle" fill="currentColor" fill-opacity="0.4" font-size="8" font-family="ui-monospace,Courier,monospace">MEET</text>
+          </svg>
+        </div>
+      </div>
+      <div class="mom-zig-row">
+        <div class="mom-zig-copy">
+          <div class="mom-zig-eyebrow"><span>03</span><span id="work-exp-s3t">Secure Booking</span></div>
+          <p class="mom-zig-body" id="work-exp-s3d">Бронювання підтверджується через Дію, після чого активується безпечний сценарій завершення сесії.</p>
+        </div>
+        <div class="mom-zig-art mom-zig-art--hero mom-zig-art--verify" aria-hidden="true">
+          <span class="mom-zig-phone" aria-hidden="true">📱</span>
+          <span class="mom-zig-badge" aria-hidden="true">✓</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="demo-sep reveal">
+    <div class="demo-sep-line"></div>
+    <div class="demo-sep-pill" id="work-demo-label">Demo mode · Test now</div>
+    <div class="demo-sep-line"></div>
+  </div>
+
   <div class="working-venue-bar reveal">
     <div>
       <div class="venue-name">PROSTIR Hub</div>
@@ -307,23 +389,39 @@ function renderSpaces(lang){
   const t = {
     ua: {
       nav: { dine: 'Dine', working: 'Working', moments: 'Moments' },
-      common:{quickLogin:'Швидкий вхід з Дія', reserve:'Замовити зараз'},
+      common:{quickLogin:'Вхід через Дію', reserve:'Замовити зараз'},
       hero: {
         eyebrow: '02 &nbsp;·&nbsp; Working',
         title: 'Твій стіл.<br><span class="accent">Вже чекає.</span>',
         desc: 'PROSTIR Hub — коворкінг з живим статусом кожного робочого місця. Зелений — вільний, бери зараз. Жовтий — в сесії. Червоний — заброньований. Ніяких сюрпризів.'
       },
-      labels:{ liveOpen:'Відкрито · 08:00 – 22:00', free:'Вільний', inSession:'В сесії', booked:'Заброньований' }
+      labels:{ liveOpen:'Відкрито · 08:00 – 22:00', free:'Вільний', inSession:'В сесії', booked:'Заброньований' },
+      explain:{
+        title:'Як працює Working у PROSTIR',
+        desc:'Working показує не просто вільний стіл, а повний сценарій: реальний статус місця, атмосферу зони, швидке бронювання через Дію та автосесію для Safe Exit.',
+        s1t:'Live Status', s1d:'Кожен desk оновлюється в режимі реального часу: вільний, у сесії або заброньований.',
+        s2t:'Zone Context', s2d:'Обирай не лише номер столу, а й тип простору: quiet, collab, window або meeting.',
+        s3t:'Secure Booking', s3d:'Бронювання підтверджується через Дію, після чого активується безпечний сценарій завершення сесії.',
+        demo:'Demo mode · Тестуй зараз'
+      }
     },
     en: {
       nav: { dine: 'Dine', working: 'Working', moments: 'Moments' },
-      common:{quickLogin:'Quick Sign-in with Diia', reserve:'Reserve now'},
+      common:{quickLogin:'Sign in with Diia', reserve:'Reserve now'},
       hero: {
         eyebrow: '02 &nbsp;·&nbsp; Working',
         title: 'Your desk.<br><span class="accent">Ready now.</span>',
         desc: 'PROSTIR Hub — coworking with a live status for every workstation. Green is free. Yellow is in-session. Red is reserved. No surprises.'
       },
-      labels:{ liveOpen:'Open · 08:00 – 22:00', free:'Free', inSession:'In session', booked:'Booked' }
+      labels:{ liveOpen:'Open · 08:00 – 22:00', free:'Free', inSession:'In session', booked:'Booked' },
+      explain:{
+        title:'How Working operates in PROSTIR',
+        desc:'Working is not just a free desk list. It is a full flow: live seat state, zone context, one-tap Diia booking, and a Safe Exit session lifecycle.',
+        s1t:'Live Status', s1d:'Every desk updates in real time: free, in session, or booked.',
+        s2t:'Zone Context', s2d:'Choose not only a desk number, but also the workspace type: quiet, collab, window, or meeting.',
+        s3t:'Secure Booking', s3d:'Booking is confirmed via Diia, then the secure session flow is activated automatically.',
+        demo:'Demo mode · Test now'
+      }
     }
   };
 
@@ -341,6 +439,16 @@ function renderSpaces(lang){
     if(heroDesc) heroDesc.textContent = t[lang].hero.desc;
     const btnLabel = document.querySelector('.diia-btn .btn-label'); if(btnLabel) btnLabel.textContent = t[lang].common.quickLogin;
     const live = document.querySelector('.live-badge'); if(live) live.innerHTML = '<span class="live-dot"></span>'+t[lang].labels.liveOpen;
+    const exp = t[lang].explain;
+    const et = $('work-exp-title'); if(et) et.textContent = exp.title;
+    const ed = $('work-exp-desc'); if(ed) ed.textContent = exp.desc;
+    const e1t = $('work-exp-s1t'); if(e1t) e1t.textContent = exp.s1t;
+    const e1d = $('work-exp-s1d'); if(e1d) e1d.textContent = exp.s1d;
+    const e2t = $('work-exp-s2t'); if(e2t) e2t.textContent = exp.s2t;
+    const e2d = $('work-exp-s2d'); if(e2d) e2d.textContent = exp.s2d;
+    const e3t = $('work-exp-s3t'); if(e3t) e3t.textContent = exp.s3t;
+    const e3d = $('work-exp-s3d'); if(e3d) e3d.textContent = exp.s3d;
+    const dl = $('work-demo-label'); if(dl) dl.textContent = exp.demo;
     const vsub = document.querySelector('.venue-sub'); if(vsub) vsub.innerHTML = lang==='en'?'Velyka Vasylkivska St, 100 &nbsp;·&nbsp; 3rd floor':'Вул. Велика Васильківська, 100 &nbsp;·&nbsp; 3-й поверх';
     document.querySelectorAll('.desk-reserve-btn').forEach(b=>b.textContent=t[lang].common.reserve);
     const footerLinks = document.querySelectorAll('.footer-links a');
@@ -486,7 +594,7 @@ function renderSpaces(lang){
         <div id="dm-success-detail" style="font-family:var(--font-mono);font-size:0.7rem;color:var(--grey-muted);line-height:1.6"></div>
         <div style="margin-top:1.1rem;display:flex;gap:0.6rem">
           <a href="/profile.html" style="flex:1;padding:0.7rem;border-radius:13px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.18);font-size:0.8rem;font-weight:600;color:#8B5CF6;text-align:center;text-decoration:none;display:block" id="dm-goto-profile">Мій профіль →</a>
-          <button id="dm-done-btn" style="flex:1;padding:0.7rem;border-radius:13px;background:#8B5CF6;border:none;color:#fff;font-size:0.8rem;font-weight:600;cursor:pointer" id="dm-done">Готово</button>
+          <button id="dm-done-btn" type="button" style="flex:1;padding:0.7rem;border-radius:13px;background:#8B5CF6;border:none;color:#fff;font-size:0.8rem;font-weight:600;cursor:pointer">Готово</button>
         </div>
       </div>
     </div>
@@ -669,6 +777,8 @@ function renderSpaces(lang){
 })();
 </script>
 
+<script src="/diia-auth.bundle.js" defer></script>
+<script src="/shell-enhancements.js" defer></script>
 <script src="/delight.js" defer></script>
 <script src="/faq.js" defer></script>
 <script src="/legal.js" defer></script>

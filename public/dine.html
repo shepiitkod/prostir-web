@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dine — Cafe Aura · PROSTIR</title>
   <link rel="stylesheet" href="/app.css"/>
+  <link rel="stylesheet" href="/prostir-zigzag.css"/>
   <style>
   /* ═══════════════════════════════════════════════════════
      DINE PAGE — Full Redesign
@@ -15,6 +16,20 @@
     padding: calc(68px + 1.5rem) 2rem 6rem;
   }
   @media (max-width: 720px) { .dine-page-wrap { padding: calc(68px + 1rem) 1rem 4rem; } }
+  .module-explain { margin: 0.2rem 0 1.1rem; border: 1px solid var(--grey-line); border-radius: 18px; background: var(--bg); box-shadow: var(--card-shadow); padding: 1.15rem; }
+  .me-title { font-size: 1.08rem; font-weight: 800; letter-spacing: -0.03em; color: var(--jet); margin-bottom: 0.35rem; }
+  body.theme-noir .me-title { color: #fff; }
+  .me-desc { font-size: 0.84rem; color: var(--grey-soft); line-height: 1.64; max-width: 74ch; margin-bottom: 0.8rem; }
+  body.theme-noir .me-desc { color: rgba(255,255,255,0.55); }
+  .me-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0.65rem; }
+  .me-item { border: 1px solid var(--grey-line); border-radius: 13px; padding: 0.8rem 0.85rem; background: var(--grey-fill); }
+  body.theme-noir .me-item { border-color: rgba(255,255,255,0.07); background: rgba(255,255,255,0.02); }
+  .me-k { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-muted); margin-bottom: 0.32rem; display: flex; align-items: center; gap: 0.35rem; }
+  .me-v { font-size: 0.78rem; color: var(--grey-soft); line-height: 1.55; }
+  .demo-sep { margin: 0.15rem 0 1rem; display: flex; align-items: center; gap: 0.7rem; }
+  .demo-sep-line { height: 1px; flex: 1; background: linear-gradient(90deg,rgba(139,92,246,0),rgba(139,92,246,0.35),rgba(139,92,246,0)); }
+  .demo-sep-pill { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid rgba(139,92,246,0.25); color: var(--violet); border-radius: 999px; padding: 0.26rem 0.7rem; background: rgba(139,92,246,0.06); white-space: nowrap; }
+  @media (max-width: 780px){ .me-grid { grid-template-columns: 1fr; } }
 
   /* ── Active session strip ── */
   .active-session-alert {
@@ -666,7 +681,7 @@
     <a href="/business.html" data-magnetic data-mag-r="44" data-mag-s="7">Business</a>
   </nav>
   <div class="header-right">
-    <a href="#" class="diia-btn"><span class="diia-logo" aria-hidden="true">Дія</span><span class="btn-label">Швидкий вхід з Дія</span></a>
+    <a href="#" class="diia-btn" aria-label="Вхід через Дію"><span class="diia-logo" aria-hidden="true">Дія</span><span class="btn-label">Вхід через Дію</span></a>
     <div class="lang-switch" id="lang-switch" role="group" aria-label="Language">
       <button type="button" class="lang-btn" data-lang="ua" aria-pressed="true" aria-label="Українська"><span class="lang-flag" aria-hidden="true">🇺🇦</span><span class="lang-code">UA</span></button>
       <button type="button" class="lang-btn" data-lang="en" aria-pressed="false" aria-label="English"><span class="lang-flag" aria-hidden="true">🇬🇧</span><span class="lang-code">EN</span></button>
@@ -766,6 +781,70 @@
         Parking · Wi-Fi · Terrace
       </div>
     </div>
+  </div>
+
+  <section class="module-explain module-explain--zigzag reveal">
+    <div class="me-title" id="dine-exp-title">Як працює Dine у PROSTIR</div>
+    <div class="me-desc" id="dine-exp-desc">Dine — це не просто бронювання столу. Це сценарій end-to-end: вибір конкретного місця на мапі залу, перевірка якості зони (шум, світло, Wi-Fi), підтвердження через Дію та Safe Exit таймер.</div>
+    <div class="mom-zig-stack">
+      <div class="mom-zig-row">
+        <div class="mom-zig-copy">
+          <div class="mom-zig-eyebrow"><span>01</span><span id="dine-exp-s1t">Smart floorplan</span></div>
+          <p class="mom-zig-body" id="dine-exp-s1d">Кожен столик має живий стан: вільний, зайнятий або обраний, щоб ти бачив реальну картину до бронювання.</p>
+        </div>
+        <div class="mom-zig-art" aria-hidden="true">
+          <svg width="200" height="168" viewBox="0 0 200 168" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="26" y="30" width="148" height="108" rx="10" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.5"/>
+            <circle cx="72" cy="62" r="13" stroke="currentColor" stroke-opacity="0.35" fill="currentColor" fill-opacity="0.1"/>
+            <circle cx="128" cy="62" r="13" stroke="currentColor" stroke-opacity="0.35" fill="currentColor" fill-opacity="0.1"/>
+            <circle cx="100" cy="98" r="17" stroke="#a78bfa" stroke-width="2.2" fill="currentColor" fill-opacity="0.14"/>
+            <text x="100" y="103" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700" font-family="system-ui,sans-serif">5</text>
+            <circle cx="72" cy="98" r="11" fill="#22c55e" fill-opacity="0.35" stroke="#4ade80" stroke-opacity="0.7" stroke-width="1.2"/>
+            <circle cx="128" cy="98" r="11" stroke="currentColor" stroke-opacity="0.28" fill="currentColor" fill-opacity="0.08"/>
+          </svg>
+        </div>
+      </div>
+      <div class="mom-zig-row mom-zig-row--reverse">
+        <div class="mom-zig-copy">
+          <div class="mom-zig-eyebrow"><span>02</span><span id="dine-exp-s2t">Context before booking</span></div>
+          <p class="mom-zig-body" id="dine-exp-s2d">Система показує вид, місткість, Wi‑Fi, шум і доступ до розеток — щоб обрати правильне місце під свій сценарій.</p>
+        </div>
+        <div class="mom-zig-art" aria-hidden="true">
+          <svg width="200" height="168" viewBox="0 0 200 168" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="44" y="34" width="112" height="100" rx="12" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M60 54h80M60 70h56M60 86h72" stroke="currentColor" stroke-opacity="0.28" stroke-width="1.2" stroke-linecap="round"/>
+            <rect x="54" y="104" width="32" height="18" rx="4" stroke="currentColor" stroke-opacity="0.4" stroke-width="1.2"/>
+            <path d="M62 112h16M62 118h10" stroke="currentColor" stroke-opacity="0.35" stroke-width="1" stroke-linecap="round"/>
+            <path d="M108 108h28v20h-28z" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.2" rx="3"/>
+            <path d="M116 114v10M111 119h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            <circle cx="152" cy="118" r="8" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.2"/>
+            <path d="M148 118c2-4 8-4 8 0v2c0 2-1.5 3.5-4 4" stroke="currentColor" stroke-opacity="0.4" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="mom-zig-row">
+        <div class="mom-zig-copy">
+          <div class="mom-zig-eyebrow"><span>03</span><span id="dine-exp-s3t">Secure flow</span></div>
+          <p class="mom-zig-body" id="dine-exp-s3d">Після підтвердження через Дію запускається безпечний цикл: підтвердження, цифровий чек і Safe Exit контроль.</p>
+        </div>
+        <div class="mom-zig-art" aria-hidden="true">
+          <svg width="200" height="168" viewBox="0 0 200 168" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M100 40l44 20v28c0 26-18 48-44 56-26-8-44-30-44-56V60l44-20z" stroke="currentColor" stroke-opacity="0.4" stroke-width="1.6" stroke-linejoin="round" fill="currentColor" fill-opacity="0.06"/>
+            <path d="M88 92l8 8 20-22" stroke="#34d399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="52" y="118" width="36" height="28" rx="5" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.2"/>
+            <path d="M62 128h16M62 134h12" stroke="currentColor" stroke-opacity="0.25" stroke-width="1" stroke-linecap="round"/>
+            <path d="M112 124h36" stroke="currentColor" stroke-opacity="0.2" stroke-width="1" stroke-dasharray="3 3" stroke-linecap="round"/>
+            <circle cx="156" cy="124" r="5" fill="#34d399" fill-opacity="0.85"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="demo-sep reveal">
+    <div class="demo-sep-line"></div>
+    <div class="demo-sep-pill" id="dine-demo-label">Demo mode · Test now</div>
+    <div class="demo-sep-line"></div>
   </div>
 
   <!-- ══ DINE BOOKING CARD ══ -->
@@ -1337,7 +1416,7 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
   const T={
     ua:{
       nav:{dine:'Dine',working:'Working',moments:'Moments'},
-      common:{quickLogin:'Швидкий вхід з Дія'},
+      common:{quickLogin:'Вхід через Дію'},
       hero:{eyebrow:'01 · Dine'},
       labels:{
         activeSession:'Активна сесія',liveOpen:'Відкрито · до 22:30',details:'Деталі столу',status:'Статус',
@@ -1348,11 +1427,17 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
         modalTitle3:'Бронювання підтверджено',modalDone:'Закрити',newBooking:'← Нове бронювання',
         vhLive:'Live · Зал оновлено',tablesNow:'столів зараз',available:'вільних',
         sbPlaceholder:'Виберіть стіл на плані',
+        expTitle:'Як працює Dine у PROSTIR',
+        expDesc:'Dine — це не просто бронювання столу. Це сценарій end-to-end: вибір конкретного місця на мапі залу, перевірка якості зони (шум, світло, Wi-Fi), підтвердження через Дію та Safe Exit таймер.',
+        expS1t:'Smart floorplan', expS1d:'Кожен столик має живий стан: вільний, зайнятий або обраний, щоб ти бачив реальну картину до бронювання.',
+        expS2t:'Context before booking', expS2d:'Система показує вид, місткість, Wi‑Fi, шум і доступ до розеток — щоб обрати правильне місце під свій сценарій.',
+        expS3t:'Secure flow', expS3d:'Після підтвердження через Дію запускається безпечний цикл: підтвердження, цифровий чек і Safe Exit контроль.',
+        demo:'Demo mode · Тестуй зараз',
       }
     },
     en:{
       nav:{dine:'Dine',working:'Working',moments:'Moments'},
-      common:{quickLogin:'Quick Sign-in with Diia'},
+      common:{quickLogin:'Sign in with Diia'},
       hero:{eyebrow:'01 · Dine'},
       labels:{
         activeSession:'Active session',liveOpen:'Open · until 22:30',details:'Table details',status:'Status',
@@ -1363,6 +1448,12 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
         modalTitle3:'Booking confirmed',modalDone:'Close',newBooking:'← New booking',
         vhLive:'Live · Hall updated',tablesNow:'tables now',available:'free',
         sbPlaceholder:'Select a table on the map',
+        expTitle:'How Dine works in PROSTIR',
+        expDesc:'Dine is more than table booking. It is an end-to-end flow: pick an exact table on the floorplan, review zone quality (noise, light, Wi-Fi), confirm via Diia, and run with Safe Exit.',
+        expS1t:'Smart floorplan', expS1d:'Each table has a live state: free, occupied, or selected, so you see real availability before booking.',
+        expS2t:'Context before booking', expS2d:'The system shows view, capacity, Wi-Fi, noise, and power access to match the seat to your scenario.',
+        expS3t:'Secure flow', expS3d:'After Diia confirmation, the secure cycle starts: booking confirmation, digital receipt, and Safe Exit control.',
+        demo:'Demo mode · Test now',
       }
     }
   };
@@ -1392,6 +1483,15 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
     const md=$('modal-done-btn'); if(md) md.textContent=t.modalDone;
     const nB=$('sb-success-new'); if(nB) nB.textContent=t.newBooking;
     const sp=$('sbp-text'); if(sp) sp.textContent=t.sbPlaceholder;
+    const et=$('dine-exp-title'); if(et) et.textContent=t.expTitle;
+    const ed=$('dine-exp-desc'); if(ed) ed.textContent=t.expDesc;
+    const e1t=$('dine-exp-s1t'); if(e1t) e1t.textContent=t.expS1t;
+    const e1d=$('dine-exp-s1d'); if(e1d) e1d.textContent=t.expS1d;
+    const e2t=$('dine-exp-s2t'); if(e2t) e2t.textContent=t.expS2t;
+    const e2d=$('dine-exp-s2d'); if(e2d) e2d.textContent=t.expS2d;
+    const e3t=$('dine-exp-s3t'); if(e3t) e3t.textContent=t.expS3t;
+    const e3d=$('dine-exp-s3d'); if(e3d) e3d.textContent=t.expS3d;
+    const dl=$('dine-demo-label'); if(dl) dl.textContent=t.demo;
     const asaT=$('asa-title'); if(asaT) asaT.textContent=t.activeSession;
     const footerLinks=document.querySelectorAll('.footer-links a');
     if(footerLinks[0]) footerLinks[0].textContent=lang==='en'?'Terms':'Умови';
@@ -1413,6 +1513,8 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
 <script>
 (function(){if(window.matchMedia("(hover: none)").matches)return;if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;const K=150,D=15;function spring(){return{pos:0,vel:0,target:0};}function stepSpring(s,dt){const F=-K*(s.pos-s.target)-D*s.vel;s.vel+=F*dt;s.pos+=s.vel*dt;}function atRest(s){return Math.abs(s.pos-s.target)<0.015&&Math.abs(s.vel)<0.015;}let mx=-9999,my=-9999;document.addEventListener("mousemove",e=>{mx=e.clientX;my=e.clientY;},{passive:true});const buttons=[];let lastT=0;function loop(now){const dt=Math.min((now-(lastT||now))/1000,0.05);lastT=now;for(const b of buttons){const r=b.el.getBoundingClientRect();const cx=r.left+r.width*.5,cy=r.top+r.height*.5;const dx=mx-cx,dy=my-cy;const dist=Math.hypot(dx,dy);if(dist<b.radius){const pull=(1-dist/b.radius);b.sx.target=(dx/b.radius)*b.maxShift*pull;b.sy.target=(dy/b.radius)*b.maxShift*pull;b.near=true;}else{b.sx.target=b.sy.target=0;b.near=false;}stepSpring(b.sx,dt);stepSpring(b.sy,dt);const x=b.sx.pos,y=b.sy.pos;b.el.style.transform="translate("+x.toFixed(2)+"px,"+y.toFixed(2)+"px)";if(b.inner){b.inner.style.transform="translate("+(x*b.innerR).toFixed(2)+"px,"+(y*b.innerR).toFixed(2)+"px)";}const g=b.near?Math.max(0,(b.radius-dist)/b.radius):0;const gq=Math.round(g*32)/32;if(gq!==b._gq){b._gq=gq;if(gq>0.01){const s1=(18+gq*32).toFixed(0);const a1=(0.10+gq*0.40).toFixed(2);b.el.style.boxShadow="0 0 "+s1+"px rgba(139,92,246,"+a1+"),0 0 "+(gq*72).toFixed(0)+"px rgba(139,92,246,"+(gq*0.12).toFixed(2)+")";}else if(atRest(b.sx)&&atRest(b.sy)){b.el.style.boxShadow="";b.el.style.transform="";if(b.inner)b.inner.style.transform="";}}}requestAnimationFrame(loop);}function initButton(el){if(el._magInit)return;el._magInit=true;const radius=parseInt(el.dataset.magR,10)||70;const maxShift=parseInt(el.dataset.magS,10)||18;const innerR=parseFloat(el.dataset.magI)||0.45;let inner=el.querySelector(":scope > .mag-inner");if(!inner){inner=document.createElement("span");inner.className="mag-inner";while(el.firstChild)inner.appendChild(el.firstChild);el.appendChild(inner);}buttons.push({el,inner,radius,maxShift,innerR,sx:spring(),sy:spring(),near:false,_gq:-1});}function init(){document.querySelectorAll(".cta-btn,.diia-btn,[data-magnetic]").forEach(initButton);if(buttons.length)requestAnimationFrame(loop);}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",init);}else{requestAnimationFrame(init);}})();
 </script>
+<script src="/diia-auth.bundle.js" defer></script>
+<script src="/shell-enhancements.js" defer></script>
 <script src="/delight.js" defer></script>
 <script src="/faq.js"    defer></script>
 <script src="/legal.js"  defer></script>

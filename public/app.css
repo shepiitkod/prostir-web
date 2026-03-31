@@ -28,6 +28,17 @@
   --font-mono:    'SF Mono', 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
   --ease:         cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  /* Spacing scale (4px grid) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --leading-tight: 1.25;
+  --leading-snug: 1.4;
+  --leading-normal: 1.5;
 }
 
 html { scroll-behavior: smooth; }
@@ -497,8 +508,8 @@ body.theme-noir .w-social-notif{
 .section-p { font-size: 1rem; color: var(--grey-soft); max-width: 48ch; line-height: 1.72; }
 
 /* Reveal scroll animation */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.72s var(--ease-out), transform 0.72s var(--ease-out); }
-.reveal.in { opacity: 1; transform: none; }
+.reveal { opacity: 0; transform: translateY(26px) scale(0.985); transition: opacity 0.72s var(--ease-out), transform 0.72s var(--ease-out); }
+.reveal.in { opacity: 1; transform: translateY(0) scale(1); }
 .reveal-delay  { transition-delay: 0.14s; }
 .reveal-delay2 { transition-delay: 0.28s; }
 @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }

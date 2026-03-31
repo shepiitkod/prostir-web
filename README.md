@@ -3,7 +3,17 @@
 > **ПРОгресивно. ПРОзоро. ПРОсто.**  
 > Your personal urban rhythm.
 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-8B5CF6?style=for-the-badge&logo=github&logoColor=white)](https://shepiitkod.github.io/prostir-web/)
+
 **GitHub → [github.com/shepiitkod/prostir-web](https://github.com/shepiitkod/prostir-web)**
+
+### GitHub Pages
+
+Static UI is deployed from the **`gh-pages`** branch on every push to **`main`** or **`master`** (see [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)). In the repo **Settings → Pages**, set the source to **Deploy from a branch** → **`gh-pages`** → **`/ (root)`**.
+
+If your fork uses another owner or repository name, update **`homepage`** in [`package.json`](package.json) and the badge URL above. The build uses `GITHUB_REPOSITORY` to prefix asset paths (e.g. `/prostir-web/app.css`).
+
+**Limits on Pages:** there is no Node/Express API on GitHub Pages. Flows that call `/api/…`, Diia auth against your server, and the venue email form need a separate backend (e.g. Render, Fly.io) or localhost.
 
 ---
 
@@ -102,11 +112,11 @@ prostir/
 # Install dependencies
 npm install
 
-# Start the server (port 3000)
+# Start the server (compile first: npm run build — listens on PORT or 8080, host 0.0.0.0)
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:8080](http://localhost:8080). For Diia mock redirects when the API is public, set **`PUBLIC_APP_URL`** to that same public URL (e.g. `https://prostir-web-production.up.railway.app` on Railway).
 
 ---
 
