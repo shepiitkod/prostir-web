@@ -1,30 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { AnimatePresence, motion } from "motion/react";
-import { TornReceipt } from "../components/TornReceipt";
-
-function langFromStorage(): "uk" | "en" {
-  return typeof localStorage !== "undefined" && localStorage.getItem("prostir_lang") === "en"
-    ? "en"
-    : "uk";
-}
-
-function VenueEmotionReceipt({ venueName }: { venueName: string }): React.ReactElement {
-  const [locale, setLocale] = useState<"uk" | "en">(langFromStorage);
-  useEffect(() => {
-    const sync = () => setLocale(langFromStorage());
-    window.addEventListener("prostir-lang-change", sync);
-    return () => window.removeEventListener("prostir-lang-change", sync);
-  }, []);
-  return (
-    <section
-      className="vn-emotion-strip"
-      aria-label={locale === "en" ? "Tips demo" : "Демо чайових"}
-    >
-      <TornReceipt venueName={venueName} locale={locale} />
-    </section>
-  );
-}
 
 type FormState = {
   venueName: string;
@@ -164,8 +140,6 @@ function VenueRegisterApp(): React.ReactElement {
           </li>
         </motion.ul>
       </motion.div>
-
-      <VenueEmotionReceipt venueName={form.venueName} />
 
       <AnimatePresence mode="wait">
         {status === "done" ? (

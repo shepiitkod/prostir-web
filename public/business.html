@@ -858,7 +858,12 @@
       background: #000;
       position: relative; overflow: hidden;
     }
-    .sv-wrap { max-width: 1100px; margin: 0 auto; }
+    .sv-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
     .sv-header { text-align: center; margin-bottom: 4rem; }
     .sv-header h2 { font-size: clamp(1.8rem,4vw,3rem); font-weight: 700; letter-spacing: -0.04em; color: #fff; margin-bottom: 0.75rem; }
     .sv-header p { font-size: 1.05rem; color: rgba(255,255,255,0.52); max-width: 52ch; margin: 0 auto; line-height: 1.72; }
@@ -904,6 +909,17 @@
       text-align: center;
       position: relative;
       z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(1.75rem, 4.5vw, 3rem);
+    }
+    .sv-human-copy {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
     .sv-human-eyebrow {
       margin: 0 0 0.6rem;
@@ -922,7 +938,7 @@
       color: #fff;
     }
     .sv-human-body {
-      margin: 0 auto 1.5rem;
+      margin: 0 auto;
       max-width: 52ch;
       font-size: 0.88rem;
       line-height: 1.68;
@@ -932,7 +948,11 @@
     .sv-human #biz-receipt-root {
       display: flex;
       justify-content: center;
+      width: 100%;
       min-height: 1px;
+      position: relative;
+      z-index: 2;
+      isolation: isolate;
     }
     .sv-divider {
       margin: 5rem auto; max-width: 860px;
@@ -2169,14 +2189,16 @@
     </div>
 
     <div class="sv-human reveal" aria-labelledby="biz-hc-title">
-      <p class="sv-human-eyebrow" id="biz-hc-eyebrow">Human-centric service</p>
-      <h3 class="sv-human-title" id="biz-hc-title">
-        <span id="biz-hc-title-l1">ОФІЦІАНТИ ЗАЛИШАЮТЬСЯ.</span><br />
-        <span id="biz-hc-title-l2">РУТИНА — ЙДЕ.</span>
-      </h3>
-      <p class="sv-human-body" id="biz-hc-body">
-        PROSTIR не замінює ваш персонал. Ми прибираємо біганину з терміналом і роздрукованими рахунками: менше походів до POS, менше паперу між столом і баром. Офіціант стає менеджером комфорту гостя, а не кур&apos;єром паперу. Це прискорює обслуговування приблизно на 30% і часто збільшує чайові — бо гість бачить увагу, а не очікування біля каси.
-      </p>
+      <div class="sv-human-copy">
+        <p class="sv-human-eyebrow" id="biz-hc-eyebrow">Human-centric service</p>
+        <h3 class="sv-human-title" id="biz-hc-title">
+          <span id="biz-hc-title-l1">ОФІЦІАНТИ ЗАЛИШАЮТЬСЯ.</span><br />
+          <span id="biz-hc-title-l2">РУТИНА — ЙДЕ.</span>
+        </h3>
+        <p class="sv-human-body" id="biz-hc-body">
+          PROSTIR не замінює ваш персонал. Ми прибираємо біганину з терміналом і роздрукованими рахунками: менше походів до POS, менше паперу між столом і баром. Офіціант стає менеджером комфорту гостя, а не кур&apos;єром паперу. Це прискорює обслуговування приблизно на 30% і часто збільшує чайові — бо гість бачить увагу, а не очікування біля каси.
+        </p>
+      </div>
       <div id="biz-receipt-root" data-venue-name="Cafe Aura"></div>
     </div>
 
