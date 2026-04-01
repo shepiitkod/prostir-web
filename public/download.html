@@ -73,15 +73,59 @@
       text-shadow: 0 0 40px rgba(139, 92, 246, 0.12);
     }
 
-    /* Три скріни в ряд: заклади · досягнення (центр) · чат */
+    /* Три скріни: м’який градієнт навколо блоку, без «рамки» на кожному img */
+    .dl-trio-wrap {
+      position: relative;
+      isolation: isolate;
+      max-width: min(100%, 880px);
+      margin: clamp(1.75rem, 4vw, 2.75rem) auto 0;
+      padding: clamp(1.1rem, 2.8vw, 1.85rem) clamp(0.35rem, 1.2vw, 0.65rem);
+      border-radius: clamp(20px, 3.5vw, 36px);
+    }
+    .dl-trio-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(
+          ellipse 78% 58% at 50% 62%,
+          rgba(139, 92, 246, 0.34) 0%,
+          rgba(99, 102, 241, 0.12) 42%,
+          transparent 68%
+        ),
+        radial-gradient(
+          ellipse 95% 48% at 50% 88%,
+          rgba(124, 58, 237, 0.2) 0%,
+          transparent 58%
+        );
+    }
+    .dl-trio-wrap::after {
+      content: "";
+      position: absolute;
+      inset: -8%;
+      border-radius: inherit;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.85;
+      background: radial-gradient(
+        circle at 50% 58%,
+        rgba(139, 92, 246, 0.22) 0%,
+        transparent 55%
+      );
+      filter: blur(28px);
+    }
     .dl-trio {
+      position: relative;
+      z-index: 2;
       display: grid;
       grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr) minmax(0, 0.9fr);
       align-items: end;
       justify-items: center;
-      gap: clamp(0.4rem, 1.8vw, 1.25rem);
-      max-width: min(100%, 920px);
-      margin: clamp(1.75rem, 4vw, 2.75rem) auto 0;
+      gap: clamp(0, 0.35vw, 0.2rem);
+      column-gap: clamp(0, 0.5vw, 0.28rem);
       width: 100%;
     }
     .dl-trio__shot {
@@ -90,6 +134,7 @@
       width: 100%;
       max-width: 100%;
       background: transparent;
+      border: none;
     }
     .dl-trio__shot img {
       width: 100%;
@@ -97,21 +142,24 @@
       height: auto;
       display: block;
       margin-inline: auto;
-      border-radius: clamp(16px, 2.8vw, 26px);
-      box-shadow:
-        0 20px 64px rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(255, 255, 255, 0.05);
+      border: 0;
+      border-radius: clamp(10px, 1.8vw, 18px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
     }
     .dl-trio__shot--center img {
       max-width: min(100%, 320px);
     }
     @media (max-width: 520px) {
+      .dl-trio-wrap {
+        padding: 0.85rem 0.2rem;
+      }
       .dl-trio {
-        gap: 0.28rem;
+        gap: 0;
+        column-gap: 0;
       }
       .dl-trio__shot img {
         max-width: none;
-        border-radius: 14px;
+        border-radius: 8px;
       }
       .dl-trio__shot--center img {
         max-width: none;
@@ -248,16 +296,18 @@
     <p class="dl-eyebrow" data-i18n="dl.eyebrow">PROSTIR · РЕЛІЗ НА iOS</p>
     <h1 class="dl-h1" id="dl-hero-h1" data-i18n="dl.h1">Скоро в App Store — лічильник уже пішов</h1>
     <p class="dl-sub" data-i18n="dl.sub">Ми на фінішній прямій: нижче не макети «на потім», а живий інтерфейс — місто, заклади, твій профіль у noir-ритмі. Залишайся в контакті: коли з’явиться «Отримати», перший тап має бути твій.</p>
-    <div class="dl-trio" role="group" aria-label="Скріншоти інтерфейсу PROSTIR">
-      <figure class="dl-trio__shot">
-        <img src="/assets/download-teaser/venues.jpg" alt="" width="660" height="1024" loading="eager" decoding="async"/>
-      </figure>
-      <figure class="dl-trio__shot dl-trio__shot--center">
-        <img src="/assets/download-teaser/achievements.jpg" alt="" width="641" height="1024" loading="eager" decoding="async"/>
-      </figure>
-      <figure class="dl-trio__shot">
-        <img src="/assets/download-teaser/chat.jpg" alt="" width="606" height="1024" loading="eager" decoding="async"/>
-      </figure>
+    <div class="dl-trio-wrap">
+      <div class="dl-trio" role="group" aria-label="Скріншоти інтерфейсу PROSTIR">
+        <figure class="dl-trio__shot">
+          <img src="/assets/download-teaser/venues.jpg" alt="" width="660" height="1024" loading="eager" decoding="async"/>
+        </figure>
+        <figure class="dl-trio__shot dl-trio__shot--center">
+          <img src="/assets/download-teaser/achievements.jpg" alt="" width="641" height="1024" loading="eager" decoding="async"/>
+        </figure>
+        <figure class="dl-trio__shot">
+          <img src="/assets/download-teaser/chat.jpg" alt="" width="606" height="1024" loading="eager" decoding="async"/>
+        </figure>
+      </div>
     </div>
   </section>
 
