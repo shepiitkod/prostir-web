@@ -240,20 +240,103 @@
     .dl-feature__shot {
       margin: 0;
       padding: 0;
-      background: #000000;
+      background: transparent;
       border: none;
       box-shadow: none;
     }
     .dl-feature__shot img {
-      width: 100%;
-      max-width: 380px;
+      width: auto;
+      max-width: min(360px, 88vw);
       height: auto;
       display: block;
       margin-inline: auto;
-      border-radius: 32px;
-      box-shadow:
-        0 24px 80px rgba(0, 0, 0, 0.65),
-        0 0 0 1px rgba(255, 255, 255, 0.04);
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      background: transparent;
+      object-fit: contain;
+    }
+
+    /* Окремий hero під бронювання (екран підтвердження + Дія) */
+    .dl-book-hero {
+      padding: clamp(2.25rem, 5.5vw, 4rem) 0;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+    }
+    .dl-book-hero__inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: clamp(1.5rem, 4vw, 3.25rem);
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .dl-book-hero__h {
+      font-size: clamp(1.45rem, 3.2vw, 2.1rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fff;
+      line-height: 1.15;
+      margin: 0 0 1rem;
+      text-shadow: 0 0 40px rgba(139, 92, 246, 0.18);
+    }
+    .dl-book-hero__lead {
+      margin: 0;
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.55);
+      max-width: 40ch;
+    }
+    .dl-book-hero__shot {
+      margin: 0;
+      padding: 0;
+      position: relative;
+      background: transparent;
+      border: none;
+    }
+    .dl-book-hero__shot::before {
+      content: "";
+      position: absolute;
+      inset: -6% -12%;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        ellipse 65% 55% at 50% 55%,
+        rgba(34, 197, 94, 0.12) 0%,
+        rgba(139, 92, 246, 0.14) 45%,
+        transparent 68%
+      );
+      filter: blur(20px);
+      opacity: 0.9;
+    }
+    .dl-book-hero__shot img {
+      position: relative;
+      z-index: 1;
+      width: auto;
+      max-width: min(320px, 90vw);
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      background: transparent;
+    }
+    @media (max-width: 900px) {
+      .dl-book-hero__inner {
+        grid-template-columns: 1fr;
+      }
+      .dl-book-hero__copy {
+        text-align: center;
+        max-width: 36rem;
+        margin: 0 auto;
+        order: 1;
+      }
+      .dl-book-hero__shot {
+        order: 2;
+      }
+      .dl-book-hero__lead {
+        max-width: none;
+      }
     }
 
     body.dl-teaser .mobile-nav.open {
@@ -318,15 +401,28 @@
     <div class="dl-trio-wrap">
       <div class="dl-trio" role="group" aria-label="Скріншоти інтерфейсу PROSTIR">
         <figure class="dl-trio__shot">
-          <img src="/assets/download-teaser/venues.png" alt="" width="1096" height="1698" loading="eager" decoding="async"/>
+          <img src="/assets/download-teaser/city.png" alt="" width="1012" height="1682" loading="eager" decoding="async"/>
         </figure>
         <figure class="dl-trio__shot dl-trio__shot--center">
-          <img src="/assets/download-teaser/achievements.png" alt="" width="1088" height="1736" loading="eager" decoding="async"/>
+          <img src="/assets/download-teaser/venues.png" alt="" width="1160" height="1704" loading="eager" decoding="async"/>
         </figure>
         <figure class="dl-trio__shot">
-          <img src="/assets/download-teaser/chat.png" alt="" width="1012" height="1710" loading="eager" decoding="async"/>
+          <img src="/assets/download-teaser/profile.png" alt="" width="1100" height="1694" loading="eager" decoding="async"/>
         </figure>
       </div>
+    </div>
+  </section>
+
+  <section class="dl-book-hero" aria-labelledby="dl-book-h">
+    <div class="dl-book-hero__inner">
+      <div class="dl-book-hero__copy">
+        <p class="dl-kicker" data-i18n="dl.book.k">БРОНЮВАННЯ · ДІЯ</p>
+        <h2 class="dl-book-hero__h" id="dl-book-h" data-i18n="dl.book.h">Підтвердження без паперу — підпис через Дію</h2>
+        <p class="dl-book-hero__lead" data-i18n="dl.book.p">Заклад, стіл, час і кількість гостей збираються в одну картку. Статус «Підтверджено» видно одразу; можна додати в календар або закрити екран — бронь уже зафіксована.</p>
+      </div>
+      <figure class="dl-book-hero__shot">
+        <img src="/assets/download-teaser/booking.png" alt="" width="1012" height="1696" loading="lazy" decoding="async"/>
+      </figure>
     </div>
   </section>
 
@@ -337,7 +433,7 @@
       <p class="dl-lead" data-i18n="dl.s1.p">Бачиш місто як шар: заклади поруч, маршрут і контекст — без зайвого шуму.</p>
     </div>
     <figure class="dl-feature__shot">
-      <img src="/assets/app-store/screen_intro.png" alt="" width="551" height="1024" loading="lazy" decoding="async"/>
+      <img src="/assets/download-teaser/city.png" alt="" width="1012" height="1682" loading="lazy" decoding="async"/>
     </figure>
   </section>
 
@@ -348,7 +444,7 @@
       <p class="dl-lead" data-i18n="dl.s2.p">Фільтри, статус залу та чіткий наступний крок — щоб зайти, а не «заповнити форму».</p>
     </div>
     <figure class="dl-feature__shot">
-      <img src="/assets/app-store/screen_menu.png" alt="" width="548" height="1024" loading="lazy" decoding="async"/>
+      <img src="/assets/download-teaser/venues.png" alt="" width="1160" height="1704" loading="lazy" decoding="async"/>
     </figure>
   </section>
 
@@ -359,7 +455,7 @@
       <p class="dl-lead" data-i18n="dl.s3.p">Тема, мова, ghost mode і Safe Exit — все поруч, у зрозумілій bento-сітці.</p>
     </div>
     <figure class="dl-feature__shot">
-      <img src="/assets/app-store/screen_settings.png" alt="" width="551" height="1024" loading="lazy" decoding="async"/>
+      <img src="/assets/download-teaser/profile.png" alt="" width="1100" height="1694" loading="lazy" decoding="async"/>
     </figure>
   </section>
 </main>
@@ -396,6 +492,11 @@
         eyebrow: 'PROSTIR · РЕЛІЗ НА iOS',
         h1: 'Скоро в App Store — лічильник уже пішов',
         sub: 'Ми на фінішній прямій: нижче не макети «на потім», а живий інтерфейс — місто, заклади, твій профіль у noir-ритмі. Залишайся в контакті: коли з’явиться «Отримати», перший тап має бути твій.',
+        book: {
+          k: 'БРОНЮВАННЯ · ДІЯ',
+          h: 'Підтвердження без паперу — підпис через Дію',
+          p: 'Заклад, стіл, час і кількість гостей збираються в одну картку. Статус «Підтверджено» видно одразу; можна додати в календар або закрити екран — бронь уже зафіксована.',
+        },
         s1: { k: '01 · Місто', h: 'Карта, яка веде тебе далі за навігатор', p: 'Партнерська мережа, контекст і маршрут — без шуму й зайвих екранів. Місто як один шар, а ти всередині.' },
         s2: { k: '02 · Заклади', h: 'Зайти, а не «заповнити форму»', p: 'Пошук, фільтри й статус залу в одному диханні. Менше тертя — більше вайбу до того, як ти вже за столом.' },
         s3: { k: '03 · Профіль', h: 'Твої правила: тема, приватність, оплата', p: 'Ghost mode, Safe Exit, мова й тема — у чистій bento-сітці. Усе під рукою, коли застосунок стане твоїм щоденним ритмом.' },
@@ -408,6 +509,11 @@
         eyebrow: 'PROSTIR · iOS LAUNCH',
         h1: 'App Store — the countdown is on',
         sub: 'We’re on the home stretch. What you see below isn’t “someday” mockups — it’s the live UI: your city, venues, your profile in full noir rhythm. Stay close. When Get appears, you’ll want to be first in line.',
+        book: {
+          k: 'BOOKING · DIIA',
+          h: 'Confirmed without the paperwork — signed with Diia',
+          p: 'Venue, table, time, and party size in one card. “Confirmed” is instant; add to calendar or tap done — your reservation is already locked in.',
+        },
         s1: { k: '01 · City', h: 'A map that takes you past the obvious', p: 'Partner network, context, route — no clutter. One layer for the city; you’re already inside.' },
         s2: { k: '02 · Venues', h: 'Walk in — don’t wrestle a form', p: 'Search, filters, floor status in one breath. Less friction, more anticipation before you’re seated.' },
         s3: { k: '03 · Profile', h: 'Your rules: look, privacy, pay', p: 'Ghost mode, Safe Exit, language, theme — clean bento grid. Ready for the day the app becomes your daily cadence.' },
