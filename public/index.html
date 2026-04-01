@@ -618,20 +618,21 @@
 
     /* ── Widget card shell ── */
     .ios-widget {
-      background: rgba(255,255,255,0.84); backdrop-filter: blur(36px) saturate(220%);
-      -webkit-backdrop-filter: blur(36px) saturate(220%);
+      background: rgba(255,255,255,0.84); backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
       border: 1px solid rgba(255,255,255,0.18);
       border-top: 1px solid rgba(255,255,255,0.62);
       border-radius: 28px;
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,0.8),
         inset 0 -1px 0 rgba(0,0,0,0.03),
-        0 8px 48px rgba(139,92,246,0.12),
-        0 2px 12px rgba(0,0,0,0.06),
+        0 6px 26px rgba(139,92,246,0.08),
+        0 2px 10px rgba(0,0,0,0.05),
         0 0 0 0.5px rgba(0,0,0,0.04);
       padding: 1.35rem; position: relative; overflow: hidden;
       animation: widgetFloat 6.5s ease-in-out infinite;
-      will-change: transform; cursor: default;
+      will-change: transform, opacity; cursor: default;
+      transform: translateZ(0);
     }
     body.theme-noir .ios-widget {
       background: rgba(18,18,22,0.88);
@@ -845,44 +846,295 @@
     @media (max-width: 860px) { .widgets-cluster { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 580px) { .widgets-cluster { grid-template-columns: 1fr; max-width: 340px; margin: 0 auto; } }
 
-    /* ── Safe Exit ── */
-    #safe-exit { background: var(--dark-bg); padding: 6rem 0 7rem; position: relative; overflow: hidden; }
-    #safe-exit .wrap.safe-exit-noir {
-      display: flex; flex-direction: column; align-items: center; text-align: center;
-      gap: 2.75rem; max-width: 720px; margin-left: auto; margin-right: auto;
+    /* ── Bento Overview ── */
+    #bento-overview {
+      --spot-x: 50%;
+      --spot-y: 50%;
+      --spot-o: 0;
+      background: #000000;
+      padding: 5.5rem 0 6.5rem;
+      position: relative;
+      overflow: hidden;
     }
-    #safe-exit .eyebrow { color: rgba(255,255,255,0.28); }
-    #safe-exit .eyebrow::after { background: rgba(255,255,255,0.07); }
-    #safe-exit .section-h { color: #fff; }
-    #safe-exit .section-p { color: rgba(255,255,255,0.38); }
-    .timer-card { background: var(--dark-surface); border: 1px solid var(--dark-border); border-radius: 26px; padding: 3rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
-    .timer-card::before { content: ''; position: absolute; bottom: -80px; left: 50%; transform: translateX(-50%); width: 260px; height: 260px; background: radial-gradient(circle, rgba(139,92,246,0.14) 0%, transparent 68%); pointer-events: none; }
-    .timer-digits { font-family: var(--font-mono); font-size: clamp(3.2rem,8vw,5.2rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1; color: #fff; text-shadow: 0 0 36px rgba(139,92,246,0.55), 0 0 80px rgba(139,92,246,0.2); margin-bottom: 0.4rem; font-variant-numeric: tabular-nums; }
-    .timer-label { font-family: var(--font-mono); font-size: 0.62rem; color: rgba(255,255,255,0.22); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 2.25rem; }
-    .safe-status { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.04em; color: var(--violet); animation: safe-pulse 2.8s ease-in-out infinite; }
-    @keyframes safe-pulse { 0%,100%{opacity:1;} 50%{opacity:0.55;} }
-    .pulse-dot { position: relative; width: 9px; height: 9px; border-radius: 50%; background: var(--violet); flex-shrink: 0; }
-    .pulse-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--violet); animation: ring 2.8s ease-in-out infinite; }
-    .timer-note { margin-top: 2rem; padding-top: 1.75rem; border-top: 1px solid var(--dark-border); font-size: 0.76rem; color: rgba(255,255,255,0.22); line-height: 1.65; }
-
-    /* ── Security ── */
-    #security-section { background: var(--dark-bg); padding: 5rem 0 6rem; }
-    #security-section .wrap.diia-noir-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
-    #security-section .eyebrow { color: rgba(255,255,255,0.28); }
-    #security-section .eyebrow::after { background: rgba(255,255,255,0.07); }
-    #security-section .section-h,
-    #security-section .diia-noir-headline { color: #fff; }
-    #security-section .section-p { color: rgba(255,255,255,0.42); }
-    .security-card { background: var(--dark-surface); border: 1px solid var(--dark-border); border-radius: 24px; padding: 2.25rem; position: relative; overflow: hidden; }
-    .security-card::before { content: ''; position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%); width: 260px; height: 260px; background: radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 68%); pointer-events: none; }
-    .sec-verified-badge { display: inline-flex; align-items: center; gap: 0.55rem; background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.28); border-radius: 100px; padding: 0.35rem 0.9rem; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; color: var(--violet); letter-spacing: 0.06em; margin-bottom: 1.5rem; }
-    .sec-verified-badge::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--violet); box-shadow: 0 0 8px rgba(139,92,246,0.6); }
-    .security-feats { display: flex; flex-direction: column; gap: 0.85rem; }
-    .sec-feat { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; }
-    .sec-feat-icon { width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0; background: rgba(139,92,246,0.14); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; }
-    .sec-feat-text { font-size: 0.82rem; color: rgba(255,255,255,0.7); }
-    .sec-feat-text strong { color: #fff; font-weight: 600; display: block; }
-    @media (max-width: 900px) { #security-section .wrap.diia-noir-grid { grid-template-columns: 1fr; } }
+    #bento-overview::before {
+      content: '';
+      position: absolute;
+      inset: -8% -4%;
+      pointer-events: none;
+      background:
+        radial-gradient(420px circle at var(--spot-x) var(--spot-y), rgba(139,92,246, calc(0.16 * var(--spot-o))), rgba(139,92,246,0) 58%),
+        radial-gradient(320px circle at calc(var(--spot-x) + 4%) calc(var(--spot-y) + 8%), rgba(167,139,250, calc(0.08 * var(--spot-o))), rgba(167,139,250,0) 62%);
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+    .bento-overview-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.9fr) minmax(280px, 1fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+    .bo-card {
+      --tx: 0px;
+      --ty: 0px;
+      --py: 0px;
+      --core-zoom: 1;
+      position: relative;
+      overflow: hidden;
+      min-height: 560px;
+      padding: 48px;
+      border-radius: 32px;
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(26px);
+      -webkit-backdrop-filter: blur(26px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 18px 52px rgba(0,0,0,0.34);
+      transform: translate3d(var(--tx), calc(var(--ty) + var(--py)), 0) scale(1);
+      transform-style: preserve-3d;
+      translate: 0;
+      contain: layout paint style;
+      transition: transform 0.55s cubic-bezier(0.22,1,0.36,1), border-color 0.35s ease, box-shadow 0.35s ease, opacity 0.6s ease;
+      will-change: transform, opacity;
+    }
+    .bo-card::before,
+    .bo-card::after {
+      content: '';
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(48px);
+      opacity: 0.1;
+      pointer-events: none;
+    }
+    .bo-card::before {
+      width: 280px;
+      height: 280px;
+      top: -110px;
+      right: -70px;
+      background: radial-gradient(circle, rgba(139,92,246,0.45), rgba(139,92,246,0));
+      animation: boBreathViolet 10s ease-in-out infinite;
+    }
+    .bo-card::after {
+      width: 220px;
+      height: 220px;
+      left: -80px;
+      bottom: -90px;
+      background: radial-gradient(circle, rgba(74,222,128,0.18), rgba(74,222,128,0));
+      animation: boBreathGreen 11.5s ease-in-out infinite;
+    }
+    .bo-card.reveal { opacity: 0; transform: translate3d(var(--tx), calc(var(--ty) + var(--py) + 24px), 0) scale(0.95); }
+    .bo-card.reveal.in { opacity: 1; transform: translate3d(var(--tx), calc(var(--ty) + var(--py)), 0) scale(1); }
+    .bo-card:hover {
+      border-color: rgba(255,255,255,0.1);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 22px 64px rgba(0,0,0,0.4);
+    }
+    .bo-card--qr,
+    .bo-card--tech {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .bo-card-copy {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .bo-title {
+      margin: 0;
+      max-width: 14ch;
+      font-family: var(--font-mono);
+      font-size: clamp(1.3rem, 2.2vw, 2.4rem);
+      line-height: 1.08;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(246,248,251,0.98);
+    }
+    .bo-caption {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.36);
+    }
+    .bo-qr-stage,
+    .bo-tech-stage {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: grid;
+      place-items: center;
+    }
+    .bo-qr-stage { min-height: 340px; }
+    .bo-qr-shell {
+      position: relative;
+      width: min(100%, 360px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.015);
+      border: 1px solid rgba(255,255,255,0.04);
+      overflow: hidden;
+      box-shadow: inset 0 0 80px rgba(139,92,246,0.05);
+    }
+    .bo-qr-shell::before {
+      content: '';
+      position: absolute;
+      inset: 12%;
+      border-radius: 24px;
+      background: radial-gradient(circle, rgba(139,92,246,0.14), rgba(139,92,246,0) 65%);
+      animation: boFieldFloat 9s ease-in-out infinite;
+    }
+    .bo-qr-svg,
+    .bo-qr-kiss {
+      position: relative;
+      z-index: 1;
+      transition: transform 0.65s cubic-bezier(0.22,1,0.36,1), opacity 0.55s ease, filter 0.55s ease;
+      will-change: transform, opacity, filter;
+    }
+    .bo-qr-svg {
+      width: min(100%, 220px);
+      height: auto;
+      color: rgba(196,181,253,0.98);
+      filter: drop-shadow(0 0 16px rgba(139,92,246,0.45));
+    }
+    .bo-qr-stroke {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.2;
+      opacity: 0.34;
+    }
+    .bo-qr-block {
+      fill: currentColor;
+    }
+    .bo-qr-kiss {
+      position: absolute;
+      font-size: clamp(4rem, 10vw, 6.8rem);
+      line-height: 1;
+      opacity: 0;
+      transform: scale(0.68);
+      filter: blur(10px) drop-shadow(0 0 0 rgba(139,92,246,0));
+    }
+    .bo-qr-laser {
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      top: -12%;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, rgba(167,139,250,0.9), rgba(245,247,250,1), rgba(167,139,250,0.9), transparent);
+      box-shadow: 0 0 18px rgba(139,92,246,0.75);
+      opacity: 0;
+      pointer-events: none;
+      will-change: transform, opacity, top;
+    }
+    .bo-card--qr:hover .bo-qr-laser {
+      animation: boLaserScan 1.3s cubic-bezier(0.45,0,0.2,1) forwards;
+    }
+    .bo-card--qr:hover .bo-qr-svg {
+      opacity: 0;
+      transform: scale(0.84);
+      filter: blur(9px) drop-shadow(0 0 32px rgba(139,92,246,0.15));
+    }
+    .bo-card--qr:hover .bo-qr-kiss {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0) drop-shadow(0 0 18px rgba(139,92,246,0.65));
+      transition-delay: 0.52s;
+    }
+    .bo-tech-stage {
+      min-height: 340px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.012);
+      border: 1px solid rgba(255,255,255,0.04);
+      overflow: hidden;
+    }
+    .bo-tech-svg {
+      width: min(100%, 360px);
+      overflow: visible;
+      transform: scale(var(--core-zoom)) translateY(calc((1 - var(--core-zoom)) * 34px));
+      transform-origin: 50% 64%;
+      transition: transform 0.2s linear;
+      filter: drop-shadow(0 18px 30px rgba(0,0,0,0.42));
+      will-change: transform;
+    }
+    .bo-tech-grid,
+    .bo-tech-street,
+    .bo-tech-peak {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .bo-tech-grid {
+      stroke: rgba(255,255,255,0.08);
+      stroke-width: 1;
+    }
+    .bo-tech-street {
+      stroke: rgba(196,181,253,0.32);
+      stroke-width: 1.15;
+    }
+    .bo-tech-peak {
+      stroke: rgba(255,255,255,0.2);
+      stroke-width: 1.2;
+    }
+    .bo-tech-core {
+      fill: rgba(74,222,128,0.18);
+      stroke: rgba(245,247,250,0.95);
+      stroke-width: 1.4;
+      filter: drop-shadow(0 0 12px rgba(74,222,128,0.68));
+      animation: boCorePulse 4.6s ease-in-out infinite;
+      will-change: transform, opacity;
+    }
+    .bo-tech-ring {
+      fill: none;
+      stroke: rgba(74,222,128,0.34);
+      stroke-width: 1.1;
+      animation: boCoreRing 4.6s ease-out infinite;
+      will-change: transform, opacity;
+    }
+    @keyframes boBreathViolet {
+      0%,100% { transform: scale(0.94); opacity: 0.1; }
+      50% { transform: scale(1.08); opacity: 0.18; }
+    }
+    @keyframes boBreathGreen {
+      0%,100% { transform: scale(0.92); opacity: 0.06; }
+      50% { transform: scale(1.04); opacity: 0.12; }
+    }
+    @keyframes boFieldFloat {
+      0%,100% { transform: translateY(0); opacity: 0.74; }
+      50% { transform: translateY(-8px); opacity: 1; }
+    }
+    @keyframes boLaserScan {
+      0% { top: 8%; opacity: 0; }
+      12% { opacity: 1; }
+      92% { opacity: 1; }
+      100% { top: 88%; opacity: 0; }
+    }
+    @keyframes boCorePulse {
+      0%,100% { transform: scale(1); opacity: 0.82; }
+      50% { transform: scale(1.12); opacity: 1; }
+    }
+    @keyframes boCoreRing {
+      0% { transform: scale(0.72); opacity: 0.7; }
+      88% { transform: scale(1.34); opacity: 0; }
+      100% { transform: scale(1.34); opacity: 0; }
+    }
+    @media (max-width: 980px) {
+      .bento-overview-grid { grid-template-columns: 1fr; }
+      .bo-card { min-height: 460px; }
+    }
+    @media (max-width: 720px) {
+      #bento-overview { padding: 4rem 0 4.5rem; }
+      .bento-overview-grid { gap: 14px; }
+      .bo-card { padding: 28px; min-height: 400px; }
+      .bo-title { font-size: clamp(1.12rem, 7vw, 1.8rem); letter-spacing: 0.16em; }
+      .bo-caption { font-size: 0.56rem; letter-spacing: 0.16em; }
+      .bo-qr-stage, .bo-tech-stage { min-height: 260px; }
+      .bo-qr-shell { width: min(100%, 250px); }
+    }
 
     /* ── Business ── */
     #business-section { padding: 0; }
@@ -1007,245 +1259,6 @@
       transform: translateY(0);
     }
 
-    /* Safe Exit — phone wake */
-    .noir-safe-kicker {
-      font-family: var(--font-mono);
-      font-size: clamp(0.72rem, 1.8vw, 0.82rem);
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.42);
-      margin: 0 0 0.75rem;
-    }
-    .noir-safe-headline {
-      font-size: clamp(1.35rem, 4vw, 2rem);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      line-height: 1.25;
-      color: #fff;
-      margin: 0;
-    }
-    .noir-safe-headline .noir-safe-accent {
-      display: block;
-      margin-top: 0.35rem;
-      font-size: 0.78em;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      color: rgba(196, 181, 253, 0.92);
-    }
-    .se-phone-stage { perspective: 900px; }
-    .se-phone-shell {
-      width: min(220px, 52vw);
-      margin: 0 auto;
-      transform-style: preserve-3d;
-      transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .se-phone-stage.is-awake .se-phone-shell { transform: rotateY(-6deg) translateZ(0); }
-    .se-phone-bezel {
-      border-radius: 36px;
-      padding: 10px;
-      background: linear-gradient(145deg, #1e1e24, #0a0a0f);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.06),
-        0 24px 64px rgba(0,0,0,0.55),
-        0 0 80px rgba(139,92,246,0);
-      transition: box-shadow 1.1s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .se-phone-stage.is-awake .se-phone-bezel {
-      box-shadow:
-        0 0 0 1px rgba(139,92,246,0.35),
-        0 24px 64px rgba(0,0,0,0.55),
-        0 0 100px rgba(139,92,246,0.45),
-        0 0 160px rgba(124,58,237,0.2);
-    }
-    .se-phone-notch {
-      height: 22px;
-      margin: -2px auto 6px;
-      width: 38%;
-      border-radius: 0 0 14px 14px;
-      background: #000;
-    }
-    .se-phone-screen {
-      border-radius: 26px;
-      overflow: hidden;
-      aspect-ratio: 9 / 18;
-      background: #020203;
-      position: relative;
-      isolation: isolate;
-    }
-    .se-screen-inner {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 0.5rem;
-      padding: 1.25rem;
-      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(88,28,135,0.35), transparent 65%), #050508;
-      opacity: 0.08;
-      filter: brightness(0.35) saturate(0.7);
-      transition: opacity 1s ease, filter 1s ease, box-shadow 1s ease;
-    }
-    .se-phone-stage.is-awake .se-screen-inner {
-      opacity: 1;
-      filter: brightness(1) saturate(1);
-      box-shadow: inset 0 0 60px rgba(139,92,246,0.25);
-    }
-    .se-screen-glow {
-      position: absolute; inset: -30%;
-      background: radial-gradient(circle, rgba(167,139,250,0.5) 0%, transparent 55%);
-      opacity: 0;
-      transition: opacity 1.2s ease;
-      pointer-events: none;
-    }
-    .se-phone-stage.is-awake .se-screen-glow { opacity: 0.85; }
-    .se-screen-content { position: relative; z-index: 1; text-align: center; }
-    .se-label {
-      font-family: var(--font-mono);
-      font-size: 0.52rem;
-      letter-spacing: 0.2em;
-      color: rgba(196,181,253,0.85);
-    }
-    .se-timer {
-      font-family: var(--font-mono);
-      font-size: clamp(1.85rem, 8vw, 2.35rem);
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: -0.02em;
-      text-shadow: 0 0 28px rgba(139,92,246,0.65);
-      font-variant-numeric: tabular-nums;
-    }
-    .se-sub {
-      font-size: 0.62rem;
-      color: rgba(255,255,255,0.38);
-      letter-spacing: 0.04em;
-    }
-
-    /* Diia Verified — QR + scanner */
-    .diia-noir-kicker {
-      font-family: var(--font-mono);
-      font-size: clamp(0.72rem, 1.8vw, 0.82rem);
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-      margin: 0 0 0.65rem;
-    }
-    .diia-noir-headline {
-      font-size: clamp(1.35rem, 3.6vw, 1.85rem);
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.2;
-      margin: 0 0 0.75rem;
-    }
-    .diia-noir-headline .diia-noir-accent {
-      display: block;
-      margin-top: 0.35rem;
-      font-size: 0.82em;
-      font-weight: 500;
-      color: rgba(196, 181, 253, 0.95);
-      letter-spacing: 0.04em;
-    }
-    .diia-interactive {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      padding: 1.5rem;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      outline: none;
-    }
-    .diia-interactive:focus-visible {
-      box-shadow: 0 0 0 2px rgba(139,92,246,0.5);
-    }
-    .diia-qr-wrap {
-      position: relative;
-      width: 132px;
-      height: 132px;
-      border-radius: 12px;
-      background: #fff;
-      padding: 10px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .diia-qr-svg {
-      display: block;
-      width: 100%;
-      height: 100%;
-      animation: qrSvgPulse 2.8s ease-in-out infinite;
-    }
-    @keyframes qrSvgPulse {
-      0%, 100% { opacity: 1; filter: contrast(1); }
-      50% { opacity: 0.88; filter: contrast(1.08); }
-    }
-    .diia-scanner-line {
-      position: absolute;
-      left: 4px; right: 4px;
-      height: 4px;
-      top: -8px;
-      border-radius: 2px;
-      background: linear-gradient(90deg, transparent, rgba(139,92,246,0.95), rgba(196,181,253,1), rgba(139,92,246,0.95), transparent);
-      box-shadow: 0 0 16px rgba(139,92,246,0.8);
-      opacity: 0;
-      pointer-events: none;
-    }
-    .diia-interactive:hover .diia-scanner-line,
-    .diia-interactive:focus-within .diia-scanner-line,
-    .diia-interactive.diia-touch-on .diia-scanner-line {
-      animation: diiaScanSweep 1.35s cubic-bezier(0.45, 0, 0.2, 1) forwards;
-    }
-    @keyframes diiaScanSweep {
-      0% { top: -5%; opacity: 0; }
-      8% { opacity: 1; }
-      92% { opacity: 1; }
-      100% { top: 102%; opacity: 0; }
-    }
-    .diia-phone-mini {
-      width: 72px;
-      border-radius: 14px;
-      padding: 5px;
-      background: linear-gradient(180deg, #2a2a32, #121218);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.4);
-    }
-    .diia-phone-mini-screen {
-      aspect-ratio: 9 / 16;
-      border-radius: 10px;
-      background: linear-gradient(165deg, #1a1025, #0c0c10);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .diia-check-svg {
-      width: 36px;
-      height: 36px;
-      color: #22c55e;
-      filter: drop-shadow(0 0 12px rgba(34,197,94,0.55));
-      opacity: 0;
-      transform: scale(0.5);
-      transition: opacity 0.01s 0.01s;
-    }
-    .diia-interactive:hover .diia-check-svg,
-    .diia-interactive:focus-within .diia-check-svg,
-    .diia-interactive.diia-touch-on .diia-check-svg {
-      animation: diiaCheckPop 0.55s 0.72s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
-    }
-    @keyframes diiaCheckPop {
-      to { opacity: 1; transform: scale(1); }
-    }
-    .diia-hint {
-      width: 100%;
-      text-align: center;
-      font-family: var(--font-mono);
-      font-size: 0.52rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.28);
-      margin-top: 0.75rem;
-    }
-
     /* Moments widget — chat stream */
     .mom-chat-stream {
       display: flex;
@@ -1303,16 +1316,6 @@
       .noir-city-bokeh::before,
       .noir-city-bokeh::after { animation: none; }
       html.noir-scroll-root .reveal { transform: none; transition: opacity 0.4s ease; }
-      .se-phone-stage.is-awake .se-phone-shell { transform: none; }
-      .diia-qr-svg { animation: none; }
-      .diia-scanner-line { display: none; }
-      .diia-interactive:hover .diia-check-svg,
-      .diia-interactive:focus-within .diia-check-svg,
-      .diia-interactive.diia-touch-on .diia-check-svg {
-        animation: none;
-        opacity: 1;
-        transform: scale(1);
-      }
       #prostir-widget-moments.mom-chat-active .mom-bubble {
         animation: none;
         opacity: 1;
@@ -1810,75 +1813,64 @@
   </div>
 </section>
 
-<!-- SAFE EXIT -->
-<section id="safe-exit" aria-labelledby="safe-h2">
-  <div class="wrap safe-exit-noir">
-    <div class="reveal">
-      <p class="eyebrow" id="safe-exit-eyebrow">03 &nbsp;·&nbsp; Safe Exit</p>
-      <p class="noir-safe-kicker" id="safe-kicker">SAFE EXIT</p>
-      <h2 class="noir-safe-headline" id="safe-h2" data-i18n-html="safeExit.headline">БЕЗПЕЧНА МІЖКИЇВСЬКА НАВІГАЦІЯ</h2>
-    </div>
-    <div class="se-phone-stage reveal reveal-delay" id="se-phone-stage" role="img" aria-label="Safe Exit на екрані телефона">
-      <div class="se-phone-shell">
-        <div class="se-phone-bezel">
-          <div class="se-phone-notch" aria-hidden="true"></div>
-          <div class="se-phone-screen">
-            <div class="se-screen-inner">
-              <div class="se-screen-glow" aria-hidden="true"></div>
-              <div class="se-screen-content">
-                <span class="se-label" id="se-phone-label">SAFE EXIT</span>
-                <div class="se-timer" id="se-phone-timer" aria-live="off">14:32</div>
-                <span class="se-sub" id="se-phone-sub">геофенс активний</span>
-              </div>
-            </div>
-          </div>
-        </div>
+<section id="bento-overview" aria-label="Bento overview">
+  <div class="wrap bento-overview-grid" id="bento-overview-shell">
+    <article class="bo-card bo-card--qr reveal" id="bo-qr-card" data-bento-card data-parallax="0.05">
+      <div class="bo-card-copy">
+        <h2 class="bo-title" id="bo-qr-title">QR-CODE. YOUR DIGITAL IMPRINT.</h2>
+        <p class="bo-caption" id="bo-qr-caption">Scan. Interact. Stay Anonymous.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECURITY · Diia Verified -->
-<section id="security-section" aria-labelledby="sec-h">
-  <div class="wrap diia-noir-grid">
-    <div class="reveal">
-      <p class="eyebrow" id="sec-eyebrow">Безпека &nbsp;·&nbsp; Дія</p>
-      <p class="diia-noir-kicker" id="diia-kicker">ДІЯ VERIFIED</p>
-      <h2 class="diia-noir-headline" id="sec-h" data-i18n-html="diiaVerified.headline">ДОВІРА У КОЖНОМУ КОНТАКТІ</h2>
-      <p class="section-p" id="sec-p-short" data-i18n="diiaVerified.desc">Один скан — державна ідентичність у кожному бронюванні та контакті.</p>
-    </div>
-    <div class="reveal reveal-delay diia-noir-demo-wrap">
-      <div class="diia-interactive" id="diia-interactive" tabindex="0" aria-label="Демо: наведіть для сканування QR Дія">
-        <div class="diia-qr-wrap" aria-hidden="true">
-          <svg class="diia-qr-svg" viewBox="0 0 29 29" xmlns="http://www.w3.org/2000/svg" width="112" height="112">
-            <rect width="29" height="29" fill="#fff"/>
-            <g fill="#0a0a0f">
-              <rect x="1" y="1" width="7" height="7"/><rect x="3" y="3" width="3" height="3" fill="#fff"/>
-              <rect x="21" y="1" width="7" height="7"/><rect x="23" y="3" width="3" height="3" fill="#fff"/>
-              <rect x="1" y="21" width="7" height="7"/><rect x="3" y="23" width="3" height="3" fill="#fff"/>
-              <rect x="10" y="1" width="2" height="2"/><rect x="14" y="1" width="2" height="2"/><rect x="18" y="3" width="2" height="2"/>
-              <rect x="10" y="5" width="2" height="2"/><rect x="16" y="5" width="2" height="2"/>
-              <rect x="11" y="10" width="2" height="2"/><rect x="15" y="10" width="3" height="2"/><rect x="20" y="10" width="2" height="2"/>
-              <rect x="9" y="13" width="2" height="2"/><rect x="13" y="12" width="2" height="3"/><rect x="17" y="13" width="2" height="2"/>
-              <rect x="21" y="12" width="2" height="2"/><rect x="10" y="16" width="2" height="2"/><rect x="14" y="16" width="2" height="2"/>
-              <rect x="18" y="17" width="2" height="2"/><rect x="22" y="16" width="2" height="2"/>
-              <rect x="10" y="20" width="2" height="2"/><rect x="15" y="19" width="3" height="3"/><rect x="20" y="20" width="2" height="2"/>
-              <rect x="12" y="23" width="2" height="2"/><rect x="17" y="22" width="2" height="2"/><rect x="21" y="22" width="2" height="2"/>
-              <rect x="22" y="25" width="2" height="2"/>
-            </g>
+      <div class="bo-qr-stage" aria-hidden="true">
+        <div class="bo-qr-shell">
+          <span class="bo-qr-laser"></span>
+          <svg class="bo-qr-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+            <rect x="22" y="22" width="176" height="176" rx="22" class="bo-qr-stroke"/>
+            <rect x="38" y="38" width="40" height="40" rx="8" class="bo-qr-block"/>
+            <rect x="52" y="52" width="12" height="12" rx="3" fill="#050507"/>
+            <rect x="142" y="38" width="40" height="40" rx="8" class="bo-qr-block"/>
+            <rect x="156" y="52" width="12" height="12" rx="3" fill="#050507"/>
+            <rect x="38" y="142" width="40" height="40" rx="8" class="bo-qr-block"/>
+            <rect x="52" y="156" width="12" height="12" rx="3" fill="#050507"/>
+            <rect x="92" y="42" width="14" height="14" rx="3" class="bo-qr-block"/>
+            <rect x="114" y="42" width="14" height="14" rx="3" class="bo-qr-block"/>
+            <rect x="92" y="64" width="14" height="14" rx="3" class="bo-qr-block"/>
+            <rect x="114" y="64" width="14" height="14" rx="3" class="bo-qr-block"/>
+            <rect x="90" y="94" width="18" height="18" rx="3" class="bo-qr-block"/>
+            <rect x="116" y="94" width="14" height="14" rx="3" class="bo-qr-block"/>
+            <rect x="138" y="94" width="14" height="14" rx="3" class="bo-qr-block"/>
+            <rect x="66" y="94" width="14" height="14" rx="3" class="bo-qr-block"/>
+            <rect x="66" y="118" width="14" height="14" rx="3" class="bo-qr-block"/>
+            <rect x="88" y="118" width="18" height="18" rx="3" class="bo-qr-block"/>
+            <rect x="114" y="118" width="14" height="14" rx="3" class="bo-qr-block"/>
+            <rect x="138" y="118" width="14" height="14" rx="3" class="bo-qr-block"/>
+            <rect x="90" y="144" width="14" height="14" rx="3" class="bo-qr-block"/>
+            <rect x="114" y="144" width="14" height="14" rx="3" class="bo-qr-block"/>
+            <rect x="138" y="144" width="14" height="14" rx="3" class="bo-qr-block"/>
+            <rect x="160" y="118" width="14" height="14" rx="3" class="bo-qr-block"/>
+            <rect x="160" y="142" width="14" height="14" rx="3" class="bo-qr-block"/>
           </svg>
-          <div class="diia-scanner-line"></div>
+          <div class="bo-qr-kiss">😘</div>
         </div>
-        <div class="diia-phone-mini" aria-hidden="true">
-          <div class="diia-phone-mini-screen">
-            <svg class="diia-check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20 6L9 17l-5-5"/>
-            </svg>
-          </div>
-        </div>
-        <p class="diia-hint" id="diia-hint" data-i18n="diiaVerified.hint">Наведи курсор — сканер проходить QR</p>
       </div>
-    </div>
+    </article>
+
+    <article class="bo-card bo-card--tech reveal" id="bo-tech-card" data-bento-card data-parallax="0.1">
+      <div class="bo-card-copy">
+        <h2 class="bo-title" id="bo-tech-title">CITY CORE. DEEP TECH.</h2>
+        <p class="bo-caption" id="bo-tech-caption">Connecting Urban Segments.</p>
+      </div>
+      <div class="bo-tech-stage" aria-hidden="true">
+        <svg class="bo-tech-svg" viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg">
+          <path class="bo-tech-grid" d="M40 226L180 138L320 226M74 210L180 150L286 210M102 194L180 162L258 194"/>
+          <path class="bo-tech-grid" d="M74 210V152M180 150V90M286 210V152"/>
+          <path class="bo-tech-street" d="M48 226H312M72 210H288M102 194H258"/>
+          <path class="bo-tech-peak" d="M84 210L118 154L144 184L180 104L214 170L246 138L282 210"/>
+          <path class="bo-tech-peak" d="M92 226L126 184L164 208L208 146L236 178L270 166L302 226"/>
+          <circle class="bo-tech-core" cx="180" cy="160" r="8"/>
+          <circle class="bo-tech-ring" cx="180" cy="160" r="18"/>
+        </svg>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -1964,10 +1956,18 @@ function $(id){ return document.getElementById(id); }
 
 // Header scroll shadow + parallax
 const dock = $('dock');
-window.addEventListener('scroll', () => {
-  dock.classList.toggle('scrolled', window.scrollY > 8);
+let indexScrollRaf = 0;
+function applyIndexScrollFx() {
+  indexScrollRaf = 0;
+  if (dock) dock.classList.toggle('scrolled', window.scrollY > 8);
   document.documentElement.style.setProperty('--parallax-y', (-window.scrollY * 0.04).toFixed(2) + 'px');
-}, { passive: true });
+}
+function scheduleIndexScrollFx() {
+  if (indexScrollRaf) return;
+  indexScrollRaf = window.requestAnimationFrame(applyIndexScrollFx);
+}
+window.addEventListener('scroll', scheduleIndexScrollFx, { passive: true });
+applyIndexScrollFx();
 
 
 // Hamburger
@@ -1986,10 +1986,10 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.08 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-// Master timer (widget + Safe Exit phone)
+// Master timer (widgets)
 (function() {
   let sec = 14*60+32;
-  const els = ['w-timer','se-phone-timer'].map(id => document.getElementById(id));
+  const els = ['w-timer'].map(id => document.getElementById(id));
   setInterval(() => {
     sec = sec <= 0 ? 15*60 : sec-1;
     const t = String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
@@ -1997,22 +1997,116 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   }, 1000);
 })();
 
-// Safe Exit phone: screen wake on scroll
+// Bento overview spotlight, magnetic hover and core zoom
 (function(){
-  const stage = document.getElementById('se-phone-stage');
-  if(!stage || window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    if(stage) stage.classList.add('is-awake');
-    return;
-  }
-  const ioSe = new IntersectionObserver(entries=>{
-    entries.forEach(en=>{
-      if(en.isIntersecting){
-        stage.classList.add('is-awake');
-        ioSe.unobserve(stage);
-      }
+  const section = document.getElementById('bento-overview');
+  const techCard = document.getElementById('bo-tech-card');
+  const cards = document.querySelectorAll('[data-bento-card]');
+  if(!section || !cards.length) return;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let sectionRect = null;
+  let pointerRaf = 0;
+  let pendingPointer = null;
+
+  function updateParallax(){
+    cards.forEach(card=>{
+      const speed = parseFloat(card.dataset.parallax || '0');
+      const rect = card.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      const center = rect.top + rect.height / 2;
+      const dist = (center - vh / 2) / vh;
+      card.style.setProperty('--py', (-dist * speed * 160).toFixed(2) + 'px');
     });
-  }, { threshold: 0.32 });
-  ioSe.observe(stage);
+    if(techCard){
+      const rect = techCard.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      const visible = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
+      const ratio = Math.max(0, Math.min(1, visible / Math.min(rect.height, vh * 0.95)));
+      techCard.style.setProperty('--core-zoom', (1 + ratio * 0.18).toFixed(3));
+    }
+  }
+
+  updateParallax();
+  let parallaxRaf = 0;
+  const scheduleParallax = ()=>{
+    if (parallaxRaf) return;
+    parallaxRaf = window.requestAnimationFrame(()=>{
+      parallaxRaf = 0;
+      sectionRect = null;
+      updateParallax();
+    });
+  };
+  window.addEventListener('scroll', scheduleParallax, { passive: true });
+  window.addEventListener('resize', ()=>{
+    sectionRect = null;
+    scheduleParallax();
+  });
+
+  function getSectionRect(){
+    if (!sectionRect) sectionRect = section.getBoundingClientRect();
+    return sectionRect;
+  }
+
+  function flushPointer(){
+    pointerRaf = 0;
+    if (!pendingPointer) return;
+    const rect = getSectionRect();
+    section.style.setProperty('--spot-x', (((pendingPointer.x - rect.left) / rect.width) * 100).toFixed(2) + '%');
+    section.style.setProperty('--spot-y', (((pendingPointer.y - rect.top) / rect.height) * 100).toFixed(2) + '%');
+    section.style.setProperty('--spot-o', '1');
+  }
+
+  section.addEventListener('mousemove', e=>{
+    pendingPointer = { x: e.clientX, y: e.clientY };
+    if (pointerRaf) return;
+    pointerRaf = window.requestAnimationFrame(flushPointer);
+  });
+  section.addEventListener('mouseleave', ()=> section.style.setProperty('--spot-o', '0'));
+
+  if(window.matchMedia('(hover: none)').matches || reduceMotion) return;
+
+  cards.forEach(card=>{
+    let cardRect = null;
+    let cardRaf = 0;
+    let pendingCardPointer = null;
+    const getCardRect = ()=> {
+      if (!cardRect) cardRect = card.getBoundingClientRect();
+      return cardRect;
+    };
+
+    card.addEventListener('mouseenter', ()=> { cardRect = null; });
+    card.addEventListener('mousemove', e=>{
+      pendingCardPointer = { x: e.clientX, y: e.clientY };
+      if (cardRaf) return;
+      cardRaf = window.requestAnimationFrame(()=>{
+        cardRaf = 0;
+        if (!pendingCardPointer) return;
+        const rect = getCardRect();
+        const px = (pendingCardPointer.x - rect.left) / rect.width - 0.5;
+        const py = (pendingCardPointer.y - rect.top) / rect.height - 0.5;
+        card.style.setProperty('--tx', (px * 10).toFixed(2) + 'px');
+        card.style.setProperty('--ty', (py * 10).toFixed(2) + 'px');
+      });
+    });
+    card.addEventListener('mouseleave', ()=>{
+      cardRect = null;
+      card.style.setProperty('--tx', '0px');
+      card.style.setProperty('--ty', '0px');
+    });
+    window.addEventListener('resize', ()=> { cardRect = null; }, { passive: true });
+  });
+})();
+
+// Mini table interactivity inside slide 0 (Dine)
+(function(){
+  const floor = document.getElementById('sl-floor-0');
+  if(!floor) return;
+  floor.querySelectorAll('.sl-tbl:not(.busy)').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      floor.querySelectorAll('.sl-tbl:not(.busy)').forEach(x=>x.classList.remove('on'));
+      btn.classList.add('on');
+    });
+  });
 })();
 
 // Moments widget: stagger chat bubbles when in view
@@ -2032,28 +2126,6 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
     });
   }, { threshold: 0.2 });
   ioMom.observe(w);
-})();
-
-// Diia demo: tap to scan on touch devices
-(function(){
-  const z = document.getElementById('diia-interactive');
-  if(!z) return;
-  z.addEventListener('touchstart', ()=>{
-    z.classList.add('diia-touch-on');
-    setTimeout(()=> z.classList.remove('diia-touch-on'), 1600);
-  }, { passive: true });
-})();
-
-// Mini table interactivity inside slide 0 (Dine)
-(function(){
-  const floor = document.getElementById('sl-floor-0');
-  if(!floor) return;
-  floor.querySelectorAll('.sl-tbl:not(.busy)').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      floor.querySelectorAll('.sl-tbl:not(.busy)').forEach(x=>x.classList.remove('on'));
-      btn.classList.add('on');
-    });
-  });
 })();
 
 // Rolling bookings counter
@@ -2168,6 +2240,12 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
           desc: 'Один скан — державна ідентичність у кожному бронюванні та контакті.',
           hint: 'Наведи курсор — сканер проходить QR',
         },
+        bentoOverview: {
+          qrTitle: 'QR-CODE. YOUR DIGITAL IMPRINT.',
+          qrCaption: 'Scan. Interact. Stay Anonymous.',
+          techTitle: 'CITY CORE. DEEP TECH.',
+          techCaption: 'Connecting Urban Segments.',
+        },
         momentsChat: {
           m1: 'Чайові +200 ₴ надійшли на картку ✨',
           m2: 'Космос. Дякую 😘',
@@ -2256,6 +2334,12 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
           desc: 'One scan — state identity in every booking and contact.',
           hint: 'Hover — scanner sweeps the QR',
         },
+        bentoOverview: {
+          qrTitle: 'QR-CODE. YOUR DIGITAL IMPRINT.',
+          qrCaption: 'Scan. Interact. Stay Anonymous.',
+          techTitle: 'CITY CORE. DEEP TECH.',
+          techCaption: 'Connecting Urban Segments.',
+        },
         momentsChat: {
           m1: 'Tips +200 ₴ landed on your card ✨',
           m2: 'Stellar. Thanks 😘',
@@ -2326,7 +2410,6 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
           else el.textContent = val;
         }
         if(parts[0]==='cta' && parts[1]==='primary') el.textContent = translations[lang].cta.primary;
-        if(parts[0]==='diiaVerified' && parts[1]==='desc') el.textContent = translations[lang].diiaVerified.desc;
         if(parts[0]==='momentsChat' && parts[1] && translations[lang].momentsChat[parts[1]]){
           el.textContent = translations[lang].momentsChat[parts[1]];
         }
@@ -2336,10 +2419,14 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
       const suffixEl = document.querySelector('[data-i18n=\"headline.suffix\"]');
       if(suffixEl) suffixEl.innerHTML = translations[lang].headline.suffix;
 
-      const safeHtml = document.querySelector('[data-i18n-html=\"safeExit.headline\"]');
-      if(safeHtml) safeHtml.textContent = translations[lang].safeExit.headline;
-      const diiaHeadHtml = document.querySelector('[data-i18n-html=\"diiaVerified.headline\"]');
-      if(diiaHeadHtml) diiaHeadHtml.textContent = translations[lang].diiaVerified.headline;
+      const boQrTitle = document.getElementById('bo-qr-title');
+      if(boQrTitle) boQrTitle.textContent = translations[lang].bentoOverview.qrTitle;
+      const boQrCaption = document.getElementById('bo-qr-caption');
+      if(boQrCaption) boQrCaption.textContent = translations[lang].bentoOverview.qrCaption;
+      const boTechTitle = document.getElementById('bo-tech-title');
+      if(boTechTitle) boTechTitle.textContent = translations[lang].bentoOverview.techTitle;
+      const boTechCaption = document.getElementById('bo-tech-caption');
+      if(boTechCaption) boTechCaption.textContent = translations[lang].bentoOverview.techCaption;
 
       // active buttons
       switcher.querySelectorAll('.lang-btn').forEach(b=>{
@@ -2384,17 +2471,6 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
       const wVenueTag = document.querySelector('.ios-widget .w-venue-tag'); if(wVenueTag) wVenueTag.innerHTML = '<div class="w-venue-dot" aria-hidden="true"></div>'+translations[lang].widgets.timerVenue;
       const wDistBig = document.querySelector('.w-distance-big'); if(wDistBig) wDistBig.textContent = translations[lang].widgets.distBig;
       const wDistLabel = document.querySelector('.w-distance-label'); if(wDistLabel) wDistLabel.textContent = translations[lang].widgets.distLabel;
-
-      const safeEyebrow = document.querySelector('#safe-exit .eyebrow'); if(safeEyebrow) safeEyebrow.innerHTML = translations[lang].sections.safeEyebrow;
-      const sk = $('safe-kicker'); if(sk) sk.textContent = translations[lang].safeExit.kicker;
-      const sel = $('se-phone-label'); if(sel) sel.textContent = translations[lang].safeExit.seLabel;
-      const ses = $('se-phone-sub'); if(ses) ses.textContent = translations[lang].safeExit.seSub;
-      const seSt = $('se-phone-stage'); if(seSt) seSt.setAttribute('aria-label', lang==='en' ? 'Safe Exit on the phone screen' : 'Safe Exit на екрані телефона');
-
-      const secEyebrow = document.querySelector('#security-section .eyebrow'); if(secEyebrow) secEyebrow.innerHTML = lang==='en' ? 'Security · Diia' : 'Безпека · Дія';
-      const dk = $('diia-kicker'); if(dk) dk.textContent = translations[lang].diiaVerified.kicker;
-      const dh = $('diia-hint'); if(dh) dh.textContent = translations[lang].diiaVerified.hint;
-      const dia = $('diia-interactive'); if(dia) dia.setAttribute('aria-label', lang==='en' ? 'Demo: hover to scan the Diia QR' : 'Демо: наведіть для сканування QR Дія');
 
       const bizEyebrow = document.querySelector('#business-section .eyebrow'); if(bizEyebrow) bizEyebrow.innerHTML = lang==='en' ? 'Business · Owners' : 'Бізнес · Власникам';
       const bizH = document.getElementById('biz-h'); if(bizH) bizH.innerHTML = lang==='en' ? 'Admin<br>dashboard.' : 'Панель<br>адміністратора.';

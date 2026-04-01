@@ -331,8 +331,8 @@ function focusDeskZone(zone){
 
 let activeSpaceId = 's1';
 
-function imgWithFallback(src, alt){ return `<img class="space-thumb" src="${src}" alt="${alt}">`; }
-function heroImgWithFallback(src, alt){ return `<img class="space-hero-img" src="${src}" alt="${alt}">`; }
+function imgWithFallback(src, alt){ return `<img class="space-thumb" src="${src}" alt="${alt}" loading="lazy" decoding="async">`; }
+function heroImgWithFallback(src, alt){ return `<img class="space-hero-img" src="${src}" alt="${alt}" loading="lazy" decoding="async">`; }
 
 function renderSpaceHero(lang, item){
   const hero = $('space-hero'); if(!hero || !item) return;

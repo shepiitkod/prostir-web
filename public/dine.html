@@ -852,71 +852,200 @@
     max-width: 1280px;
     padding-top: 2rem;
   }
-  .df-bento {
+  #bento-overview {
+    background: #000000;
+  }
+  .bento-overview {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 18px;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    gap: 22px;
     align-items: stretch;
   }
-  /* ── DINE CINEMATIC REDESIGN ── */
-  .df-bento--prime {
-    grid-template-columns: minmax(0, 1.35fr) minmax(340px, 0.8fr);
-    gap: 22px;
-  }
-  .df-bento--prime .df-card--safe,
-  .df-bento--prime .df-card--pulse {
-    grid-column: auto;
-    grid-row: auto;
-  }
-  .df-bento--prime .df-card--safe {
+  .bo-card {
+    --tx: 0px;
+    --ty: 0px;
+    --py: 0px;
+    --fill: 0.18;
+    position: relative;
+    overflow: hidden;
     min-height: 620px;
+    padding: 48px;
+    border-radius: 32px;
+    border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.02);
+    backdrop-filter: blur(26px);
+    -webkit-backdrop-filter: blur(26px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.02),
+      0 18px 52px rgba(0,0,0,0.34);
+    transform: translate3d(var(--tx), calc(var(--ty) + var(--py)), 0) scale(1);
+    transform-style: preserve-3d;
+    contain: layout paint style;
+    transition: transform 0.55s cubic-bezier(0.22,1,0.36,1), border-color 0.35s ease, box-shadow 0.35s ease, opacity 0.6s ease;
+    will-change: transform, opacity;
   }
-  .df-card--pulse {
-    min-height: 620px;
+  .bo-card::before,
+  .bo-card::after {
+    content: "";
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(48px);
+    opacity: 0.1;
+    pointer-events: none;
+  }
+  .bo-card::before {
+    width: 280px;
+    height: 280px;
+    top: -110px;
+    right: -60px;
+    background: radial-gradient(circle, rgba(139,92,246,0.5), rgba(139,92,246,0));
+    animation: dfBreathViolet 9s ease-in-out infinite;
+  }
+  .bo-card::after {
+    width: 220px;
+    height: 220px;
+    left: -80px;
+    bottom: -90px;
+    background: radial-gradient(circle, rgba(74,222,128,0.26), rgba(74,222,128,0));
+    animation: dfBreathGreen 11s ease-in-out infinite;
+  }
+  .bo-card.reveal {
+    opacity: 0;
+    transform: translate3d(var(--tx), calc(var(--ty) + var(--py) + 24px), 0) scale(0.95);
+  }
+  .bo-card.reveal.in {
+    opacity: 1;
+    transform: translate3d(var(--tx), calc(var(--ty) + var(--py)), 0) scale(1);
+  }
+  .bo-card:hover {
+    border-color: rgba(255,255,255,0.09);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.03),
+      0 22px 64px rgba(0,0,0,0.4);
+  }
+  .bo-card--safe,
+  .bo-card--pulse {
     display: flex;
     flex-direction: column;
+    gap: 2rem;
+  }
+  .bo-card--safe {
+    min-height: 620px;
+  }
+  .bo-card--pulse {
+    --pulse-speed: 4.6s;
+    min-height: 620px;
     justify-content: space-between;
   }
-  .df-pulse-core {
+  .bo-card--pulse:hover {
+    --pulse-speed: 2.15s;
+  }
+  .bo-title {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    max-width: 11ch;
+    font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+    font-size: clamp(1.55rem, 2.3vw, 2.5rem);
+    line-height: 1.04;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(246,248,251,0.98);
+  }
+  .bo-safe-stage,
+  .bo-pulse-stage {
     position: relative;
     z-index: 1;
     flex: 1;
-    min-height: 360px;
     display: grid;
     place-items: center;
   }
-  .df-pulse-ring,
-  .df-pulse-orb {
+  .bo-safe-stage {
+    min-height: 380px;
+  }
+  .bo-safe-stage::before {
+    content: "";
+    position: absolute;
+    inset: 12% 8%;
+    border-radius: 42px;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(139,92,246,0.22), rgba(139,92,246,0.08) 36%, rgba(139,92,246,0) 66%),
+      radial-gradient(circle at 50% 58%, rgba(255,255,255,0.06), rgba(255,255,255,0) 58%);
+    filter: blur(18px);
+    animation: dfCoreFloat 10s ease-in-out infinite;
+  }
+  .bo-safe-timer-wrap {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    font-family: "Space Grotesk", var(--font-mono), ui-monospace, monospace;
+    font-size: clamp(4.8rem, 11vw, 8.8rem);
+    font-weight: 700;
+    letter-spacing: -0.08em;
+    line-height: 0.9;
+    animation: dfTimerBreath 7.5s ease-in-out infinite;
+  }
+  .bo-safe-timer {
+    grid-area: 1 / 1;
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+  }
+  .bo-safe-timer--ghost {
+    color: rgba(255,255,255,0.12);
+    -webkit-text-stroke: 1px rgba(255,255,255,0.08);
+  }
+  .bo-safe-timer--fill {
+    color: rgba(245,247,250,0.98);
+    clip-path: inset(calc((1 - var(--fill)) * 100%) 0 0 0);
+    text-shadow:
+      0 0 28px rgba(139,92,246, calc(0.12 + var(--fill) * 0.26)),
+      0 0 64px rgba(139,92,246, calc(0.08 + var(--fill) * 0.18));
+    transition: clip-path 0.18s linear, text-shadow 0.18s linear;
+  }
+  .bo-safe-track {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 4px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.06);
+  }
+  .bo-safe-track span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform-origin: left center;
+    transform: scaleX(var(--fill));
+    background: linear-gradient(90deg, rgba(245,247,250,0.96), rgba(167,139,250,0.96));
+    box-shadow: 0 0 24px rgba(139,92,246,0.42);
+    transition: transform 0.18s linear;
+  }
+  .bo-pulse-stage {
+    min-height: 420px;
+  }
+  .bo-pulse-ring,
+  .bo-pulse-dot {
     position: absolute;
     border-radius: 50%;
   }
-  .df-pulse-ring {
-    border: 1px solid rgba(255,255,255,0.08);
-    animation: dfPulseExpand 5.8s ease-out infinite;
+  .bo-pulse-ring {
+    border: 1px solid rgba(74,222,128,0.22);
+    box-shadow: inset 0 0 18px rgba(74,222,128,0.04);
+    animation: boPulseExpand var(--pulse-speed) ease-out infinite;
   }
-  .df-pulse-ring--1 { width: 74px; height: 74px; }
-  .df-pulse-ring--2 { width: 128px; height: 128px; animation-delay: 0.9s; }
-  .df-pulse-ring--3 { width: 188px; height: 188px; animation-delay: 1.8s; }
-  .df-pulse-ring--4 { width: 248px; height: 248px; animation-delay: 2.7s; }
-  .df-pulse-orb {
-    width: 20px;
-    height: 20px;
+  .bo-pulse-ring--1 { width: 82px; height: 82px; }
+  .bo-pulse-ring--2 { width: 144px; height: 144px; animation-delay: 0.72s; }
+  .bo-pulse-ring--3 { width: 214px; height: 214px; animation-delay: 1.44s; }
+  .bo-pulse-ring--4 { width: 286px; height: 286px; animation-delay: 2.16s; }
+  .bo-pulse-dot {
+    width: 18px;
+    height: 18px;
     background: rgba(245,247,250,0.96);
     box-shadow:
-      0 0 26px rgba(139,92,246,0.55),
-      0 0 48px rgba(74,222,128,0.28);
-    animation: dfPulseOrb 4.8s ease-in-out infinite;
-  }
-  .df-pulse-value {
-    position: relative;
-    z-index: 1;
-    font-family: "Space Grotesk", var(--font-mono), monospace;
-    font-size: clamp(4rem, 10vw, 7rem);
-    font-weight: 700;
-    letter-spacing: -0.08em;
-    color: rgba(255,255,255,0.16);
-    -webkit-text-stroke: 1px rgba(255,255,255,0.08);
-    text-shadow: 0 0 40px rgba(139,92,246,0.18);
+      0 0 22px rgba(74,222,128,0.52),
+      0 0 48px rgba(74,222,128,0.22);
+    animation: boPulseDot 4s ease-in-out infinite;
   }
   .df-card {
     --tx: 0px;
@@ -932,11 +1061,15 @@
     border-radius: 32px;
     border: 1px solid rgba(255, 255, 255, 0.03);
     background: rgba(255, 255, 255, 0.025);
-    backdrop-filter: blur(40px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.025),
-      0 28px 80px rgba(0, 0, 0, 0.42);
+      0 16px 48px rgba(0, 0, 0, 0.32);
     transform: translate3d(var(--tx), calc(var(--ty) + var(--py)), 0) scale(1);
+    transform-style: preserve-3d;
+    contain: layout paint style;
+    translate: 0;
     transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease, box-shadow 0.35s ease, opacity 0.6s ease;
     will-change: transform, opacity;
   }
@@ -945,8 +1078,8 @@
     content: "";
     position: absolute;
     border-radius: 999px;
-    filter: blur(60px);
-    opacity: 0.16;
+    filter: blur(42px);
+    opacity: 0.1;
     pointer-events: none;
   }
   .df-card::before {
@@ -977,7 +1110,7 @@
     border-color: rgba(255, 255, 255, 0.065);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.03),
-      0 34px 90px rgba(0, 0, 0, 0.5);
+      0 20px 58px rgba(0, 0, 0, 0.38);
   }
   .df-card--safe {
     grid-column: span 8;
@@ -1061,6 +1194,7 @@
     letter-spacing: -0.08em;
     line-height: 0.92;
     animation: dfTimerBreath 7.5s ease-in-out infinite;
+    will-change: transform, opacity;
   }
   .df-safe-timer {
     grid-area: 1 / 1;
@@ -1078,6 +1212,7 @@
       0 0 30px rgba(139, 92, 246, calc(0.08 + var(--fill) * 0.24)),
       0 0 60px rgba(74, 222, 128, calc(0.04 + var(--fill) * 0.18));
     transition: clip-path 0.18s linear, text-shadow 0.18s linear;
+    will-change: clip-path, text-shadow;
   }
   .df-safe-track {
     position: relative;
@@ -1097,9 +1232,10 @@
     transform: scaleX(var(--fill));
     background: rgba(245, 247, 250, 0.95);
     box-shadow:
-      0 0 22px rgba(139, 92, 246, 0.38),
-      0 0 44px rgba(74, 222, 128, 0.24);
+      0 0 12px rgba(139, 92, 246, 0.24),
+      0 0 20px rgba(74, 222, 128, 0.14);
     transition: transform 0.18s linear;
+    will-change: transform;
   }
   .df-card--arrival {
     display: flex;
@@ -1195,6 +1331,8 @@
     position: relative;
     margin-top: 22px;
     padding: 8px 0 0;
+    content-visibility: auto;
+    contain-intrinsic-size: 1100px;
   }
   .df-lower-shell::before {
     content: "";
@@ -1287,6 +1425,8 @@
     background: rgba(255, 255, 255, 0.012);
     border: 1px solid rgba(255, 255, 255, 0.03);
     overflow: hidden;
+    transform: translateZ(0);
+    will-change: transform, opacity;
   }
   .df-atmo-viz::after {
     content: "";
@@ -1296,10 +1436,12 @@
     transform: translateX(-100%);
     animation: dfAtmoSweep 9s linear infinite;
     pointer-events: none;
+    will-change: transform, opacity;
   }
   .df-atmo-viz svg {
     width: 100%;
     height: 100%;
+    will-change: transform;
   }
   .df-atmo-grid {
     stroke: rgba(255, 255, 255, 0.04);
@@ -1341,6 +1483,7 @@
     width: min(100%, 240px);
     overflow: visible;
     animation: dfLockFloat 8.2s ease-in-out infinite;
+    will-change: transform, opacity;
   }
   .df-lock-ring {
     fill: none;
@@ -1355,8 +1498,9 @@
     stroke-linecap: round;
     transform-box: fill-box;
     transform-origin: center;
-    filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.38));
+    filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.24));
     transition: transform 0.16s linear;
+    will-change: transform;
   }
   .df-lock-arc--left { transform: rotate(calc(-60deg + (var(--wrap-progress) * 60deg))); }
   .df-lock-arc--right { transform: rotate(calc(60deg - (var(--wrap-progress) * 60deg))); }
@@ -1400,11 +1544,12 @@
     border: 1px solid rgba(255, 255, 255, 0.05);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.03),
-      0 18px 54px rgba(0, 0, 0, 0.34);
+      0 12px 34px rgba(0, 0, 0, 0.24);
     transform: translateY(calc(26px - (var(--receipt-rise) * 26px)));
     opacity: calc(0.32 + (var(--receipt-rise) * 0.68));
     transition: transform 0.18s linear, opacity 0.18s linear;
     animation: dfReceiptFloat 8.5s ease-in-out infinite;
+    will-change: transform, opacity;
   }
   .df-receipt-mini::before {
     content: "";
@@ -1478,9 +1623,10 @@
     position: absolute;
     inset: -16px 0;
     background: linear-gradient(90deg, rgba(139,92,246,0), rgba(139,92,246,0.12), rgba(139,92,246,0));
-    filter: blur(18px);
-    opacity: 0.8;
+    filter: blur(10px);
+    opacity: 0.55;
     animation: dfCitySweep 10s linear infinite;
+    will-change: transform, opacity;
   }
   .df-city-dot {
     position: absolute;
@@ -1498,9 +1644,9 @@
     height: 16px;
     background: rgba(245, 247, 250, 0.96);
     box-shadow:
-      0 0 0 10px rgba(139, 92, 246, 0.16),
-      0 0 28px rgba(139, 92, 246, 0.48),
-      0 0 44px rgba(74, 222, 128, 0.22);
+      0 0 0 8px rgba(139, 92, 246, 0.12),
+      0 0 16px rgba(139, 92, 246, 0.28),
+      0 0 22px rgba(74, 222, 128, 0.12);
     animation: dfCityPulse 4.8s ease-in-out infinite;
   }
   .df-city-name {
@@ -1542,6 +1688,15 @@
     0% { transform: scale(0.48); opacity: 0.7; }
     85% { transform: scale(1.06); opacity: 0; }
     100% { transform: scale(1.08); opacity: 0; }
+  }
+  @keyframes boPulseExpand {
+    0% { transform: scale(0.42); opacity: 0.82; }
+    82% { transform: scale(1.04); opacity: 0; }
+    100% { transform: scale(1.08); opacity: 0; }
+  }
+  @keyframes boPulseDot {
+    0%,100% { transform: scale(0.92); opacity: 0.9; }
+    50% { transform: scale(1.12); opacity: 1; }
   }
   @keyframes dfSelectedPulse {
     0%, 100% { transform: scale(1); }
@@ -1660,19 +1815,25 @@
     border-radius: 32px;
     border: 1px solid rgba(255,255,255,0.03);
     background: rgba(255,255,255,0.02);
-    backdrop-filter: blur(40px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.02),
-      0 34px 96px rgba(0,0,0,0.48);
+      0 20px 58px rgba(0,0,0,0.34);
     transform: translate3d(0, var(--py), 0);
+    transform-style: preserve-3d;
+    contain: layout paint style;
+    content-visibility: auto;
+    contain-intrinsic-size: 800px;
     transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+    will-change: transform, opacity;
   }
   .df-showcase::before,
   .df-showcase::after {
     content: "";
     position: absolute;
     border-radius: 999px;
-    filter: blur(80px);
+    filter: blur(52px);
     pointer-events: none;
   }
   .df-showcase::before {
@@ -2028,16 +2189,24 @@
     50% { transform: scale(1.14); opacity: 1; }
   }
   @media (max-width: 1100px) {
-    .df-bento--prime { grid-template-columns: 1fr; }
-    .df-card--pulse,
-    .df-bento--prime .df-card--safe { min-height: 420px; }
+    .bento-overview { grid-template-columns: 1fr; }
+    .bo-card { min-height: 460px; }
     .df-showcase-stage { min-height: 680px; }
     .df-floor-shell,
     .df-moment-shell { grid-template-columns: 1fr; }
   }
   @media (max-width: 720px) {
     .dine-page-wrap--future { padding-left: 1rem; padding-right: 1rem; }
-    .df-bento { gap: 14px; }
+    .bento-overview { gap: 14px; }
+    .bo-card { padding: 28px; min-height: 400px; }
+    .bo-title { font-size: clamp(1.12rem, 7vw, 1.8rem); letter-spacing: 0.16em; }
+    .bo-safe-stage,
+    .bo-pulse-stage { min-height: 260px; }
+    .bo-safe-timer-wrap { font-size: clamp(3.8rem, 18vw, 5.8rem); }
+    .bo-pulse-ring--1 { width: 66px; height: 66px; }
+    .bo-pulse-ring--2 { width: 116px; height: 116px; }
+    .bo-pulse-ring--3 { width: 172px; height: 172px; }
+    .bo-pulse-ring--4 { width: 230px; height: 230px; }
     .df-lower-grid { gap: 14px; }
     .df-card { padding: 1.2rem; }
     .df-card-label,
@@ -2142,57 +2311,27 @@
 
 <!-- ══ PAGE CONTENT ══ -->
 <div class="dine-page-wrap dine-page-wrap--future">
-  <section class="df-bento" aria-label="Dine premium grid">
-    <article class="df-card df-card--safe reveal" id="safe-exit-card" data-magnetic-card data-parallax="0.06">
-      <span class="df-card-label" id="df-safe-label">SAFE EXIT</span>
-      <div class="df-safe-core" aria-hidden="true">
-        <div class="df-safe-timer-wrap">
-          <span class="df-safe-timer df-safe-timer--ghost" id="safe-timer-base">14:32</span>
-          <span class="df-safe-timer df-safe-timer--fill" id="safe-timer-fill">14:32</span>
+  <section id="bento-overview" class="bento-overview" aria-label="Bento overview">
+    <article class="bo-card bo-card--safe reveal" id="safe-exit-card" data-magnetic-card data-parallax="0.06">
+      <h2 class="bo-title" id="bo-safe-title">SAFE EXIT. URBAN NAVIGATION</h2>
+      <div class="bo-safe-stage" aria-hidden="true">
+        <div class="bo-safe-timer-wrap">
+          <span class="bo-safe-timer bo-safe-timer--ghost" id="safe-timer-base">04:59</span>
+          <span class="bo-safe-timer bo-safe-timer--fill" id="safe-timer-fill">04:59</span>
         </div>
       </div>
-      <div class="df-card-foot" id="df-safe-foot">AUTO CLOSE WITHIN ZONE</div>
-      <div class="df-safe-track" aria-hidden="true"><span></span></div>
+      <div class="bo-safe-track" aria-hidden="true"><span></span></div>
     </article>
 
-    <article class="df-card df-card--arrival reveal" data-magnetic-card>
-      <span class="df-card-label" id="df-arrival-label">ARRIVAL PULSE</span>
-      <div class="df-arrival-visual" aria-hidden="true">
-        <span class="df-arrival-ring df-arrival-ring--1"></span>
-        <span class="df-arrival-ring df-arrival-ring--2"></span>
-        <span class="df-arrival-ring df-arrival-ring--3"></span>
-        <span class="df-arrival-dot"></span>
+    <article class="bo-card bo-card--pulse reveal" id="bo-pulse-card" data-magnetic-card data-parallax="0.1">
+      <h2 class="bo-title" id="bo-pulse-title">PULSE</h2>
+      <div class="bo-pulse-stage" aria-hidden="true">
+        <span class="bo-pulse-ring bo-pulse-ring--1"></span>
+        <span class="bo-pulse-ring bo-pulse-ring--2"></span>
+        <span class="bo-pulse-ring bo-pulse-ring--3"></span>
+        <span class="bo-pulse-ring bo-pulse-ring--4"></span>
+        <span class="bo-pulse-dot"></span>
       </div>
-      <div class="df-card-headline" id="df-arrival-title">TABLE 05 READY</div>
-      <div class="df-card-foot" id="df-arrival-foot">ONE STEP TO LAND</div>
-    </article>
-
-    <article class="df-card df-card--plan reveal" data-magnetic-card>
-      <span class="df-card-label" id="df-plan-label">SMART FLOORPLAN</span>
-      <div class="df-plan-stage" aria-hidden="true">
-        <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
-          <ellipse class="df-grid-base" cx="160" cy="110" rx="116" ry="72"/>
-          <ellipse class="df-grid-base" cx="160" cy="110" rx="84" ry="50"/>
-          <path class="df-grid-base" d="M44 110H276"/>
-          <path class="df-grid-base" d="M160 38V182"/>
-          <circle class="df-seat df-seat--soft" cx="90" cy="74" r="13"/>
-          <circle class="df-seat-ring" cx="90" cy="74" r="20"/>
-          <circle class="df-seat" cx="160" cy="62" r="13"/>
-          <circle class="df-seat-ring" cx="160" cy="62" r="20"/>
-          <circle class="df-seat df-seat--soft" cx="228" cy="80" r="13"/>
-          <circle class="df-seat-ring" cx="228" cy="80" r="20"/>
-          <circle class="df-seat df-seat--selected" cx="124" cy="128" r="14"/>
-          <circle class="df-seat-ring df-seat-ring--selected" cx="124" cy="128" r="27"/>
-          <text class="df-seat-label" x="124" y="131">05</text>
-          <circle class="df-seat" cx="196" cy="136" r="13"/>
-          <circle class="df-seat-ring" cx="196" cy="136" r="20"/>
-          <circle class="df-seat df-seat--soft" cx="94" cy="164" r="13"/>
-          <circle class="df-seat-ring" cx="94" cy="164" r="20"/>
-          <circle class="df-seat" cx="228" cy="160" r="13"/>
-          <circle class="df-seat-ring" cx="228" cy="160" r="20"/>
-        </svg>
-      </div>
-      <div class="df-card-foot" id="df-plan-foot">TABLE 05 LOCKED</div>
     </article>
   </section>
 
@@ -2716,7 +2855,18 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
   document.body.classList.add('theme-noir');
 
   const dock=$('dock');
-  window.addEventListener('scroll',()=>{ if(dock) dock.classList.toggle('scrolled',window.scrollY>8); },{passive:true});
+  let dineScrollRaf=0;
+  function runDineScrollFx(){
+    dineScrollRaf=0;
+    if(dock) dock.classList.toggle('scrolled',window.scrollY>8);
+    document.documentElement.style.setProperty('--parallax-y',(-window.scrollY*0.04).toFixed(2)+'px');
+    updateSafeFill();
+    updateScrollDepth();
+  }
+  function scheduleDineScrollFx(){
+    if(dineScrollRaf) return;
+    dineScrollRaf=window.requestAnimationFrame(runDineScrollFx);
+  }
 
   const drawerBtn=$('hamburger'), drawer=$('mobile-nav');
   drawerBtn&&drawerBtn.addEventListener('click',()=>{
@@ -2748,13 +2898,8 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
         desc:'Обери стіл на мапі, подивись контекст зони та підтвердь бронювання в один крок. Safe Exit і цифровий чек працюють у тому ж ритмі, без зайвих перемикань.',
       },
       bento:{
-        safeLabel:'SAFE EXIT',
-        safeFoot:'АВТО ЗАКРИТТЯ В ЗОНІ',
-        arrivalLabel:'ARRIVAL PULSE',
-        arrivalTitle:'СТІЛ 05 ГОТОВИЙ',
-        arrivalFoot:'ОДИН КРОК ДО ПОСАДКИ',
-        planLabel:'SMART FLOORPLAN',
-        planFoot:'СТІЛ 05 ОБРАНО',
+        safeTitle:'SAFE EXIT. URBAN NAVIGATION',
+        pulseTitle:'PULSE',
         atmoLabel:'ATMOSPHERE SCAN',
         atmoTitle:'ATMOSPHERE:',
         atmoState:'CALM',
@@ -2779,13 +2924,8 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
         desc:'Pick a table on the map, review the zone context, and confirm the booking in one step. Safe Exit and a digital receipt stay in the same flow with no extra switching.',
       },
       bento:{
-        safeLabel:'SAFE EXIT',
-        safeFoot:'AUTO CLOSE WITHIN ZONE',
-        arrivalLabel:'ARRIVAL PULSE',
-        arrivalTitle:'TABLE 05 READY',
-        arrivalFoot:'ONE STEP TO LAND',
-        planLabel:'SMART FLOORPLAN',
-        planFoot:'TABLE 05 LOCKED',
+        safeTitle:'SAFE EXIT. URBAN NAVIGATION',
+        pulseTitle:'PULSE',
         atmoLabel:'ATMOSPHERE SCAN',
         atmoTitle:'ATMOSPHERE:',
         atmoState:'CALM',
@@ -2811,13 +2951,8 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
     const quickBtn=document.querySelector('.diia-btn'); if(quickBtn) quickBtn.setAttribute('aria-label',t.common.quickLogin);
     const quickLogo=document.querySelector('.diia-btn .diia-logo'); if(quickLogo) quickLogo.textContent='ID';
     const btnLbl=document.querySelector('.diia-btn .btn-label'); if(btnLbl) btnLbl.textContent=t.common.quickLogin;
-    const safeLabel=$('df-safe-label'); if(safeLabel) safeLabel.textContent=t.bento.safeLabel;
-    const safeFoot=$('df-safe-foot'); if(safeFoot) safeFoot.textContent=t.bento.safeFoot;
-    const arrivalLabel=$('df-arrival-label'); if(arrivalLabel) arrivalLabel.textContent=t.bento.arrivalLabel;
-    const arrivalTitle=$('df-arrival-title'); if(arrivalTitle) arrivalTitle.textContent=t.bento.arrivalTitle;
-    const arrivalFoot=$('df-arrival-foot'); if(arrivalFoot) arrivalFoot.textContent=t.bento.arrivalFoot;
-    const planLabel=$('df-plan-label'); if(planLabel) planLabel.textContent=t.bento.planLabel;
-    const planFoot=$('df-plan-foot'); if(planFoot) planFoot.textContent=t.bento.planFoot;
+    const safeTitle=$('bo-safe-title'); if(safeTitle) safeTitle.textContent=t.bento.safeTitle;
+    const pulseTitle=$('bo-pulse-title'); if(pulseTitle) pulseTitle.textContent=t.bento.pulseTitle;
     const atmoLabel=$('df-atmo-label'); if(atmoLabel) atmoLabel.textContent=t.bento.atmoLabel;
     const atmoTitle=$('df-atmo-title'); if(atmoTitle) atmoTitle.innerHTML=t.bento.atmoTitle+'<span>'+t.bento.atmoState+'</span>';
     const autoLabel=$('df-auto-label'); if(autoLabel) autoLabel.textContent=t.bento.autoLabel;
@@ -2849,9 +2984,9 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
     });
   });
 
-  let sec=14*60+33;
+  let sec=4*60+59;
   function updateTimer(){
-    sec=sec<=0?15*60:sec-1;
+    sec=sec<=0?5*60:sec-1;
     const value=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
     const base=$('safe-timer-base');
     const fill=$('safe-timer-fill');
@@ -2871,18 +3006,28 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
     safeCard.style.setProperty('--fill', ratio.toFixed(3));
   }
   updateSafeFill();
-  window.addEventListener('scroll',updateSafeFill,{passive:true});
-  window.addEventListener('resize',updateSafeFill);
 
   const lowerShell=$('df-lower-shell');
   if(lowerShell){
-    lowerShell.addEventListener('mousemove',e=>{
-      const rect=lowerShell.getBoundingClientRect();
-      lowerShell.style.setProperty('--spot-x',(((e.clientX-rect.left)/rect.width)*100).toFixed(2)+'%');
-      lowerShell.style.setProperty('--spot-y',(((e.clientY-rect.top)/rect.height)*100).toFixed(2)+'%');
+    let lowerShellRect=null;
+    let lowerShellRaf=0;
+    let lowerShellPointer=null;
+    const flushLowerShellPointer=()=>{
+      lowerShellRaf=0;
+      if(!lowerShellPointer) return;
+      const rect=lowerShellRect || (lowerShellRect=lowerShell.getBoundingClientRect());
+      lowerShell.style.setProperty('--spot-x',(((lowerShellPointer.x-rect.left)/rect.width)*100).toFixed(2)+'%');
+      lowerShell.style.setProperty('--spot-y',(((lowerShellPointer.y-rect.top)/rect.height)*100).toFixed(2)+'%');
       lowerShell.style.setProperty('--spot-o','1');
+    };
+    lowerShell.addEventListener('mouseenter',()=>{ lowerShellRect=null; });
+    lowerShell.addEventListener('mousemove',e=>{
+      lowerShellPointer={x:e.clientX,y:e.clientY};
+      if(lowerShellRaf) return;
+      lowerShellRaf=window.requestAnimationFrame(flushLowerShellPointer);
     });
     lowerShell.addEventListener('mouseleave',()=>lowerShell.style.setProperty('--spot-o','0'));
+    window.addEventListener('resize',()=>{ lowerShellRect=null; });
   }
 
   const autoCard=$('df-auto-card');
@@ -2913,22 +3058,37 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
     }
   }
   updateScrollDepth();
-  window.addEventListener('scroll',updateScrollDepth,{passive:true});
-  window.addEventListener('resize',updateScrollDepth);
+  window.addEventListener('scroll',scheduleDineScrollFx,{passive:true});
+  window.addEventListener('resize',()=>{
+    scheduleDineScrollFx();
+  });
+  runDineScrollFx();
 
   if(!window.matchMedia('(hover: none)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     document.querySelectorAll('[data-magnetic-card]').forEach(card=>{
+      let cardRect=null;
+      let cardRaf=0;
+      let pendingPointer=null;
+      card.addEventListener('mouseenter',()=>{ cardRect=null; });
       card.addEventListener('mousemove',e=>{
-        const rect=card.getBoundingClientRect();
-        const px=(e.clientX-rect.left)/rect.width-0.5;
-        const py=(e.clientY-rect.top)/rect.height-0.5;
-        card.style.setProperty('--tx',(px*14).toFixed(2)+'px');
-        card.style.setProperty('--ty',(py*14).toFixed(2)+'px');
+        pendingPointer={x:e.clientX,y:e.clientY};
+        if(cardRaf) return;
+        cardRaf=window.requestAnimationFrame(()=>{
+          cardRaf=0;
+          if(!pendingPointer) return;
+          const rect=cardRect || (cardRect=card.getBoundingClientRect());
+          const px=(pendingPointer.x-rect.left)/rect.width-0.5;
+          const py=(pendingPointer.y-rect.top)/rect.height-0.5;
+          card.style.setProperty('--tx',(px*10).toFixed(2)+'px');
+          card.style.setProperty('--ty',(py*10).toFixed(2)+'px');
+        });
       });
       card.addEventListener('mouseleave',()=>{
+        cardRect=null;
         card.style.setProperty('--tx','0px');
         card.style.setProperty('--ty','0px');
       });
+      window.addEventListener('resize',()=>{ cardRect=null; });
     });
   }
 })();

@@ -224,7 +224,7 @@ export function TornReceipt({ venueName, locale = "uk" }: TornReceiptProps): Rea
       <motion.div
         className="vn-receipt-ambient"
         initial={{ opacity: 0, y: 22 }}
-        animate={
+        whileInView={
           reduceMotion
             ? { opacity: 1, y: 0 }
             : {
@@ -234,6 +234,7 @@ export function TornReceipt({ venueName, locale = "uk" }: TornReceiptProps): Rea
                 rotate: [0.4, -0.35, 0.2, -0.15, 0],
               }
         }
+        viewport={{ once: true, amount: 0.35 }}
         transition={
           reduceMotion
             ? { duration: 0.35 }
