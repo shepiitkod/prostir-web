@@ -73,59 +73,55 @@
       text-shadow: 0 0 40px rgba(139, 92, 246, 0.12);
     }
 
-    /* Три скріни: м’який градієнт навколо блоку, без «рамки» на кожному img */
+    /* Тільки телефони на #000: без тіней/скруглень на img; градієнт — кільце навколо, без «картки» посередині */
     .dl-trio-wrap {
       position: relative;
       isolation: isolate;
       max-width: min(100%, 880px);
       margin: clamp(1.75rem, 4vw, 2.75rem) auto 0;
-      padding: clamp(1.1rem, 2.8vw, 1.85rem) clamp(0.35rem, 1.2vw, 0.65rem);
-      border-radius: clamp(20px, 3.5vw, 36px);
+      padding: clamp(0.35rem, 1.5vw, 0.85rem) 0;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
     }
     .dl-trio-wrap::before {
       content: "";
       position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      z-index: 1;
+      inset: -4% -14% -6% -14%;
+      z-index: 0;
       pointer-events: none;
-      background:
-        radial-gradient(
-          ellipse 78% 58% at 50% 62%,
-          rgba(139, 92, 246, 0.34) 0%,
-          rgba(99, 102, 241, 0.12) 42%,
-          transparent 68%
-        ),
-        radial-gradient(
-          ellipse 95% 48% at 50% 88%,
-          rgba(124, 58, 237, 0.2) 0%,
-          transparent 58%
-        );
+      background: radial-gradient(
+        ellipse 70% 52% at 50% 58%,
+        transparent 40%,
+        rgba(139, 92, 246, 0.13) 52%,
+        rgba(99, 102, 241, 0.07) 64%,
+        transparent 78%
+      );
     }
     .dl-trio-wrap::after {
       content: "";
       position: absolute;
-      inset: -8%;
-      border-radius: inherit;
+      inset: -14% -22% -10% -22%;
       z-index: 0;
       pointer-events: none;
-      opacity: 0.85;
+      opacity: 0.75;
       background: radial-gradient(
-        circle at 50% 58%,
-        rgba(139, 92, 246, 0.22) 0%,
-        transparent 55%
+        circle at 50% 54%,
+        rgba(139, 92, 246, 0.1) 0%,
+        transparent 48%
       );
-      filter: blur(28px);
+      filter: blur(42px);
     }
     .dl-trio {
       position: relative;
-      z-index: 2;
+      z-index: 1;
       display: grid;
       grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr) minmax(0, 0.9fr);
       align-items: end;
       justify-items: center;
-      gap: clamp(0, 0.35vw, 0.2rem);
-      column-gap: clamp(0, 0.5vw, 0.28rem);
+      column-gap: 0;
+      gap: 0;
       width: 100%;
     }
     .dl-trio__shot {
@@ -135,6 +131,8 @@
       max-width: 100%;
       background: transparent;
       border: none;
+      outline: none;
+      box-shadow: none;
     }
     .dl-trio__shot img {
       width: 100%;
@@ -143,23 +141,23 @@
       display: block;
       margin-inline: auto;
       border: 0;
-      border-radius: clamp(10px, 1.8vw, 18px);
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+      outline: 0;
+      border-radius: 0;
+      box-shadow: none;
+      background: transparent;
+      object-fit: contain;
     }
     .dl-trio__shot--center img {
       max-width: min(100%, 320px);
     }
+    @media (min-width: 521px) {
+      .dl-trio__shot:not(:first-child) {
+        margin-left: clamp(-1.25rem, -3vw, -0.35rem);
+      }
+    }
     @media (max-width: 520px) {
-      .dl-trio-wrap {
-        padding: 0.85rem 0.2rem;
-      }
-      .dl-trio {
-        gap: 0;
-        column-gap: 0;
-      }
       .dl-trio__shot img {
         max-width: none;
-        border-radius: 8px;
       }
       .dl-trio__shot--center img {
         max-width: none;
