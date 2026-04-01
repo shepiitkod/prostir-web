@@ -73,6 +73,51 @@
       text-shadow: 0 0 40px rgba(139, 92, 246, 0.12);
     }
 
+    /* Три скріни в ряд: заклади · досягнення (центр) · чат */
+    .dl-trio {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr) minmax(0, 0.9fr);
+      align-items: end;
+      justify-items: center;
+      gap: clamp(0.4rem, 1.8vw, 1.25rem);
+      max-width: min(100%, 920px);
+      margin: clamp(1.75rem, 4vw, 2.75rem) auto 0;
+      width: 100%;
+    }
+    .dl-trio__shot {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+      background: transparent;
+    }
+    .dl-trio__shot img {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      border-radius: clamp(16px, 2.8vw, 26px);
+      box-shadow:
+        0 20px 64px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+    .dl-trio__shot--center img {
+      max-width: min(100%, 320px);
+    }
+    @media (max-width: 520px) {
+      .dl-trio {
+        gap: 0.28rem;
+      }
+      .dl-trio__shot img {
+        max-width: none;
+        border-radius: 14px;
+      }
+      .dl-trio__shot--center img {
+        max-width: none;
+      }
+    }
+
     .dl-feature {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
@@ -203,6 +248,17 @@
     <p class="dl-eyebrow" data-i18n="dl.eyebrow">PROSTIR · РЕЛІЗ НА iOS</p>
     <h1 class="dl-h1" id="dl-hero-h1" data-i18n="dl.h1">Скоро в App Store — лічильник уже пішов</h1>
     <p class="dl-sub" data-i18n="dl.sub">Ми на фінішній прямій: нижче не макети «на потім», а живий інтерфейс — місто, заклади, твій профіль у noir-ритмі. Залишайся в контакті: коли з’явиться «Отримати», перший тап має бути твій.</p>
+    <div class="dl-trio" role="group" aria-label="Скріншоти інтерфейсу PROSTIR">
+      <figure class="dl-trio__shot">
+        <img src="/assets/download-teaser/venues.jpg" alt="" width="660" height="1024" loading="eager" decoding="async"/>
+      </figure>
+      <figure class="dl-trio__shot dl-trio__shot--center">
+        <img src="/assets/download-teaser/achievements.jpg" alt="" width="641" height="1024" loading="eager" decoding="async"/>
+      </figure>
+      <figure class="dl-trio__shot">
+        <img src="/assets/download-teaser/chat.jpg" alt="" width="606" height="1024" loading="eager" decoding="async"/>
+      </figure>
+    </div>
   </section>
 
   <section class="dl-feature" aria-labelledby="dl-s1-h">
