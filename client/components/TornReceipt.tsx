@@ -34,7 +34,7 @@ function copy(locale: "uk" | "en") {
       tipsConnectionTitle: "TIPS ARE GRATITUDE, NOT JUST NUMBERS",
       tipsConnectionBody:
         "PROSTIR removes the awkwardness around the terminal—no hovering by the POS while everyone waits. Guests pick their thanks in one tap, so the room stays human, not a queue.",
-      receiptStubLine: "KEEP THIS STUB",
+      receiptStubLine: "KEEP THIS RECEIPT",
       tipsLabel: "Tip",
       waiterLabel: "Server",
       chatPick: "Pick a tip — watch the total update.",
