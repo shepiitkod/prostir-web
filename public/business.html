@@ -1708,6 +1708,7 @@
     <a href="/business.html" class="nav-active" data-magnetic data-mag-r="44" data-mag-s="7">Business</a>
   </nav>
   <div class="header-right">
+    <a href="/download.html" class="header-download" data-i18n="nav.download" data-magnetic data-mag-r="40" data-mag-s="6">Незабаром</a>
     <a href="/venue" class="diia-btn" aria-label="Стати партнером">
       <span class="diia-logo" aria-hidden="true">B2B</span>
       <span class="btn-label">Стати партнером</span>
@@ -1727,6 +1728,7 @@
 </header>
 
 <div class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Мобільне меню">
+  <a href="/download.html" class="header-download" data-i18n="nav.download">Незабаром</a>
   <a href="/dine.html">Dine</a>
   <a href="/working.html">Working</a>
   <a href="/moments.html">Moments</a>
@@ -3146,7 +3148,7 @@
 
   const T = {
     ua: {
-      nav: { dine:'Dine', working:'Working', moments:'Moments', business:'Business' },
+      nav: { dine:'Dine', working:'Working', moments:'Moments', business:'Business', download:'Незабаром' },
       headerBtn: 'Стати партнером',
       hero: {
         eyebrow: 'PROSTIR for Business · B2B Platform',
@@ -3280,7 +3282,7 @@
       footer: { home:'Головна' },
     },
     en: {
-      nav: { dine:'Dine', working:'Working', moments:'Moments', business:'Business' },
+      nav: { dine:'Dine', working:'Working', moments:'Moments', business:'Business', download:'Coming soon' },
       headerBtn: 'Become a partner',
       hero: {
         eyebrow: 'PROSTIR for Business · B2B Platform',
@@ -3422,7 +3424,8 @@
     document.querySelectorAll('[data-i18n="nav.dine"]').forEach(el=>el.textContent=t.nav.dine);
     document.querySelectorAll('[data-i18n="nav.working"]').forEach(el=>el.textContent=t.nav.working);
     document.querySelectorAll('[data-i18n="nav.moments"]').forEach(el=>el.textContent=t.nav.moments);
-    const headerBtn = document.querySelector('#dock .btn-label'); if(headerBtn) headerBtn.textContent=t.headerBtn;
+    document.querySelectorAll('[data-i18n="nav.download"]').forEach(el=>el.textContent=t.nav.download);
+    const headerBtn = document.querySelector('#dock .diia-btn .btn-label'); if(headerBtn) headerBtn.textContent=t.headerBtn;
 
     /* hero */
     const heroEyebrow = document.querySelector('.biz-eyebrow');

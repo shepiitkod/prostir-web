@@ -13,7 +13,8 @@
     "start": "node server.js",
     "dev": "tsx watch src/server.ts",
     "dev:once": "tsx src/server.ts",
-    "verify": "tsc --noEmit && node --check server.js && for f in public/*.js; do node --check \"$f\"; done"
+    "verify": "tsc --noEmit && node --check server.js && for f in public/*.js; do node --check \"$f\"; done",
+    "app-store:export": "node scripts/export-app-store-mockups.mjs"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
@@ -40,6 +41,7 @@
     "@types/react-dom": "^19.2.3",
     "esbuild": "^0.27.4",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "playwright": "^1.51.0"
   }
 }

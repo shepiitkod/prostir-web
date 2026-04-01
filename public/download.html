@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Незабаром у App Store — PROSTIR</title>
+  <link rel="stylesheet" href="/app.css"/>
+  <style>
+    /* Єдиний «void» #000 — без сірих карток під скріни */
+    html.dl-teaser-root,
+    body.dl-teaser {
+      background: #000000 !important;
+    }
+    body.dl-teaser .grain { opacity: 0.045; }
+
+    body.dl-teaser #dock {
+      background: rgba(0, 0, 0, 0.72);
+      border-bottom-color: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    body.dl-teaser #dock.scrolled {
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    body.dl-teaser #dock .logo .lp { color: rgba(255, 255, 255, 0.92); }
+    body.dl-teaser #dock .logo .lrest { color: rgba(255, 255, 255, 0.38); }
+    body.dl-teaser #dock nav a {
+      color: rgba(255, 255, 255, 0.45);
+    }
+    body.dl-teaser #dock nav a:hover,
+    body.dl-teaser #dock nav a.nav-active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .dl-shell {
+      min-height: 100vh;
+      padding: calc(68px + env(safe-area-inset-top, 0px) + 3rem) clamp(1.25rem, 4vw, 2.5rem) 5rem;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .dl-hero {
+      text-align: center;
+      margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+      padding-bottom: clamp(2rem, 5vw, 3rem);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.12);
+    }
+    .dl-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(139, 92, 246, 0.85);
+      margin-bottom: 1rem;
+    }
+    .dl-h1 {
+      font-size: clamp(1.85rem, 4.5vw, 2.85rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fff;
+      line-height: 1.12;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 48px rgba(139, 92, 246, 0.22);
+    }
+    .dl-sub {
+      font-size: clamp(0.92rem, 2.1vw, 1.08rem);
+      color: rgba(255, 255, 255, 0.72);
+      max-width: 40rem;
+      margin: 0 auto;
+      line-height: 1.68;
+      text-shadow: 0 0 40px rgba(139, 92, 246, 0.12);
+    }
+
+    .dl-feature {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+      gap: clamp(1.75rem, 5vw, 3.5rem);
+      align-items: center;
+      padding: clamp(2rem, 5vw, 3.75rem) 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .dl-feature:last-of-type {
+      border-bottom: none;
+    }
+    .dl-feature--flip .dl-feature__copy { order: 2; }
+    .dl-feature--flip .dl-feature__shot { order: 1; }
+
+    @media (max-width: 900px) {
+      .dl-feature,
+      .dl-feature--flip {
+        grid-template-columns: 1fr;
+      }
+      .dl-feature--flip .dl-feature__copy,
+      .dl-feature--flip .dl-feature__shot {
+        order: unset;
+      }
+      .dl-feature__copy { text-align: center; max-width: 36rem; margin: 0 auto; }
+    }
+
+    .dl-kicker {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(196, 181, 253, 0.9);
+      margin-bottom: 0.75rem;
+    }
+    .dl-h2 {
+      font-size: clamp(1.35rem, 3vw, 1.85rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.85rem;
+    }
+    .dl-lead {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.5);
+      max-width: 36ch;
+    }
+    @media (max-width: 900px) {
+      .dl-lead { max-width: none; }
+    }
+
+    .dl-feature__shot {
+      margin: 0;
+      padding: 0;
+      background: #000000;
+      border: none;
+      box-shadow: none;
+    }
+    .dl-feature__shot img {
+      width: 100%;
+      max-width: 380px;
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      border-radius: 32px;
+      box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.65),
+        0 0 0 1px rgba(255, 255, 255, 0.04);
+    }
+
+    body.dl-teaser .mobile-nav.open {
+      background: rgba(6, 6, 8, 0.97);
+      border-bottom-color: rgba(255, 255, 255, 0.06);
+    }
+    body.dl-teaser .mobile-nav a {
+      color: rgba(255, 255, 255, 0.58);
+    }
+    body.dl-teaser .mobile-nav a:hover,
+    body.dl-teaser .mobile-nav a.nav-active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    body.dl-teaser .hamburger {
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+    body.dl-teaser .hamburger span {
+      background: #fff;
+    }
+  </style>
+</head>
+<body class="theme-noir dl-teaser">
+<script>document.documentElement.classList.add('dl-teaser-root');</script>
+<div class="grain" aria-hidden="true"></div>
+
+<header id="dock">
+  <a class="logo" href="/" aria-label="PROSTIR home"><span class="lp">PR</span><span class="lo">O</span><span class="lrest">STIR</span></a>
+  <nav aria-label="Main navigation">
+    <a href="/dine.html" data-magnetic data-mag-r="44" data-mag-s="7">Dine</a>
+    <a href="/working.html" data-magnetic data-mag-r="44" data-mag-s="7">Working</a>
+    <a href="/moments.html" data-magnetic data-mag-r="44" data-mag-s="7">Moments</a>
+    <a href="/business.html" data-magnetic data-mag-r="44" data-mag-s="7">Business</a>
+  </nav>
+  <div class="header-right">
+    <a href="/download.html" class="header-download" aria-current="page" data-i18n="nav.download">Незабаром</a>
+    <a href="#" class="diia-btn" aria-label="Вхід через Дію"><span class="diia-logo" aria-hidden="true">Дія</span><span class="btn-label" data-i18n="common.quickLogin">Вхід через Дію</span></a>
+    <div class="lang-switch" id="lang-switch" role="group" aria-label="Language">
+      <button type="button" class="lang-btn" data-lang="ua" aria-pressed="true" aria-label="Українська"><span class="lang-flag" aria-hidden="true">🇺🇦</span><span class="lang-code">UA</span></button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false" aria-label="English"><span class="lang-flag" aria-hidden="true">🇬🇧</span><span class="lang-code">EN</span></button>
+    </div>
+    <a href="/profile.html" class="user-avatar" title="Профіль" aria-label="Профіль">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="mobile-nav" id="mobile-nav">
+  <a href="/download.html" class="header-download" aria-current="page" data-i18n="nav.download">Незабаром</a>
+  <a href="/dine.html">Dine</a>
+  <a href="/working.html">Working</a>
+  <a href="/moments.html">Moments</a>
+  <a href="/business.html">Business</a>
+</div>
+
+<main class="dl-shell">
+  <section class="dl-hero" aria-labelledby="dl-hero-h1">
+    <p class="dl-eyebrow" data-i18n="dl.eyebrow">PROSTIR · РЕЛІЗ НА iOS</p>
+    <h1 class="dl-h1" id="dl-hero-h1" data-i18n="dl.h1">Скоро в App Store — лічильник уже пішов</h1>
+    <p class="dl-sub" data-i18n="dl.sub">Ми на фінішній прямій: нижче не макети «на потім», а живий інтерфейс — місто, заклади, твій профіль у noir-ритмі. Залишайся в контакті: коли з’явиться «Отримати», перший тап має бути твій.</p>
+  </section>
+
+  <section class="dl-feature" aria-labelledby="dl-s1-h">
+    <div class="dl-feature__copy">
+      <p class="dl-kicker" data-i18n="dl.s1.k">01 · Місто</p>
+      <h2 class="dl-h2" id="dl-s1-h" data-i18n="dl.s1.h">Карта та партнерська мережа в одному ритмі</h2>
+      <p class="dl-lead" data-i18n="dl.s1.p">Бачиш місто як шар: заклади поруч, маршрут і контекст — без зайвого шуму.</p>
+    </div>
+    <figure class="dl-feature__shot">
+      <img src="/assets/app-store/screen_intro.png" alt="" width="551" height="1024" loading="lazy" decoding="async"/>
+    </figure>
+  </section>
+
+  <section class="dl-feature dl-feature--flip" aria-labelledby="dl-s2-h">
+    <div class="dl-feature__copy">
+      <p class="dl-kicker" data-i18n="dl.s2.k">02 · Заклади</p>
+      <h2 class="dl-h2" id="dl-s2-h" data-i18n="dl.s2.h">Пошук і бронь без тертя</h2>
+      <p class="dl-lead" data-i18n="dl.s2.p">Фільтри, статус залу та чіткий наступний крок — щоб зайти, а не «заповнити форму».</p>
+    </div>
+    <figure class="dl-feature__shot">
+      <img src="/assets/app-store/screen_menu.png" alt="" width="548" height="1024" loading="lazy" decoding="async"/>
+    </figure>
+  </section>
+
+  <section class="dl-feature" aria-labelledby="dl-s3-h">
+    <div class="dl-feature__copy">
+      <p class="dl-kicker" data-i18n="dl.s3.k">03 · Профіль</p>
+      <h2 class="dl-h2" id="dl-s3-h" data-i18n="dl.s3.h">Налаштування, приватність і оплата під контролем</h2>
+      <p class="dl-lead" data-i18n="dl.s3.p">Тема, мова, ghost mode і Safe Exit — все поруч, у зрозумілій bento-сітці.</p>
+    </div>
+    <figure class="dl-feature__shot">
+      <img src="/assets/app-store/screen_settings.png" alt="" width="551" height="1024" loading="lazy" decoding="async"/>
+    </figure>
+  </section>
+</main>
+
+<script>
+(function(){
+  const dock = document.getElementById('dock');
+  window.addEventListener('scroll', function(){
+    if (dock) dock.classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  const btn = document.getElementById('hamburger');
+  const drawer = document.getElementById('mobile-nav');
+  if (btn && drawer) {
+    btn.addEventListener('click', function(){
+      const open = drawer.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+      const s = btn.querySelectorAll('span');
+      if (open) {
+        s[0].style.transform = 'translateY(6.5px) rotate(45deg)';
+        s[1].style.opacity = '0';
+        s[2].style.transform = 'translateY(-6.5px) rotate(-45deg)';
+      } else {
+        s.forEach(function(x){ x.style.transform = ''; x.style.opacity = ''; });
+      }
+    });
+  }
+
+  const T = {
+    ua: {
+      nav: { download: 'Незабаром' },
+      common: { quickLogin: 'Вхід через Дію' },
+      dl: {
+        eyebrow: 'PROSTIR · РЕЛІЗ НА iOS',
+        h1: 'Скоро в App Store — лічильник уже пішов',
+        sub: 'Ми на фінішній прямій: нижче не макети «на потім», а живий інтерфейс — місто, заклади, твій профіль у noir-ритмі. Залишайся в контакті: коли з’явиться «Отримати», перший тап має бути твій.',
+        s1: { k: '01 · Місто', h: 'Карта, яка веде тебе далі за навігатор', p: 'Партнерська мережа, контекст і маршрут — без шуму й зайвих екранів. Місто як один шар, а ти всередині.' },
+        s2: { k: '02 · Заклади', h: 'Зайти, а не «заповнити форму»', p: 'Пошук, фільтри й статус залу в одному диханні. Менше тертя — більше вайбу до того, як ти вже за столом.' },
+        s3: { k: '03 · Профіль', h: 'Твої правила: тема, приватність, оплата', p: 'Ghost mode, Safe Exit, мова й тема — у чистій bento-сітці. Усе під рукою, коли застосунок стане твоїм щоденним ритмом.' },
+      },
+    },
+    en: {
+      nav: { download: 'Coming soon' },
+      common: { quickLogin: 'Sign in with Diia' },
+      dl: {
+        eyebrow: 'PROSTIR · iOS LAUNCH',
+        h1: 'App Store — the countdown is on',
+        sub: 'We’re on the home stretch. What you see below isn’t “someday” mockups — it’s the live UI: your city, venues, your profile in full noir rhythm. Stay close. When Get appears, you’ll want to be first in line.',
+        s1: { k: '01 · City', h: 'A map that takes you past the obvious', p: 'Partner network, context, route — no clutter. One layer for the city; you’re already inside.' },
+        s2: { k: '02 · Venues', h: 'Walk in — don’t wrestle a form', p: 'Search, filters, floor status in one breath. Less friction, more anticipation before you’re seated.' },
+        s3: { k: '03 · Profile', h: 'Your rules: look, privacy, pay', p: 'Ghost mode, Safe Exit, language, theme — clean bento grid. Ready for the day the app becomes your daily cadence.' },
+      },
+    },
+  };
+
+  function apply(lang) {
+    var t = T[lang];
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var path = el.getAttribute('data-i18n');
+      var parts = path.split('.');
+      var cur = t;
+      for (var i = 0; i < parts.length; i++) {
+        cur = cur && cur[parts[i]];
+      }
+      if (typeof cur === 'string') el.textContent = cur;
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang ? 'true' : 'false');
+    });
+    try { localStorage.setItem('prostir_lang', lang); } catch (e) {}
+  }
+
+  var saved = localStorage.getItem('prostir_lang') === 'en' ? 'en' : 'ua';
+  apply(saved);
+
+  var switcher = document.getElementById('lang-switch');
+  if (switcher) {
+    switcher.querySelectorAll('.lang-btn').forEach(function(b){
+      b.addEventListener('click', function(){
+        apply(b.getAttribute('data-lang') === 'en' ? 'en' : 'ua');
+      });
+    });
+  }
+})();
+</script>
+<script src="/shell-enhancements.js" defer></script>
+</body>
+</html>
