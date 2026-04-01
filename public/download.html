@@ -120,17 +120,21 @@
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: flex-end;
       gap: 0;
-      width: 100%;
+      /* Критично: не width:100% — інакше flex-діти з width:100% img роз’їжджаються на весь ряд */
+      width: fit-content;
+      max-width: 100%;
+      margin-inline: auto;
       overflow: visible;
     }
     .dl-trio__shot {
       margin: 0;
       padding: 0;
       flex: 0 0 auto;
-      width: auto;
+      width: fit-content;
+      min-width: 0;
       max-width: none;
       background: transparent;
       border: none;
@@ -138,11 +142,11 @@
       box-shadow: none;
     }
     .dl-trio__shot img {
-      width: 100%;
-      max-width: 280px;
+      width: auto;
+      max-width: min(280px, 29vw);
       height: auto;
       display: block;
-      margin-inline: auto;
+      margin-inline: 0;
       border: 0;
       outline: 0;
       border-radius: 0;
@@ -156,28 +160,28 @@
       transform: translateY(clamp(-0.55rem, -2.2vw, -0.25rem));
     }
     .dl-trio__shot--center img {
-      max-width: min(100%, 320px);
+      max-width: min(320px, 33vw);
     }
-    /* Майже «склеєні»: flex без широких grid-клітин + сильне перекриття (~32–38% ширини макета) */
+    /* Перекриття: підігнано під реальну ширину макетів після fit-content */
     @media (min-width: 521px) {
       .dl-trio__shot:nth-child(2),
       .dl-trio__shot:nth-child(3) {
-        margin-left: clamp(-5.75rem, -19vw, -3.25rem);
+        margin-left: clamp(-6.25rem, -21vw, -3.5rem);
       }
     }
     @media (max-width: 520px) {
       .dl-trio__shot:nth-child(2),
       .dl-trio__shot:nth-child(3) {
-        margin-left: clamp(-3.25rem, -16vw, -1.85rem);
+        margin-left: clamp(-3.75rem, -18vw, -2rem);
       }
       .dl-trio__shot--center {
         transform: translateY(clamp(-0.35rem, -1.8vw, -0.12rem));
       }
       .dl-trio__shot img {
-        max-width: none;
+        max-width: min(200px, 30vw);
       }
       .dl-trio__shot--center img {
-        max-width: none;
+        max-width: min(220px, 34vw);
       }
     }
 
