@@ -147,15 +147,27 @@
       background: transparent;
       object-fit: contain;
     }
+    .dl-trio__shot--center {
+      position: relative;
+      z-index: 2;
+      transform: translateY(clamp(-0.55rem, -2.2vw, -0.25rem));
+    }
     .dl-trio__shot--center img {
       max-width: min(100%, 320px);
     }
+    /* Щільне «з’єднання» — легке перекриття між сусідніми телефонами */
     @media (min-width: 521px) {
       .dl-trio__shot:not(:first-child) {
-        margin-left: clamp(-1.25rem, -3vw, -0.35rem);
+        margin-left: clamp(-2.85rem, -9vw, -1.35rem);
       }
     }
     @media (max-width: 520px) {
+      .dl-trio__shot:not(:first-child) {
+        margin-left: clamp(-1.1rem, -5.5vw, -0.35rem);
+      }
+      .dl-trio__shot--center {
+        transform: translateY(clamp(-0.35rem, -1.8vw, -0.12rem));
+      }
       .dl-trio__shot img {
         max-width: none;
       }
