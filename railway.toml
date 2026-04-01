@@ -1,0 +1,10 @@
+# PROSTIR — Express + static `public/` (not Next.js).
+# https://docs.railway.com/reference/config-as-code
+[build]
+buildCommand = "npm ci && npm run build"
+
+[deploy]
+startCommand = "node server.js"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 30
+restartPolicyType = "ON_FAILURE"
