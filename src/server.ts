@@ -22,6 +22,23 @@ app.use(
 );
 app.use(express.json({ limit: '32kb' }));
 
+/** Admin UI — must run before `express.static` so `/admin/leads` is never swallowed by static (no `leads` file without extension). */
+const adminLeadsHtml = path.resolve(__root, 'public', 'admin', 'leads.html');
+function sendAdminLeadsHtml(res: express.Response): void {
+  if (!IS_PROD) {
+    res.setHeader('Cache-Control', 'no-store');
+  }
+  res.type('html');
+  res.sendFile(adminLeadsHtml, (err) => {
+    if (err) {
+      res.status(404).type('text').send('Admin panel: leads.html not found on server.');
+    }
+  });
+}
+app.get(['/admin/leads', '/admin/leads/'], (_req, res) => {
+  sendAdminLeadsHtml(res);
+});
+
 const staticOpts = {
   maxAge: IS_PROD ? '7d' : 0,
   etag: true,
@@ -42,13 +59,6 @@ app.get('/', (_req, res) => {
 app.use('/auth/diia', diiaRouter);
 app.use('/api/venue', venueRouter);
 app.use('/api/admin', leadsAdminRouter);
-
-app.get('/admin/leads', (_req, res) => {
-  if (!IS_PROD) {
-    res.setHeader('Cache-Control', 'no-store');
-  }
-  res.sendFile(path.join(__root, 'public', 'admin', 'leads.html'));
-});
 
 app.get('/venue', (_req, res) => {
   res.sendFile(path.join(__root, 'public', 'venue.html'));
