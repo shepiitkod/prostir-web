@@ -8,6 +8,7 @@ import {
   getVenueNotifyTo,
   type VenueRegisterPayload,
 } from '../services/venue-register-mail';
+import { createLeadFromVenueRegistration } from '../services/lead.service';
 
 const MAX = 240;
 const MAX_LINK = 2000;
@@ -72,6 +73,7 @@ venueRouter.post('/register', async (req, res) => {
       text,
       html,
     });
+    void createLeadFromVenueRegistration(parsed.data);
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     console.error('[PROSTIR] Venue register: не вдалося надіслати лист:', msg);

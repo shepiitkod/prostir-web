@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { diiaRouter } from './controllers/diia.controller';
 import { venueRouter } from './controllers/venue.controller';
+import { leadsAdminRouter } from './controllers/leads-admin.controller';
 import { ensureUsersTable } from './db/pool';
 
 const app = express();
@@ -40,6 +41,14 @@ app.get('/', (_req, res) => {
 
 app.use('/auth/diia', diiaRouter);
 app.use('/api/venue', venueRouter);
+app.use('/api/admin', leadsAdminRouter);
+
+app.get('/admin/leads', (_req, res) => {
+  if (!IS_PROD) {
+    res.setHeader('Cache-Control', 'no-store');
+  }
+  res.sendFile(path.join(__root, 'public', 'admin', 'leads.html'));
+});
 
 app.get('/venue', (_req, res) => {
   res.sendFile(path.join(__root, 'public', 'venue.html'));
