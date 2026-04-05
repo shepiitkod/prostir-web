@@ -22,6 +22,13 @@ app.use(
 );
 app.use(express.json({ limit: '32kb' }));
 
+const staticOpts = {
+  maxAge: IS_PROD ? '7d' : 0,
+  etag: true,
+  lastModified: true,
+  index: false,
+} as const;
+
 /** Admin UI — must run before `express.static` so `/admin/leads` is never swallowed by static (no `leads` file without extension). */
 const adminLeadsHtml = path.resolve(__root, 'public', 'admin', 'leads.html');
 function sendAdminLeadsHtml(res: express.Response): void {
@@ -39,12 +46,17 @@ app.get(['/admin/leads', '/admin/leads/'], (_req, res) => {
   sendAdminLeadsHtml(res);
 });
 
-const staticOpts = {
-  maxAge: IS_PROD ? '7d' : 0,
-  etag: true,
-  lastModified: true,
-  index: false,
-} as const;
+/** Лог адмін-запитів + явна роздача `public/admin` (leads-app.js тощо). Шлях на диску: <repo>/public/admin — те саме, що потрапляє в Railway разом із репо. */
+const adminPublicDir = path.join(__root, 'public', 'admin');
+app.use(
+  '/admin',
+  (req, _res, next) => {
+    console.log(`[PROSTIR] Admin request: ${req.method} ${req.originalUrl}`);
+    next();
+  },
+  express.static(adminPublicDir, { ...staticOpts, index: false })
+);
+
 app.use(express.static(path.join(__root, 'public'), { ...staticOpts }));
 app.use('/media', express.static(__root, { ...staticOpts, index: false }));
 
