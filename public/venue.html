@@ -317,6 +317,22 @@
       color: rgba(255, 255, 255, 0.55);
       border-bottom-color: rgba(255, 255, 255, 0.22);
     }
+    .vn-foot {
+      position: relative;
+      z-index: 1;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .vn-foot .footer-offer {
+      font-size: 0.56rem;
+    }
     @media (max-width: 480px) {
       .vn-root {
         padding: var(--vn-space-6) var(--vn-space-3) var(--vn-space-6);
@@ -347,6 +363,9 @@
     <div class="vn-scene-glow"></div>
   </div>
   <div id="venue-root"></div>
+  <footer class="vn-foot">
+    <a href="/legal.html" class="footer-offer">Публічна оферта</a>
+  </footer>
   <script src="/venue-register.bundle.js"></script>
 </body>
 </html>

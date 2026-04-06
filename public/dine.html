@@ -1676,6 +1676,13 @@
   .dine-page .footer-links a {
     color: rgba(255, 255, 255, 0.46);
   }
+  .dine-page .footer-offer {
+    color: rgba(196, 181, 253, 0.92);
+    border-color: rgba(139, 92, 246, 0.45);
+  }
+  .dine-page .footer-offer:hover {
+    color: #fff;
+  }
   @keyframes dfBreathViolet {
     0%, 100% { transform: scale(0.94); opacity: 0.12; }
     50% { transform: scale(1.08); opacity: 0.2; }
@@ -2415,6 +2422,7 @@
   <div class="footer-inner">
     <a class="footer-logo" href="/"><span class="lp">PR</span><span class="lo">O</span><span class="lrest">STIR</span></a>
     <span class="footer-copy">© 2026 PROSTIR · Urban OS · Kyiv</span>
+    <a href="/legal.html" class="footer-offer">Публічна оферта</a>
     <nav class="footer-links"><a href="#">Умови</a><a href="#">Конфіденційність</a><a href="#">Контакти</a><a href="#" class="faq-link">FAQ</a><a href="/profile.html">Профіль</a></nav>
   </div>
 </footer>
@@ -2835,6 +2843,8 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
     const dl=$('dine-demo-label'); if(dl) dl.textContent=t.demo;
     if(Array.isArray(t.mosaic)){ t.mosaic.forEach((cell,i)=>{ const n=i+1; const kk=$(`dmc-${n}-k`); const dd=$(`dmc-${n}-d`); if(kk) kk.textContent=cell.k; if(dd) dd.textContent=cell.d; }); }
     const asaT=$('asa-title'); if(asaT) asaT.textContent=t.activeSession;
+    const footerOffer=document.querySelector('footer .footer-offer');
+    if(footerOffer) footerOffer.textContent=lang==='en'?'Public offer':'Публічна оферта';
     const footerLinks=document.querySelectorAll('.footer-links a');
     if(footerLinks[0]) footerLinks[0].textContent=lang==='en'?'Terms':'Умови';
     if(footerLinks[1]) footerLinks[1].textContent=lang==='en'?'Privacy':'Конфіденційність';
@@ -2966,6 +2976,8 @@ $('sew-cancel').addEventListener('click',()=>{$('sew').classList.remove('active'
     const cityLabel=$('df-city-label'); if(cityLabel) cityLabel.textContent=t.bento.cityLabel;
     const cityCopy=$('df-city-copy'); if(cityCopy) cityCopy.textContent=t.bento.cityCopy;
     const cityActive=$('df-city-active'); if(cityActive) cityActive.textContent=t.bento.cityActive;
+    const footerOffer2=document.querySelector('footer .footer-offer');
+    if(footerOffer2) footerOffer2.textContent=lang==='en'?'Public offer':'Публічна оферта';
     const footerLinks=document.querySelectorAll('.footer-links a');
     if(footerLinks[0]) footerLinks[0].textContent=lang==='en'?'Terms':'Умови';
     if(footerLinks[1]) footerLinks[1].textContent=lang==='en'?'Privacy':'Конфіденційність';

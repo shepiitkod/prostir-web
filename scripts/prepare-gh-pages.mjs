@@ -77,6 +77,8 @@ const ROOT_FILES = new Set([
   'delight.js',
   'faq.js',
   'legal.js',
+  'legal.html',
+  'oferta.html',
 ]);
 
 function rewriteJs(content, prefix) {

@@ -1070,9 +1070,47 @@ footer { padding: 2.5rem; border-top: 1px solid var(--grey-line); background: va
 .footer-logo .lrest { color: var(--grey-faint); }
 .footer-logo:hover .lo { text-shadow: 0 0 16px rgba(139,92,246,0.5); }
 .footer-copy { font-family: var(--font-mono); font-size: 0.66rem; color: var(--grey-muted); letter-spacing: 0.04em; }
-.footer-links { display: flex; gap: 1.5rem; }
+.footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
 .footer-links a { font-size: 0.78rem; color: var(--grey-muted); text-decoration: none; transition: color 0.2s; }
 .footer-links a:hover { color: var(--jet); }
+/* CTA to public offer — visible even when .footer-links is hidden on narrow screens */
+.footer-offer {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid rgba(139, 92, 246, 0.42);
+  border-radius: 2px;
+  color: rgba(139, 92, 246, 0.95);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.footer-offer:hover {
+  color: #fff;
+  border-color: rgba(139, 92, 246, 0.75);
+  background: rgba(139, 92, 246, 0.12);
+}
+.biz-footer-links a.footer-offer {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid rgba(139, 92, 246, 0.42);
+  border-radius: 2px;
+  color: rgba(196, 181, 253, 0.95);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.biz-footer-links a.footer-offer:hover {
+  color: #fff;
+  border-color: rgba(139, 92, 246, 0.7);
+  background: rgba(139, 92, 246, 0.12);
+}
 
 /* ═══════════════════════════════════════
    RESPONSIVE
@@ -1100,6 +1138,7 @@ footer { padding: 2.5rem; border-top: 1px solid var(--grey-line); background: va
   .desk-grid { grid-template-columns: 1fr; }
   .safe-exit-widget { left: 0.75rem; right: 0.75rem; min-width: 0; max-width: none; bottom: 1rem; }
   .footer-links { display: none; }
+  .footer-inner .footer-offer { margin-left: auto; }
 }
 @media (max-width: 560px) {
   .dine-map svg { width: 100%; max-width: 100%; height: auto; }

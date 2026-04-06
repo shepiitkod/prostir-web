@@ -253,6 +253,7 @@
   <div class="footer-inner">
     <a class="footer-logo" href="/"><span class="lp">PR</span><span class="lo">O</span><span class="lrest">STIR</span></a>
     <span class="footer-copy">© 2026 PROSTIR · Urban OS · Kyiv &nbsp;·&nbsp; <span style="color:rgba(139,92,246,0.7);font-size:0.6rem;">✓ verified by Дія</span></span>
+    <a href="/legal.html" class="footer-offer">Публічна оферта</a>
     <nav class="footer-links"><a href="#">Умови</a><a href="#">Конфіденційність</a><a href="#">Контакти</a><a href="#" class="faq-link">FAQ</a><a href="/profile.html">Профіль</a></nav>
   </div>
 </footer>
@@ -453,6 +454,8 @@ function renderSpaces(lang){
     const dl = $('work-demo-label'); if(dl) dl.textContent = exp.demo;
     const vsub = document.querySelector('.venue-sub'); if(vsub) vsub.innerHTML = lang==='en'?'Velyka Vasylkivska St, 100 &nbsp;·&nbsp; 3rd floor':'Вул. Велика Васильківська, 100 &nbsp;·&nbsp; 3-й поверх';
     document.querySelectorAll('.desk-reserve-btn').forEach(b=>b.textContent=t[lang].common.reserve);
+    const footerOffer = document.querySelector('footer .footer-offer');
+    if (footerOffer) footerOffer.textContent = lang === 'en' ? 'Public offer' : 'Публічна оферта';
     const footerLinks = document.querySelectorAll('.footer-links a');
     if(footerLinks[0]) footerLinks[0].textContent = lang==='en'?'Terms':'Умови';
     if(footerLinks[1]) footerLinks[1].textContent = lang==='en'?'Privacy':'Конфіденційність';

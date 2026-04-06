@@ -2534,6 +2534,7 @@
     </div>
     <nav class="biz-footer-links" aria-label="Footer navigation">
       <a href="/" id="biz-footer-home">Головна</a>
+      <a href="/legal.html" class="footer-offer" id="biz-footer-offer">Публічна оферта</a>
       <a href="/dine.html">Dine</a>
       <a href="/working.html">Working</a>
       <a href="/moments.html">Moments</a>
@@ -3279,7 +3280,7 @@
         btn2: 'Завантажити презентацію',
         fine: 'Інтеграція займає менше 48 годин · Підтримка 24/7 · Без прихованих комісій',
       },
-      footer: { home:'Головна' },
+      footer: { home:'Головна', offer:'Публічна оферта' },
     },
     en: {
       nav: { dine:'Dine', working:'Working', moments:'Moments', business:'Business', download:'Coming soon' },
@@ -3413,7 +3414,7 @@
         btn2: 'Download presentation',
         fine: 'Integration takes less than 48 hours · 24/7 support · No hidden fees',
       },
-      footer: { home:'Home' },
+      footer: { home:'Home', offer:'Public offer' },
     }
   };
 
@@ -3618,6 +3619,7 @@
 
     /* footer */
     const footerHome = document.querySelector('.biz-footer-links a[href="/"]'); if(footerHome) footerHome.textContent=t.footer.home;
+    const footerOfferBiz = document.getElementById('biz-footer-offer'); if(footerOfferBiz) footerOfferBiz.textContent=t.footer.offer;
 
     /* lang-switch active state */
     switcher.querySelectorAll('.lang-btn').forEach(b=>{

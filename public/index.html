@@ -1914,6 +1914,7 @@
   <div class="footer-inner">
     <a class="footer-logo" href="/" aria-label="PROSTIR"><span class="lp">PR</span><span class="lo">O</span><span class="lrest">STIR</span></a>
     <span class="footer-copy">© 2026 PROSTIR · Urban OS · Kyiv &nbsp;·&nbsp; <span style="color:rgba(139,92,246,0.7);font-size:0.6rem;">✓ verified by Дія</span></span>
+    <a href="/legal.html" class="footer-offer" data-i18n="footer.offer">Публічна оферта</a>
     <nav class="footer-links" aria-label="Footer navigation"><a href="#" data-i18n="footer.terms">Умови</a><a href="#" data-i18n="footer.privacy">Конфіденційність</a><a href="#" data-i18n="footer.contacts">Контакти</a><a href="#" class="faq-link" data-i18n="footer.faq">FAQ</a><a href="/profile.html" data-i18n="footer.profile">Профіль</a></nav>
   </div>
 </footer>
@@ -2288,7 +2289,7 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
           c5p: 'Один підпис через Дію замінює будь-яку реєстрацію. Zero password. 100% верифіковано.',
           c5r1l: 'Верифікація', c5r1b: 'Активна', c5r2l: 'Підпис', c5r2b: 'Дія · Digital',
         },
-        footer: { terms:'Умови', privacy:'Конфіденційність', contacts:'Контакти', faq:'FAQ', profile:'Профіль' },
+        footer: { offer:'Публічна оферта', terms:'Умови', privacy:'Конфіденційність', contacts:'Контакти', faq:'FAQ', profile:'Профіль' },
         hiw: {
           eyebrow:'01 &nbsp;·&nbsp; Як це працює',
           h2:'Три кроки.<br>Весь міський ритм.',
@@ -2382,7 +2383,7 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
           c5p: 'One Diia signature replaces any registration. Zero password. 100% verified.',
           c5r1l: 'Verification', c5r1b: 'Active', c5r2l: 'Signature', c5r2b: 'Diia · Digital',
         },
-        footer: { terms:'Terms', privacy:'Privacy', contacts:'Contacts', faq:'FAQ', profile:'Profile' },
+        footer: { offer:'Public offer', terms:'Terms', privacy:'Privacy', contacts:'Contacts', faq:'FAQ', profile:'Profile' },
         hiw: {
           eyebrow:'01 &nbsp;·&nbsp; How it works',
           h2:'Three steps.<br>The full city rhythm.',
@@ -2519,6 +2520,8 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
       setHIW('hiw-t2','hiw-d2','hiw-tag2',hiw.t2,hiw.d2,hiw.tag2);
       setHIW('hiw-t3','hiw-d3','hiw-tag3',hiw.t3,hiw.d3,hiw.tag3);
 
+      const footerOffer = document.querySelector('footer .footer-offer');
+      if (footerOffer) footerOffer.textContent = translations[lang].footer.offer;
       const footerLinks = document.querySelectorAll('.footer-links a');
       if(footerLinks[0]) footerLinks[0].textContent = translations[lang].footer.terms;
       if(footerLinks[1]) footerLinks[1].textContent = translations[lang].footer.privacy;

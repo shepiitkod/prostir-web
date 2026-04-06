@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="uk" class="legal-scroll-root">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Публічна оферта PROSTIR — повний текст."/>
+  <title>PROSTIR — Публічна оферта</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #000000;
+      --fg: #ffffff;
+      --fg-soft: rgba(255, 255, 255, 0.82);
+      --fg-dim: rgba(255, 255, 255, 0.5);
+      --tui-gray: #444444;
+      --line: rgba(255, 255, 255, 0.1);
+      --violet: #7c3aed;
+      --violet-alt: #8b5cf6;
+      --violet-glow: rgba(124, 58, 237, 0.5);
+      --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html.legal-scroll-root {
+      scroll-behavior: smooth;
+      scroll-padding-top: 2rem;
+    }
+
+    body.legal-noir {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--fg-soft);
+      font-family: var(--sans);
+      font-size: 1.02rem;
+      line-height: 1.78;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .legal-grain {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+    }
+
+    .legal-shell {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1.65rem clamp(1rem, 4vw, 1.75rem) 0;
+    }
+
+    .legal-shell-panel {
+      border: none;
+      padding: 0 0 2rem;
+      margin-bottom: 0.25rem;
+      background: transparent;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .legal-shell-panel::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+    .legal-shell-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.25rem;
+      padding-bottom: 0.85rem;
+      margin-bottom: 0;
+    }
+
+    .legal-shell-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.4rem;
+      min-width: 0;
+    }
+
+    .text-violet-500 {
+      color: #8b5cf6;
+    }
+
+    .legal-os-logo {
+      font-size: 1.02rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--fg);
+      font-family: var(--mono);
+      line-height: 1.2;
+    }
+    .legal-os-logo .text-violet-500 {
+      text-shadow: 0 0 16px rgba(139, 92, 246, 0.55), 0 0 32px rgba(124, 58, 237, 0.28);
+    }
+
+    .legal-status-bar {
+      font-family: var(--mono);
+      font-size: 0.54rem;
+      letter-spacing: 0.1em;
+      color: var(--tui-gray);
+      line-height: 1.5;
+      margin: 0;
+    }
+    .legal-status-bar .legal-status-w {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .legal-shell-bar {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.25rem 0.45rem;
+      padding: 0.65rem 0 1.5rem;
+      align-items: start;
+    }
+    @media (max-width: 720px) {
+      .legal-shell-bar { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 400px) {
+      .legal-shell-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    .legal-shell-cell {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      padding: 0.35rem 0.25rem;
+      min-width: 0;
+      border: none;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .legal-shell-cell:hover .legal-shell-cell__t {
+      color: rgba(255, 255, 255, 0.88);
+    }
+    .legal-shell-cell__n {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--tui-gray);
+      line-height: 1.35;
+    }
+    .legal-shell-cell--active .legal-shell-cell__n {
+      color: #c4b5fd;
+      text-shadow:
+        0 0 10px rgba(139, 92, 246, 0.95),
+        0 0 22px rgba(124, 58, 237, 0.55),
+        0 0 36px rgba(91, 33, 182, 0.35);
+    }
+    .legal-shell-cell__t {
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: none;
+      color: rgba(255, 255, 255, 0.42);
+      line-height: 1.25;
+    }
+    .legal-shell-cell:focus-visible {
+      outline: 1px solid var(--violet-alt);
+      outline-offset: 2px;
+    }
+
+    .legal-print-btn {
+      font-family: var(--mono);
+      font-size: 0.54rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.38);
+      background: transparent;
+      border: none;
+      padding: 0.5rem 0.15rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      align-self: flex-start;
+      transition: color 0.15s, text-shadow 0.15s;
+    }
+    .legal-print-btn:hover {
+      color: rgba(255, 255, 255, 0.92);
+      text-shadow: 0 0 16px rgba(124, 58, 237, 0.35);
+    }
+    .legal-print-btn:focus-visible {
+      outline: 1px solid var(--violet-alt);
+      outline-offset: 3px;
+    }
+
+    .legal-main {
+      position: relative;
+      z-index: 1;
+      padding-bottom: 3rem;
+    }
+
+    .legal-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 clamp(1rem, 4vw, 1.5rem) 2.5rem;
+    }
+
+    .legal-doc-front {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--fg-dim);
+      margin: 0 0 0.4rem;
+    }
+    .legal-doc-front:first-of-type {
+      font-size: 0.74rem;
+      letter-spacing: 0.24em;
+      color: var(--fg-soft);
+      margin-top: 0.15rem;
+    }
+
+    .legal-meta {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--fg-dim);
+      margin: 1.5rem 0 0.85rem;
+    }
+
+    .legal-h1 {
+      font-family: var(--mono);
+      font-size: clamp(0.78rem, 2vw, 0.9rem);
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-align: center;
+      margin: 0 0 0.55rem;
+      color: var(--fg);
+    }
+    .legal-sub {
+      text-align: center;
+      color: var(--fg-dim);
+      font-size: 0.92rem;
+      margin: 0 0 1.65rem;
+      line-height: 1.65;
+    }
+
+    .legal-law {
+      display: block;
+      margin: 0 0 1.85rem;
+      padding: 1rem 1.05rem;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.02);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s;
+    }
+    .legal-law:hover {
+      border-color: rgba(139, 92, 246, 0.35);
+    }
+    .legal-law__k {
+      font-family: var(--mono);
+      font-size: 0.54rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fg-dim);
+      margin-bottom: 0.35rem;
+    }
+    .legal-law__t { font-weight: 600; font-size: 0.98rem; color: var(--fg); }
+    .legal-law__u {
+      font-family: var(--mono);
+      font-size: 0.64rem;
+      color: var(--fg-dim);
+      margin-top: 0.45rem;
+      word-break: break-all;
+    }
+
+    .legal-p { margin: 0 0 1.05rem; color: var(--fg-soft); }
+
+    a.legal-zakon-ref {
+      color: var(--fg);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.08);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    a.legal-zakon-ref:hover {
+      border-bottom-color: rgba(139, 92, 246, 0.55);
+      box-shadow: 0 0 22px rgba(139, 92, 246, 0.18);
+    }
+
+    .legal-wrap a:not(.legal-law):not(.legal-os-logo):not(.legal-shell-cell):not(.legal-foot a):not(.legal-endnote a) {
+      color: var(--fg-soft);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(255, 255, 255, 0.35);
+    }
+    .legal-wrap a:not(.legal-law):not(.legal-os-logo):not(.legal-shell-cell):not(.legal-foot a):not(.legal-endnote a):hover {
+      color: var(--fg);
+      text-decoration-color: rgba(255, 255, 255, 0.55);
+    }
+
+    .legal-section {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line);
+    }
+    .legal-section h2 {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      margin: 0 0 1.05rem;
+      padding-bottom: 0.55rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--fg);
+    }
+    .legal-section h3 {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin: 1.15rem 0 0.7rem;
+      color: var(--fg-dim);
+    }
+
+    .legal-list { margin: 0 0 1.15rem; }
+    .legal-li {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      margin: 0 0 0.5rem;
+      padding: 0;
+      line-height: 1.72;
+      color: var(--fg-soft);
+    }
+    .legal-li__m {
+      flex: 0 0 0.85rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.35);
+      line-height: 1.72;
+      user-select: none;
+    }
+    .legal-li__t { flex: 1; min-width: 0; }
+
+    .legal-def {
+      position: relative;
+      margin: 0 0 0.9rem;
+      line-height: 1.75;
+      padding-left: 1rem;
+      border: none;
+      color: var(--fg-soft);
+    }
+    .legal-def::before {
+      content: '~';
+      position: absolute;
+      left: 0;
+      top: 0.05em;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.32);
+      user-select: none;
+    }
+    .legal-def strong { font-weight: 600; color: var(--fg); }
+
+    .legal-split-wrap { margin: 1.2rem 0 1.6rem; }
+    .legal-split-caption--en {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+      color: var(--fg-dim);
+      margin: 0 0 0.85rem;
+    }
+    .legal-split-note {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      line-height: 1.65;
+      color: var(--fg-dim);
+      margin: 1rem 0 0;
+    }
+
+    .legal-split-footnote {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.38);
+      margin: 0.65rem 0 0;
+      letter-spacing: 0.02em;
+    }
+
+    .legal-split-table-outer {
+      border: none;
+      border-radius: 3px;
+      padding: 2px;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(124, 58, 237, 0.04) 45%, transparent 65%);
+      filter:
+        drop-shadow(0 0 32px rgba(139, 92, 246, 0.45))
+        drop-shadow(0 0 64px rgba(91, 33, 182, 0.2))
+        drop-shadow(0 16px 48px rgba(0, 0, 0, 0.55));
+    }
+
+    .legal-split-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      background: var(--bg);
+    }
+    .legal-split-table:focus-visible {
+      outline: 1px solid var(--violet);
+      outline-offset: 4px;
+    }
+    .legal-split-table th,
+    .legal-split-table td {
+      padding: 0.75rem 0.85rem;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+    .legal-split-table tbody tr {
+      transition: background 0.15s ease;
+    }
+    .legal-split-table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .legal-split-table thead th {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-dim);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.25);
+    }
+    .legal-split-col-share {
+      width: 6.5rem;
+      text-align: right;
+    }
+    .legal-split-mono {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      color: var(--fg);
+      text-align: right;
+      white-space: nowrap;
+    }
+    .legal-split-table tbody tr:last-child td {
+      border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .legal-split-table tfoot tr.legal-split-total th,
+    .legal-split-table tfoot tr.legal-split-total td {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      padding-top: 0.95rem;
+      padding-bottom: 0.85rem;
+      border-bottom: none;
+      color: var(--fg);
+    }
+    .legal-split-table tfoot tr.legal-split-total th {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.58rem;
+      color: var(--violet-alt);
+    }
+
+    .legal-req {
+      margin-top: 0.75rem;
+      border: 1px solid var(--line);
+      padding: 0.85rem 0.75rem;
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    .legal-endnote {
+      margin-top: 2.75rem;
+      padding-top: 1.35rem;
+      border-top: 1px solid var(--line);
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--fg-dim);
+    }
+    .legal-endnote a {
+      color: var(--fg-soft);
+      text-decoration: none;
+      border-bottom: 1px solid var(--line);
+    }
+    .legal-endnote a:hover { color: var(--fg); border-bottom-color: var(--fg-dim); }
+
+    .legal-foot {
+      margin-top: 0;
+      padding: 2.25rem clamp(1rem, 4vw, 1.5rem) 3rem;
+      border-top: 1px solid var(--line);
+      background: #000;
+      position: relative;
+      z-index: 1;
+    }
+    .legal-foot-inner { max-width: 800px; margin: 0 auto; }
+
+    .legal-sys-banner {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--fg-dim);
+      margin: 0 0 1rem;
+    }
+
+    .legal-foot__logo {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      text-decoration: none;
+      color: var(--fg);
+      display: inline-block;
+      margin-bottom: 1.25rem;
+      font-family: var(--mono);
+    }
+    .legal-foot__logo .text-violet-500 {
+      text-shadow: 0 0 12px rgba(139, 92, 246, 0.45);
+    }
+    .legal-foot__logo .legal-foot-rest { color: rgba(255, 255, 255, 0.42); }
+
+    .legal-sys-block {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      line-height: 1.85;
+      color: var(--fg-soft);
+      border: 1px solid var(--line);
+      padding: 1rem 1rem 1rem 0.85rem;
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .legal-sys-line {
+      margin: 0;
+      padding: 0.15rem 0;
+      display: flex;
+      gap: 0.65rem;
+      align-items: baseline;
+    }
+    .legal-sys-line__m {
+      flex: 0 0 1rem;
+      color: var(--fg-dim);
+      user-select: none;
+    }
+    .legal-sys-line__k {
+      flex: 0 0 11.5rem;
+      color: var(--fg-dim);
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .legal-sys-line__v { flex: 1; min-width: 0; color: var(--fg-soft); }
+    @media (max-width: 560px) {
+      .legal-sys-line { flex-wrap: wrap; }
+      .legal-sys-line__k { flex: 1 1 100%; }
+    }
+
+    .legal-foot-copy {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      color: var(--fg-dim);
+      letter-spacing: 0.08em;
+      margin: 1.25rem 0 0;
+    }
+
+    @media print {
+      .legal-grain, .legal-print-btn, .legal-shell { display: none !important; }
+      body.legal-noir { background: #fff; color: #111; }
+      .legal-law, .legal-split-table-outer, .legal-sys-block, .legal-req { border-color: #ccc; }
+      .legal-p, .legal-li, .legal-def, .legal-sys-line__v { color: #222; }
+      .legal-section h2 { color: #000; }
+      a.legal-zakon-ref { color: #000; box-shadow: none; }
+      .legal-split-table-outer { filter: none; }
+    }
+  </style>
+</head>
+<body class="legal-noir">
+<div class="legal-grain" aria-hidden="true"></div>
+
+<div class="legal-shell">
+  <header class="legal-shell-panel" aria-label="PROSTIR · shell">
+    <div class="legal-shell-top">
+      <div class="legal-shell-brand">
+        <a class="legal-os-logo" href="/" aria-label="PROSTIR — головна">PR<span class="text-violet-500">O</span>STIR</a>
+        <p class="legal-status-bar" role="status"><span class="legal-status-w">v1.0.4-LEGAL</span></p>
+      </div>
+      <button type="button" class="legal-print-btn" onclick="window.print()">PRINT TO PDF</button>
+    </div>
+    <nav class="legal-shell-bar" aria-label="Розділи документа">
+        <a class="legal-shell-cell legal-shell-cell--active" href="#s1" data-shell="1" aria-current="true"><span class="legal-shell-cell__n">[ 01 ]</span><span class="legal-shell-cell__t">Definitions</span></a>
+        <a class="legal-shell-cell" href="#s2" data-shell="2"><span class="legal-shell-cell__n">[ 02 ]</span><span class="legal-shell-cell__t">Subject</span></a>
+        <a class="legal-shell-cell" href="#s3" data-shell="3"><span class="legal-shell-cell__n">[ 03 ]</span><span class="legal-shell-cell__t">Services</span></a>
+        <a class="legal-shell-cell" href="#s4" data-shell="4"><span class="legal-shell-cell__n">[ 04 ]</span><span class="legal-shell-cell__t">FEES</span></a>
+        <a class="legal-shell-cell" href="#s5" data-shell="5"><span class="legal-shell-cell__n">[ 05 ]</span><span class="legal-shell-cell__t">Rights</span></a>
+        <a class="legal-shell-cell" href="#s6" data-shell="6"><span class="legal-shell-cell__n">[ 06 ]</span><span class="legal-shell-cell__t">Disputes</span></a>
+        <a class="legal-shell-cell" href="#s7" data-shell="7"><span class="legal-shell-cell__n">[ 07 ]</span><span class="legal-shell-cell__t">Accept</span></a>
+        <a class="legal-shell-cell" href="#s8" data-shell="8"><span class="legal-shell-cell__n">[ 08 ]</span><span class="legal-shell-cell__t">Privacy</span></a>
+        <a class="legal-shell-cell" href="#s9" data-shell="9"><span class="legal-shell-cell__n">[ 09 ]</span><span class="legal-shell-cell__t">Refunds</span></a>
+        <a class="legal-shell-cell" href="#s10" data-shell="10"><span class="legal-shell-cell__n">[ 10 ]</span><span class="legal-shell-cell__t">Final</span></a>
+        <a class="legal-shell-cell" href="#s11" data-shell="11"><span class="legal-shell-cell__n">[ 11 ]</span><span class="legal-shell-cell__t">Registry</span></a>
+    </nav>
+  </header>
+</div>
+
+<main class="legal-main">
+  <div class="legal-wrap">
+    <p class="legal-doc-front">ПУБЛІЧНА ОФЕРТА</p>
+    <p class="legal-doc-front">про надання технологічних послуг</p>
+    <p class="legal-doc-front">Платформа PROSTIR</p>
+    <p class="legal-doc-front">Редакція від: 06 квітня 2026 року</p>
+
+    <p class="legal-meta">prostir.app · public_offer · utf-8</p>
+    <h1 class="legal-h1">Публічна оферта</h1>
+    <p class="legal-sub">Про надання технологічних послуг · платформа PROSTIR</p>
+
+    <a class="legal-law" href="https://zakon.rada.gov.ua/laws/show/1591-20#n11" target="_blank" rel="noopener noreferrer">
+      <div class="legal-law__k">Закон України · платіжні послуги</div>
+      <div class="legal-law__t">«Про платіжні послуги» № 1591-IX</div>
+      <div class="legal-law__u">zakon.rada.gov.ua — офіційний текст</div>
+    </a>
+    <p class="legal-p">Цей документ є офіційною публічною офертою (далі — «Оферта») фізичної особи-підприємця, що діє під комерційним найменуванням PROSTIR (далі — «Виконавець»), адресованою необмеженому колу юридичних осіб та фізичних осіб-підприємців, які здійснюють господарську діяльність у сфері готельно-ресторанного бізнесу (HoReCa), щодо укладення Договору про надання технологічних послуг на умовах, визначених нижче.</p>
+    <p class="legal-p">Відповідно до статті 633 Цивільного кодексу України та положень Закону України «Про електронну комерцію» від 03 вересня 2015 року № 675-VIII, прийняття (акцепт) умов цієї Оферти здійснюється шляхом вчинення конклюдентних дій — реєстрації облікового запису на Платформі PROSTIR та/або здійснення першого платіжного розрахунку із застосуванням технологій Платформи, що підтверджує повне та беззастережне прийняття Замовником усіх умов цієї Оферти без будь-яких застережень або вилучень.</p>
+    <section class="legal-section" id="s1" aria-labelledby="h1">
+      <h2 id="h1">1. ВИЗНАЧЕННЯ ТЕРМІНІВ</h2>
+    <p class="legal-p">У цій Оферті наведені нижче терміни вживаються в такому значенні:</p>
+      <p class="legal-def"><strong>Платформа PROSTIR</strong> — програмно-апаратний комплекс, що включає сукупність технологічних рішень, алгоритмів, API-інтерфейсів, мобільних застосунків та веб-сервісів, розміщених за адресою prostir.app, які забезпечують Послуги ініціювання платіжних операцій та автоматизацію процесів бронювання відповідно до Закону України «Про платіжні послуги» від 30 червня 2021 року <a class="legal-zakon-ref" href="https://zakon.rada.gov.ua/laws/show/1591-20#n11" target="_blank" rel="noopener noreferrer">№ 1591-IX</a>.</p>
+      <p class="legal-def"><strong>Ініціювання платежу (Invisible Checkout)</strong> — технологічна послуга, що полягає у створенні та передачі платіжного доручення від Користувача до уповноваженого надавача платіжних послуг (monobank / Universalbank) через API-інтеграцію Платформи з метою здійснення безготівкового розрахунку без фізичного пред'явлення платіжного інструменту на касі закладу.</p>
+      <p class="legal-def"><strong>Послуга Booking</strong> — технологічний сервіс автоматизованого онлайн-бронювання столиків, послуг або часових слотів у закладах HoReCa, що інтегрований із функцією Ініціювання платежу та дозволяє здійснювати авансову оплату або резервування без особистої присутності Користувача.</p>
+      <p class="legal-def"><strong>Замовник</strong> — юридична особа або фізична особа-підприємець, зареєстрована відповідно до законодавства України, що здійснює господарську діяльність у сфері HoReCa (заклади харчування, готелі, розважальні заклади тощо) та акцептувала умови цієї Оферти у порядку, передбаченому розділом 7.</p>
+      <p class="legal-def"><strong>Користувач</strong> — фізична особа (кінцевий споживач), яка використовує функціонал Платформи PROSTIR для здійснення платіжних операцій та/або бронювання у закладах Замовника через мобільний застосунок або веб-інтерфейс Платформи.</p>
+      <p class="legal-def"><strong>Успішна транзакція</strong> — завершена платіжна операція, за якою уповноважений надавач платіжних послуг підтвердив списання коштів з рахунку (платіжного інструменту) Користувача та їх зарахування на рахунок Замовника, що зафіксовано у статусі транзакції в особистому кабінеті Платформи.</p>
+      <p class="legal-def"><strong>Комісія Платформи</strong> — винагорода Виконавця за надання доступу до технологічних послуг Платформи, що становить 2% (два відсотки) від суми кожної Успішної транзакції та утримується автоматично в момент розподілу коштів (split payment).</p>
+      <p class="legal-def"><strong>Split Payment (Автоматичний розподіл)</strong> — технологічний механізм, реалізований через API monobank/Universalbank, що забезпечує автоматичне розщеплення суми платежу Користувача: 96,5% на користь Замовника (чистий дохід після урахування комісій), 2% — Комісія Платформи (Виконавець), 1,5% — стандартна комісія банку-еквайєра (згідно з тарифами monobank для юридичних осіб); сума часток дорівнює 100% суми Успішної транзакції.</p>
+      <p class="legal-def"><strong>Акцепт Оферти</strong> — повне та беззастережне прийняття Замовником умов цієї Оферти, що здійснюється у порядку, передбаченому розділом 7 цієї Оферти та тягне за собою укладення між Сторонами Договору про надання технологічних послуг.</p>
+    </section>
+    <section class="legal-section" id="s2" aria-labelledby="h2">
+      <h2 id="h2">2. ПРЕДМЕТ ДОГОВОРУ</h2>
+    <div class="legal-list">
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Виконавець зобов'язується надавати Замовнику технологічні послуги щодо ініціювання платіжних операцій та автоматизованого бронювання (Invisible Checkout &amp; Booking) через Платформу PROSTIR, а Замовник зобов'язується приймати такі послуги та сплачувати Комісію Платформи у розмірі та порядку, що визначені розділом 4 цієї Оферти.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Технологічні послуги Виконавця за цим Договором не є платіжними послугами у розумінні Закону України «Про платіжні послуги» <a class="legal-zakon-ref" href="https://zakon.rada.gov.ua/laws/show/1591-20#n11" target="_blank" rel="noopener noreferrer">№ 1591-IX</a>. Виконавець діє виключно як технологічний посередник, що забезпечує технічне з'єднання між Замовником, Користувачем та уповноваженим надавачем платіжних послуг — Акціонерним товариством «Універсал Банк» (monobank), який має відповідну ліцензію Національного банку України на надання платіжних послуг.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Перелік технологічних послуг включає:</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">надання доступу до програмного інтерфейсу (API) Платформи PROSTIR для інтеграції з інформаційними системами Замовника;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">технологічне забезпечення функції Invisible Checkout — безконтактної оплати замовлення Користувачем через QR-код або NFC без участі персоналу закладу;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">технологічне забезпечення функції онлайн-бронювання (Booking) з можливістю авансової оплати;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">автоматичний розподіл (split payment) коштів між Замовником та Виконавцем через API monobank;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">надання Замовнику персонального кабінету для моніторингу транзакцій, статистики та управління меню/бронюваннями;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">технічна підтримка у робочі дні з 09:00 до 18:00 (UTC+2).</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Використання Платформи Замовником здійснюється виключно у межах, передбачених чинним законодавством України, зокрема Законом України «Про електронну комерцію», Законом України «Про платіжні послуги» <a class="legal-zakon-ref" href="https://zakon.rada.gov.ua/laws/show/1591-20#n11" target="_blank" rel="noopener noreferrer">№ 1591-IX</a>, та нормативними актами Національного банку України.</span></p>
+    </div>
+    </section>
+    <section class="legal-section" id="s3" aria-labelledby="h3">
+      <h2 id="h3">3. ПОРЯДОК НАДАННЯ ТЕХНОЛОГІЧНИХ ПОСЛУГ</h2>
+    <div class="legal-list">
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Доступ до технологічних послуг Платформи PROSTIR надається Замовнику після виконання сукупності таких умов:</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">реєстрація облікового запису Замовника на Платформі PROSTIR за адресою prostir.app із зазначенням достовірних реквізитів суб'єкта господарювання;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">акцепт умов цієї Оферти у порядку, передбаченому розділом 7;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">проходження процедури верифікації Замовника відповідно до вимог законодавства у сфері фінансового моніторингу (KYC/AML);</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">підключення банківського рахунку Замовника до API monobank/Universalbank для забезпечення функції Split Payment.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Виконавець забезпечує цілодобову доступність технічної інфраструктури Платформи (24/7/365) з допустимим рівнем простою не більше 0,5% на місяць, що відповідає SLA 99,5%. Плановий технічний регламент проводиться у нічний час (00:00–04:00 UTC+2) з попередньою нотифікацією Замовника не менш ніж за 24 години.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Усі платіжні операції, ініційовані через Платформу, виконуються уповноваженим надавачем платіжних послуг — АТ «Універсал Банк» (monobank) відповідно до умов його публічної оферти та правил платіжної системи. Виконавець не несе відповідальності за дії або бездіяльність уповноваженого надавача платіжних послуг.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Кошти від Успішних транзакцій зараховуються на розрахунковий рахунок Замовника після автоматичного утримання Комісії Платформи у порядку Split Payment. Строки зарахування визначаються операційним регламентом АТ «Універсал Банк» і, як правило, становлять T+1 (наступний банківський день після дати транзакції).</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Виконавець має право тимчасово призупинити надання послуг Замовнику у разі:</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">порушення Замовником умов цієї Оферти або чинного законодавства України;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">виникнення обґрунтованих підозр щодо шахрайських дій або порушень у сфері фінансового моніторингу;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">технічних збоїв, що не залежать від Виконавця (форс-мажорні обставини).</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Замовник несе виключну відповідальність за достовірність інформації про заклад, цін та умов сервісу, розміщених на Платформі PROSTIR, а також за дотримання чинного законодавства України при здійсненні господарської діяльності.</span></p>
+    </div>
+    </section>
+    <section class="legal-section" id="s4" aria-labelledby="h4">
+      <h2 id="h4">4. ВАРТІСТЬ ПОСЛУГ ТА ПОРЯДОК РОЗРАХУНКІВ</h2>
+    <div class="legal-list">
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Вартість технологічних послуг Виконавця складає 2% (два відсотки) від суми кожної Успішної транзакції (далі — «Комісія Платформи»). Комісія Платформи є єдиним та вичерпним платежем Замовника за доступ до функціоналу Платформи PROSTIR, якщо інше не передбачено окремою письмовою угодою між Сторонами.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Утримання Комісії Платформи здійснюється автоматично в момент здійснення кожної Успішної транзакції шляхом Split Payment через API monobank/Universalbank без додаткового виставлення рахунків або підписання актів приймання-передачі, якщо інше не вимагається нормами чинного законодавства України.</span></p>
+    </div>
+    <p class="legal-p">Розподіл коштів при кожній Успішній транзакції здійснюється у такому співвідношенні:</p>
+      <div class="legal-split-wrap" id="split-payment-overview">
+        <p class="legal-split-caption legal-split-caption--en">split_payment · margin · total 100%</p>
+        <div class="legal-split-table-outer">
+        <table class="legal-split-table" role="table" aria-label="Розподіл: частки учасників (100%)" tabindex="0">
+          <thead>
+            <tr>
+              <th scope="col">Participant</th>
+              <th scope="col" class="legal-split-col-share">Share %</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Restaurant (Partner)</td>
+              <td class="legal-split-mono">96.5%</td>
+              <td>Net revenue after fees</td>
+            </tr>
+            <tr>
+              <td>PROSTIR Platform</td>
+              <td class="legal-split-mono">2.0%</td>
+              <td>Technology service fee</td>
+            </tr>
+            <tr>
+              <td>Acquiring Bank (Mono)</td>
+              <td class="legal-split-mono">1.5%</td>
+              <td>Standard bank processing fee</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="legal-split-total">
+              <th scope="row">Total</th>
+              <td class="legal-split-mono">100%</td>
+              <td>All participant shares sum to the transaction amount.</td>
+            </tr>
+          </tfoot>
+        </table>
+        </div>
+        <p class="legal-split-note">Partner 96.5% / PROSTIR 2.0% / Acquiring 1.5% — licensed PSP executes settlement; PROSTIR supplies integration technology only.</p>
+        <p class="legal-split-footnote">Bank fee is subject to monobank's current tariffs for legal entities.</p>
+      </div>
+    <div class="legal-list">
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Комісія Платформи, утримана за наданий доступ до технологічних послуг, є остаточною та поверненню не підлягає незалежно від подальшої долі основного правочину між Замовником та Користувачем, у тому числі у разі здійснення повернення (рефанду) Користувачу коштів за основним чеком.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Виконавець не є платником ПДВ / єдиного податку (відповідна система оподаткування зазначається в реквізитах). Замовник самостійно несе відповідальність за правильність відображення операцій у власному бухгалтерському та податковому обліку.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">У разі технічної помилки, що призвела до подвійного списання Комісії Платформи з однієї транзакції, Виконавець зобов'язується повернути надміру утримані кошти протягом 5 (п'яти) робочих днів з дати підтвердженого звернення Замовника.</span></p>
+    </div>
+    </section>
+    <section class="legal-section" id="s5" aria-labelledby="h5">
+      <h2 id="h5">5. ПРАВА ТА ОБОВ'ЯЗКИ СТОРІН</h2>
+      <h3>5.1. Права та обов'язки Виконавця</h3>
+    <div class="legal-list">
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Виконавець зобов'язаний:</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">забезпечувати стабільне функціонування Платформи PROSTIR відповідно до рівня SLA, встановленого у пункті 3.2 цієї Оферти;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">надавати Замовнику доступ до особистого кабінету з актуальною інформацією про транзакції та розрахунки;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">повідомляти Замовника про заплановані технічні роботи не пізніше ніж за 24 години шляхом надсилання повідомлення на зареєстровану електронну пошту або в особистий кабінет;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">вживати всіх необхідних технічних та організаційних заходів для захисту персональних даних Користувачів та комерційних даних Замовника відповідно до Закону України «Про захист персональних даних»;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">не розголошувати конфіденційну інформацію Замовника третім особам, крім випадків, передбачених чинним законодавством України або рішенням суду.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Виконавець має право:</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">вносити зміни до функціоналу Платформи, технічних характеристик та умов цієї Оферти у порядку, визначеному розділом 7;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">призупиняти доступ Замовника до Платформи у випадках, передбачених пунктом 3.5 цієї Оферти;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">на власний розсуд визначати технічні засоби та методи надання послуг, що відповідають меті Договору;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">залучати третіх осіб (субпідрядників) для виконання технічних завдань без необхідності отримання попередньої згоди Замовника, залишаючись при цьому відповідальним перед Замовником за якість наданих послуг.</span></p>
+    </div>
+      <h3>5.2. Права та обов'язки Замовника</h3>
+    <div class="legal-list">
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Замовник зобов'язаний:</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">надавати достовірні відомості при реєстрації та верифікації на Платформі та своєчасно актуалізувати їх у разі зміни;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">використовувати Платформу PROSTIR виключно у правомірних цілях та у межах, що відповідають профілю господарської діяльності, зазначеному при реєстрації;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">дотримуватись вимог законодавства України у сфері захисту прав споживачів, фінансового моніторингу та електронної комерції при взаємодії з Користувачами;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">не вчиняти дій, спрямованих на обхід механізмів захисту Платформи або розкриття програмного коду та архітектури системи;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">негайно повідомляти Виконавця про виявлені технічні збої або несанкціонований доступ до облікового запису Замовника.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Замовник має право:</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">отримувати технічну підтримку Виконавця у порядку та строки, передбачені пунктом 2.3 цієї Оферти;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">самостійно визначати умови повернення коштів Користувачам за основним чеком відповідно до правил закладу та чинного законодавства України про захист прав споживачів;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">вимагати надання детальної фінансової звітності по транзакціях через особистий кабінет Платформи або шляхом направлення письмового запиту Виконавцю;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">в односторонньому порядку припинити використання Платформи шляхом надіслання відповідного повідомлення Виконавцю, що не звільняє від зобов'язання щодо сплати нарахованої, але не сплаченої Комісії Платформи.</span></p>
+    </div>
+    </section>
+    <section class="legal-section" id="s6" aria-labelledby="h6">
+      <h2 id="h6">6. ВИРІШЕННЯ СПОРІВ ТА ВІДПОВІДАЛЬНІСТЬ</h2>
+    <div class="legal-list">
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Сторони зобов'язуються докладати всіх зусиль для вирішення будь-яких розбіжностей та спорів, що виникають з цієї Оферти або у зв'язку з нею, шляхом переговорів та взаємних консультацій у досудовому порядку.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Претензійний порядок врегулювання спорів є обов'язковим. Строк розгляду претензії складає 30 (тридцять) календарних днів з дати її отримання Стороною, якій її адресовано. Претензія вважається отриманою з моменту її надходження на електронну пошту або рекомендованим листом на юридичну адресу відповідної Сторони.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">У разі якщо спір не врегульовано шляхом переговорів у строки, передбачені пунктом 6.2, він підлягає передачі на розгляд компетентного суду відповідно до вимог Господарського процесуального кодексу України та Цивільного процесуального кодексу України. Підсудність визначається відповідно до чинного законодавства України.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">До відносин між Сторонами застосовується право України. Ця Оферта та Договір, що укладається на її підставі, тлумачаться та виконуються відповідно до законодавства України.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Відповідальність Виконавця за порушення умов цієї Оферти обмежується сумою Комісії Платформи, фактично утриманої за 3 (три) останніх місяці, що передували виникненню спірної ситуації. Виконавець не несе відповідальності за непрямі збитки, упущену вигоду або моральну шкоду Замовника.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Виконавець звільняється від відповідальності за невиконання або неналежне виконання своїх зобов'язань у разі настання обставин непереборної сили (форс-мажор), що підтверджується відповідним документом Торгово-промислової палати України. Строк виконання зобов'язань продовжується на термін дії форс-мажорних обставин.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Замовник несе повну відповідальність перед Користувачами за якість товарів, послуг та сервісу, що надаються у його закладі, а також за правомірність та умови повернення коштів за основним чеком. Виконавець не є стороною правовідносин між Замовником та Користувачем щодо якості наданих послуг/товарів.</span></p>
+    </div>
+    </section>
+    <section class="legal-section" id="s7" aria-labelledby="h7">
+      <h2 id="h7">7. ТЕРМІН ДІЇ ОФЕРТИ ТА ПОРЯДОК АКЦЕПТУ</h2>
+    <div class="legal-list">
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Ця Оферта набирає чинності з дати її публікації на офіційному сайті Платформи PROSTIR за адресою prostir.app та діє безстроково до моменту її відкликання Виконавцем.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Акцепт цієї Оферти здійснюється Замовником шляхом вчинення будь-якої з наступних конклюдентних дій:</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">завершення процедури реєстрації облікового запису на Платформі PROSTIR;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">натискання кнопки «Погоджуюсь» або іншої аналогічної функції під час реєстрації або підключення;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">здійснення першої Успішної транзакції через Платформу PROSTIR.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Виконавець залишає за собою право в односторонньому порядку вносити зміни до умов цієї Оферти. Змінена редакція Оферти набирає чинності через 10 (десять) календарних днів з дати її публікації на сайті Платформи, якщо інший строк не зазначений у повідомленні про зміни. Замовник вважається таким, що погодився зі змінами, якщо протягом зазначеного строку не направив Виконавцю письмове повідомлення про відмову від подальшого використання Платформи.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Договір, укладений на підставі цієї Оферти шляхом акцепту, є безстроковим і може бути розірваний:</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">за взаємною згодою Сторін у будь-який час;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Замовником — в односторонньому порядку шляхом надіслання письмового повідомлення Виконавцю не менш ніж за 10 (десять) календарних днів до дати розірвання;</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Виконавцем — в односторонньому порядку у разі систематичного (більше 2 разів) або грубого порушення Замовником умов цієї Оферти, а також у разі настання обставин, передбачених пунктом 3.5.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Розірвання Договору не звільняє Сторони від виконання зобов'язань, що виникли до дати його розірвання, зокрема від обов'язку Замовника щодо сплати нарахованої Комісії Платформи.</span></p>
+    </div>
+    </section>
+    <section class="legal-section" id="s8" aria-labelledby="h8">
+      <h2 id="h8">8. КОНФІДЕНЦІЙНІСТЬ ТА ЗАХИСТ ДАНИХ</h2>
+    <div class="legal-list">
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Сторони зобов'язуються зберігати в суворій конфіденційності будь-яку інформацію, отриману в ході виконання Договору, яка має ознаки комерційної таємниці, та не розголошувати її третім особам без попередньої письмової згоди іншої Сторони, крім випадків, передбачених чинним законодавством України.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Виконавець здійснює обробку персональних даних Користувачів та представників Замовника відповідно до Закону України «Про захист персональних даних» від 01 червня 2010 року № 2297-VI та Політики конфіденційності Платформи PROSTIR, розміщеної за адресою prostir.app/privacy.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Замовник, використовуючи технологічні інструменти Платформи для збору та передачі персональних даних Користувачів, діє як самостійний розпорядник персональних даних у розумінні Закону України «Про захист персональних даних» та несе відповідальність за законність такої обробки.</span></p>
+    </div>
+    </section>
+    <section class="legal-section" id="s9" aria-labelledby="h9">
+      <h2 id="h9">9. ПОВЕРНЕННЯ КОШТІВ</h2>
+    <div class="legal-list">
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Комісія Платформи, утримана Виконавцем за надання доступу до технологічних послуг Платформи PROSTIR, є остаточною та поверненню не підлягає в жодному випадку, оскільки є платою за фактично надані технологічні послуги — ініціювання платіжної операції, яка завершена успішно.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Повернення Користувачу коштів за основним чеком (рефанд) здійснюється Замовником відповідно до внутрішніх правил закладу, умов, відображених на Платформі при бронюванні, та норм Закону України «Про захист прав споживачів». Виконавець не є стороною таких відносин та не несе відповідальності за рішення Замовника щодо повернення коштів.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">У технічно виняткових випадках, коли транзакція відображається як Успішна у системі Платформи, проте фактичне списання коштів не відбулося через помилку на стороні уповноваженого надавача платіжних послуг, питання повернення вирішується безпосередньо між Замовником та АТ «Універсал Банк» (monobank) відповідно до їх умов обслуговування.</span></p>
+    </div>
+    </section>
+    <section class="legal-section" id="s10" aria-labelledby="h10">
+      <h2 id="h10">10. ПРИКІНЦЕВІ ПОЛОЖЕННЯ</h2>
+    <div class="legal-list">
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Ця Оферта є повним та виключним викладенням умов угоди між Сторонами щодо предмету, визначеного розділом 2, та скасовує всі попередні усні та письмові домовленості Сторін стосовно зазначеного предмету.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Якщо будь-яке положення цієї Оферти визнається судом недійсним або таким, що суперечить чинному законодавству, це не тягне за собою недійсності Оферти в цілому. Недійсне положення вважається виключеним, а решта положень зберігають повну юридичну силу.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Ця Оферта складена українською мовою. У разі виникнення розбіжностей між україномовним та будь-яким іншим перекладом, що може бути надано для зручності, перевагу має українськомовна версія.</span></p>
+      <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Усі повідомлення, запити та претензії за цією Офертою направляються Виконавцю на електронну адресу: legal@prostir.app або поштою на юридичну адресу Виконавця, вказану в реквізитах.</span></p>
+    </div>
+    </section>
+    <section class="legal-section" id="s11" aria-labelledby="h11">
+      <h2 id="h11">11. РЕКВІЗИТИ ВИКОНАВЦЯ</h2>
+      <div class="legal-req legal-list">
+        <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Найменування: Фізична особа-підприємець Шепітько Денис Олексійович, що провадить діяльність під комерційним найменуванням PROSTIR</span></p>
+        <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">РНОКПП: [ідентифікаційний номер]</span></p>
+        <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Юридична адреса: [юридична адреса ФОП]</span></p>
+        <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">IBAN: UA673220010000026200347104840</span></p>
+        <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Найменування банку: АТ «Універсал Банк» (monobank)</span></p>
+        <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">МФО: 322001</span></p>
+        <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Електронна пошта: legal@prostir.app</span></p>
+        <p class="legal-li"><span class="legal-li__m" aria-hidden="true">~</span><span class="legal-li__t">Веб-сайт: prostir.app</span></p>
+        <p class="legal-li"><span class="legal-li__m" aria-hidden="true">&gt;</span><span class="legal-li__t">Публікуючи цю Оферту, Виконавець підтверджує, що має всі необхідні права та повноваження для укладення договорів на її підставі, а умови цієї Оферти не суперечать чинному законодавству України.</span></p>
+      </div>
+    </section>
+
+    <p class="legal-endnote"><a href="/">/home</a> · <a href="mailto:legal@prostir.app">legal@prostir.app</a></p>
+  </div>
+</main>
+
+<footer class="legal-foot">
+  <div class="legal-foot-inner">
+    <p class="legal-sys-banner">// system.out · contractor_registry</p>
+    <a class="legal-foot__logo" href="/" aria-label="PROSTIR">PR<span class="text-violet-500">O</span><span class="legal-foot-rest">STIR</span></a>
+    <div class="legal-sys-block" aria-label="Реквізити виконавця">
+      <p class="legal-sys-line"><span class="legal-sys-line__m">&gt;</span><span class="legal-sys-line__k">entity</span><span class="legal-sys-line__v">ФОП Шепітько Денис Олексійович · комерційне найменування PROSTIR</span></p>
+      <p class="legal-sys-line"><span class="legal-sys-line__m">~</span><span class="legal-sys-line__k">rnokpp_tin</span><span class="legal-sys-line__v">[ідентифікаційний номер]</span></p>
+      <p class="legal-sys-line"><span class="legal-sys-line__m">&gt;</span><span class="legal-sys-line__k">legal_addr</span><span class="legal-sys-line__v">[юридична адреса ФОП]</span></p>
+      <p class="legal-sys-line"><span class="legal-sys-line__m">~</span><span class="legal-sys-line__k">iban</span><span class="legal-sys-line__v">UA673220010000026200347104840</span></p>
+      <p class="legal-sys-line"><span class="legal-sys-line__m">&gt;</span><span class="legal-sys-line__k">bank</span><span class="legal-sys-line__v">АТ «Універсал Банк» (monobank)</span></p>
+      <p class="legal-sys-line"><span class="legal-sys-line__m">~</span><span class="legal-sys-line__k">mfo</span><span class="legal-sys-line__v">322001</span></p>
+      <p class="legal-sys-line"><span class="legal-sys-line__m">&gt;</span><span class="legal-sys-line__k">email</span><span class="legal-sys-line__v">legal@prostir.app</span></p>
+      <p class="legal-sys-line"><span class="legal-sys-line__m">~</span><span class="legal-sys-line__k">host</span><span class="legal-sys-line__v">prostir.app</span></p>
+    </div>
+    <p class="legal-foot-copy">© 2026 PROSTIR · Kyiv · EOF</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var meta = [{"id":"s1","n":1,"title":"1. ВИЗНАЧЕННЯ ТЕРМІНІВ"},{"id":"s2","n":2,"title":"2. ПРЕДМЕТ ДОГОВОРУ"},{"id":"s3","n":3,"title":"3. ПОРЯДОК НАДАННЯ ТЕХНОЛОГІЧНИХ ПОСЛУГ"},{"id":"s4","n":4,"title":"4. ВАРТІСТЬ ПОСЛУГ ТА ПОРЯДОК РОЗРАХУНКІВ"},{"id":"s5","n":5,"title":"5. ПРАВА ТА ОБОВ'ЯЗКИ СТОРІН"},{"id":"s6","n":6,"title":"6. ВИРІШЕННЯ СПОРІВ ТА ВІДПОВІДАЛЬНІСТЬ"},{"id":"s7","n":7,"title":"7. ТЕРМІН ДІЇ ОФЕРТИ ТА ПОРЯДОК АКЦЕПТУ"},{"id":"s8","n":8,"title":"8. КОНФІДЕНЦІЙНІСТЬ ТА ЗАХИСТ ДАНИХ"},{"id":"s9","n":9,"title":"9. ПОВЕРНЕННЯ КОШТІВ"},{"id":"s10","n":10,"title":"10. ПРИКІНЦЕВІ ПОЛОЖЕННЯ"},{"id":"s11","n":11,"title":"11. РЕКВІЗИТИ ВИКОНАВЦЯ"}];
+  if (!meta.length) return;
+
+  var lastN = 0;
+  function setActive(n) {
+    if (n === lastN) return;
+    lastN = n;
+    if (!meta[n - 1]) return;
+    document.querySelectorAll('.legal-shell-cell').forEach(function (el) {
+      var d = el.getAttribute('data-shell');
+      var on = d === String(n);
+      el.classList.toggle('legal-shell-cell--active', on);
+      if (on) el.setAttribute('aria-current', 'true');
+      else el.removeAttribute('aria-current');
+    });
+  }
+
+  function topOf(el) {
+    return el.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0);
+  }
+
+  var sections = meta
+    .map(function (s) {
+      return document.getElementById(s.id);
+    })
+    .filter(Boolean);
+
+  if (!sections.length) return;
+
+  var ticking = false;
+  function pickFromScroll() {
+    ticking = false;
+    var pad = 100;
+    var y = (window.scrollY || window.pageYOffset || 0) + pad;
+    var n = meta[0].n;
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (topOf(sections[i]) <= y) {
+        n = meta[i].n;
+        break;
+      }
+    }
+    setActive(n);
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(pickFromScroll);
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  pickFromScroll();
+})();
+</script>
+</body>
+</html>
