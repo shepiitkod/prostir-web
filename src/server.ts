@@ -2,11 +2,14 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import fs from 'fs';
+import http from 'http';
 import path from 'path';
 import { diiaRouter } from './controllers/diia.controller';
-import { venueRouter } from './controllers/venue.controller';
 import { leadsAdminRouter } from './controllers/leads-admin.controller';
+import { monobankRouter } from './controllers/monobank.controller';
+import { venueRouter } from './controllers/venue.controller';
 import { ensureUsersTable } from './db/pool';
+import { emitTableUpdated, initSocketIO } from './realtime/socket';
 
 const app = express();
 const __root = path.join(__dirname, '..');
@@ -71,6 +74,7 @@ app.get('/', (_req, res) => {
 app.use('/auth/diia', diiaRouter);
 app.use('/api/venue', venueRouter);
 app.use('/api/admin', leadsAdminRouter);
+app.use('/api/webhooks', monobankRouter);
 
 app.get('/venue', (_req, res) => {
   res.sendFile(path.join(__root, 'public', 'venue.html'));
@@ -206,6 +210,31 @@ app.post('/api/book', (req, res) => {
   return res.status(201).json({ success: true, booking });
 });
 
+app.patch('/api/tables/:venueId/:tableId', (req, res) => {
+  const { venueId, tableId } = req.params;
+  const { status } = req.body as { status?: string };
+
+  const allowed = ['available', 'booked', 'paid', 'occupied', 'reserved'];
+  if (!status || !allowed.includes(status)) {
+    return res.status(400).json({ error: `status must be one of: ${allowed.join(', ')}` });
+  }
+
+  const db = readDb() as {
+    tables: Array<{ id: number; venueId: string; status: string }>;
+  };
+  const tableIdInt = parseInt(tableId, 10);
+  const table = db.tables.find((t) => t.id === tableIdInt && t.venueId === venueId);
+  if (!table) {
+    return res.status(404).json({ error: 'Table not found' });
+  }
+
+  table.status = status;
+  writeDb(db);
+  emitTableUpdated(venueId, tableIdInt, status);
+
+  return res.json({ ok: true, tableId: tableIdInt, venueId, status });
+});
+
 app.delete('/api/bookings/:id', (req, res) => {
   const db = readDb() as {
     bookings: Array<{ id: number; status: string; tableId: number }>;
@@ -245,13 +274,17 @@ async function main(): Promise<void> {
     console.error('[PROSTIR] PostgreSQL init skipped or failed:', msg);
   }
 
-  const server = app.listen(PORT, '0.0.0.0', () => {
+  const httpServer = http.createServer(app);
+  initSocketIO(httpServer);
+
+  httpServer.listen(PORT, '0.0.0.0', () => {
     if (process.env.NODE_ENV !== 'production') {
       console.log('PROSTIR Backend live on port ' + PORT);
       console.log('Open http://localhost:' + PORT);
+      console.log('Socket.io realtime engine active');
     }
   });
-  server.on('error', (err: NodeJS.ErrnoException) => {
+  httpServer.on('error', (err: NodeJS.ErrnoException) => {
     if (err.code === 'EADDRINUSE') {
       console.error(
         `[PROSTIR] Port ${PORT} is already in use. Free it or pick another port in .env:\n` +
